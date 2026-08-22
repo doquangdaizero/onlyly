@@ -39,9 +39,28 @@
       z-index: 0;
       pointer-events: none;
     }
-    .g1 { width: 500px; height: 500px; top: -150px; left: -100px; background: #f8bbd0; }
-    .g2 { width: 500px; height: 500px; bottom: -150px; right: -100px; background: #ffccbc; }
-    .g3 { width: 300px; height: 300px; top: 40%; left: 30%; background: #ffe0b2; opacity: 0.2; }
+    .g1 {
+      width: 500px;
+      height: 500px;
+      top: -150px;
+      left: -100px;
+      background: #f8bbd0;
+    }
+    .g2 {
+      width: 500px;
+      height: 500px;
+      bottom: -150px;
+      right: -100px;
+      background: #ffccbc;
+    }
+    .g3 {
+      width: 300px;
+      height: 300px;
+      top: 40%;
+      left: 30%;
+      background: #ffe0b2;
+      opacity: 0.2;
+    }
 
     .container {
       position: relative;
@@ -52,7 +71,8 @@
       backdrop-filter: blur(14px);
       border-radius: 60px;
       padding: 30px 26px 38px;
-      box-shadow: 0 30px 60px -20px rgba(180, 80, 80, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      box-shadow: 0 30px 60px -20px rgba(180, 80, 80, 0.25),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.7);
       border: 1px solid rgba(255, 200, 190, 0.4);
     }
 
@@ -74,13 +94,17 @@
       background: #e86f6f;
       box-shadow: 0 0 20px rgba(232, 111, 111, 0.4);
     }
-    .dot.passed { background: #f5a0a0; }
+    .dot.passed {
+      background: #f5a0a0;
+    }
 
     .step {
       display: none;
       animation: fadeIn 0.7s cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .step.active { display: block; }
+    .step.active {
+      display: block;
+    }
     @keyframes fadeIn {
       0% { opacity: 0; transform: translateY(30px) scale(0.95); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -118,7 +142,10 @@
       border: 1px solid rgba(235, 180, 170, 0.3);
       line-height: 1.7;
     }
-    .note strong { color: #d45a5a; font-weight: 600; }
+    .note strong {
+      color: #d45a5a;
+      font-weight: 600;
+    }
 
     .options {
       display: grid;
@@ -126,8 +153,11 @@
       gap: 12px;
       margin-bottom: 26px;
     }
-    @media (max-width: 480px) { .options { grid-template-columns: 1fr; } }
-
+    @media (max-width: 480px) {
+      .options {
+        grid-template-columns: 1fr;
+      }
+    }
     .option {
       background: rgba(255, 248, 245, 0.7);
       backdrop-filter: blur(4px);
@@ -163,9 +193,18 @@
       box-shadow: 0 12px 28px -8px rgba(180, 80, 80, 0.2);
       background: rgba(255, 248, 245, 0.95);
     }
-    .option:hover::after { opacity: 1; }
-    .option .emoji { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; }
-    .option .label { flex: 1; }
+    .option:hover::after {
+      opacity: 1;
+    }
+    .option .emoji {
+      font-size: 22px;
+      flex-shrink: 0;
+      width: 32px;
+      text-align: center;
+    }
+    .option .label {
+      flex: 1;
+    }
     .option .check {
       opacity: 0;
       transform: scale(0.5) rotate(-30deg);
@@ -176,10 +215,14 @@
     .option.selected {
       border-color: #d45a5a;
       background: rgba(245, 200, 190, 0.25);
-      box-shadow: 0 8px 24px -6px rgba(212, 90, 90, 0.2), inset 0 0 0 1px rgba(212, 90, 90, 0.15);
+      box-shadow: 0 8px 24px -6px rgba(212, 90, 90, 0.2),
+                  inset 0 0 0 1px rgba(212, 90, 90, 0.15);
       transform: translateY(-2px);
     }
-    .option.selected .check { opacity: 1; transform: scale(1) rotate(0deg); }
+    .option.selected .check {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
 
     .btn-group {
       display: flex;
@@ -213,13 +256,17 @@
       animation: rippleAnim 0.6s linear;
       pointer-events: none;
     }
-    @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
+    }
     button:hover:not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 12px 28px -8px rgba(212, 90, 90, 0.45);
       background: #c04a4a;
     }
-    button:active:not(:disabled) { transform: scale(0.94); }
+    button:active:not(:disabled) {
+      transform: scale(0.94);
+    }
     button:disabled {
       opacity: 0.35;
       pointer-events: none;
@@ -246,8 +293,14 @@
       margin-bottom: 4px;
       animation: float 3s ease-in-out infinite;
     }
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-    .step-final .note { background: rgba(245, 200, 190, 0.15); border-color: rgba(235, 180, 170, 0.25); }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .step-final .note {
+      background: rgba(245, 200, 190, 0.15);
+      border-color: rgba(235, 180, 170, 0.25);
+    }
 
     @media (max-width: 480px) {
       .container { padding: 24px 16px 30px; }
@@ -268,7 +321,7 @@
   <div class="container" id="app">
     <div class="dots" id="dots"></div>
 
-    <!-- STEP 0 -->
+    <!-- STEP 0: Chào -->
     <div class="step active" data-step="0">
       <h1 id="typing-title">🌸 Nè, cho tớ hỏi chút</h1>
       <div class="sub">Chỉ là vài câu để tớ hiểu cậu hơn thôi</div>
@@ -276,10 +329,12 @@
         💬 <strong>“Hôm nay cậu có điều gì nhẹ nhàng không?”</strong><br />
         (nếu không có, thì để tớ gửi cậu một chút nắng)
       </div>
-      <div class="btn-group"><button onclick="nextStep()" id="startBtn">Bắt đầu ✦</button></div>
+      <div class="btn-group">
+        <button onclick="nextStep()" id="startBtn">Bắt đầu ✦</button>
+      </div>
     </div>
 
-    <!-- STEP 1..5 -->
+    <!-- STEP 1–5 -->
     <div class="step" data-step="1">
       <h1>🌿 Vài điều nhỏ xinh</h1>
       <div class="sub">Chọn những gì cậu thấy hợp</div>
@@ -338,33 +393,70 @@
     <!-- STEP 6: Cảm ơn -->
     <div class="step step-final" data-step="6">
       <span class="big-emoji">💗</span>
-      <h1 style="text-align:center; -webkit-text-fill-color:#4a2a2a; background:none; color:#4a2a2a;">Cảm ơn cậu</h1>
-      <div class="sub" style="text-align:center; border-left:none; padding-left:0;">Tớ đã có thêm một chút hiểu về cậu</div>
-      <div class="note" style="font-size:17px; border:none; background:rgba(245,200,190,0.15);">
+      <h1 style="text-align:center; -webkit-text-fill-color: #4a2a2a; background: none; color:#4a2a2a;">Cảm ơn cậu</h1>
+      <div class="sub" style="text-align:center; border-left: none; padding-left:0;">Tớ đã có thêm một chút hiểu về cậu</div>
+      <div class="note" style="font-size:17px; border: none; background: rgba(245,200,190,0.15);">
         <span style="display:block; font-size:32px; margin-bottom:4px;">🍰</span>
         <strong>“Hãy luôn như những điều cậu đã chọn”</strong><br />
         <span style="font-size:14px; color:#7a5a5a;">— từ một người thầm thương cậu</span>
       </div>
-      <div class="note" style="background:rgba(245,200,190,0.08); font-style:normal;">📬 Tớ đã nhận được câu trả lời của cậu.</div>
-      <div class="btn-group" style="justify-content:center;"><button onclick="resetAll()">🔄 Làm lại</button></div>
+      <div class="note" style="background: rgba(245,200,190,0.08); font-style: normal;">
+        📬 Tớ đã nhận được câu trả lời của cậu.
+      </div>
+      <div class="btn-group" style="justify-content:center;">
+        <button onclick="resetAll()">🔄 Làm lại</button>
+      </div>
     </div>
   </div>
 
   <script>
     // =============================================================
-    //  PHẦN 1: BACKGROUND CANVAS – dùng ẢNH CHIBI từ cùng thư mục
+    // 1. BACKGROUND CANVAS – dùng ẢNH CHIBI từ cùng thư mục
+    //    Giữ nguyên toàn bộ hiệu ứng (bong bóng, sao băng, tim, hoa, ...)
     // =============================================================
     (function initBg() {
       const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
       let w, h;
-      function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
       window.addEventListener('resize', resize);
       resize();
 
-      // ----- ĐƯỜNG DẪN ẢNH (cùng thư mục với index.html) -----
-      // 👉 Mày chỉ cần đặt tên file ảnh đúng như dưới đây,
-      // hoặc sửa tên cho khớp với file của mày.
+      // ----- Bong bóng -----
+      const bubbles = [];
+      for (let i = 0; i < 30; i++) {
+        bubbles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 2 + Math.random() * 10,
+          dx: (Math.random() - 0.5) * 0.3,
+          dy: -0.1 - Math.random() * 0.4,
+          color: `hsla(340, 70%, 80%, ${0.1 + Math.random()*0.3})`
+        });
+      }
+
+      // ----- Sao băng -----
+      const stars = [];
+      for (let i = 0; i < 12; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          len: 4 + Math.random() * 12,
+          speed: 1 + Math.random() * 3,
+          angle: Math.PI / 4 + (Math.random() - 0.5) * 0.3,
+          alpha: 0.1 + Math.random() * 0.3,
+          life: 0,
+          maxLife: 100 + Math.random() * 200,
+          active: true
+        });
+      }
+
+      // ----- LOAD ẢNH CHIBI (cùng thư mục) -----
+      // 👉 SỬA TÊN FILE ẢNH CỦA BẠN VÀO ĐÂY
       const imageUrls = [
         'Screenshot 2026-08-22 144206.png',  // 👈 thay link ảnh 1
         'Screenshot 2026-08-22 144220.png',  // 👈 thay link ảnh 2
@@ -372,34 +464,29 @@
         'Screenshot 2026-08-22 144243.png'   // 👈 thay link ảnh 4
       ];
 
-      // Load ảnh
       const images = [];
       let loadedCount = 0;
       let allLoaded = false;
 
       imageUrls.forEach((url, idx) => {
         const img = new Image();
-        img.crossOrigin = 'anonymous'; // nếu cần
         img.onload = () => {
           loadedCount++;
           if (loadedCount === imageUrls.length) {
             allLoaded = true;
-            initCharacters();
+            // bắt đầu sau khi load xong
           }
         };
         img.onerror = () => {
-          // nếu lỗi, vẫn tiếp tục nhưng sẽ dùng fallback
+          // nếu ảnh lỗi, vẫn tiếp tục (dùng fallback emoji)
           loadedCount++;
-          if (loadedCount === imageUrls.length) {
-            allLoaded = true;
-            initCharacters();
-          }
+          if (loadedCount === imageUrls.length) allLoaded = true;
         };
         img.src = url;
         images[idx] = img;
       });
 
-      // Tạo nhân vật
+      // ----- Tạo nhân vật (mỗi nhân vật là một ảnh hoặc emoji fallback) -----
       let characters = [];
       function initCharacters() {
         characters = [];
@@ -417,7 +504,7 @@
             rotation: 0
           });
         }
-        // Nếu không load được ảnh nào, dùng emoji
+        // fallback nếu không có ảnh nào
         if (characters.length === 0) {
           for (let i = 0; i < 4; i++) {
             characters.push({
@@ -433,183 +520,121 @@
         }
       }
 
-      // Nếu ảnh chưa load xong, vẫn khởi tạo nhân vật tạm
-      setTimeout(() => {
-        if (!allLoaded) {
-          initCharacters();
+      // khởi tạo nhân vật ngay lập tức (nếu ảnh chưa load xong thì sẽ dùng fallback)
+      initCharacters();
+
+      // khi tất cả ảnh load xong, cập nhật lại nhân vật để dùng ảnh thật
+      const checkLoaded = setInterval(() => {
+        if (allLoaded) {
+          clearInterval(checkLoaded);
+          // cập nhật lại ảnh cho từng nhân vật
+          characters.forEach((c, idx) => {
+            const img = images[idx % images.length];
+            if (img && img.complete && img.naturalWidth > 0) {
+              c.img = img;
+            }
+          });
         }
-      }, 1000);
+      }, 200);
 
-      // ----- HIỆU ỨNG -----
-      // Trái tim rơi
-      const hearts = [];
-      function spawnHeart() {
-        hearts.push({
-          x: Math.random() * w,
-          y: -20,
-          size: 12 + Math.random() * 18,
-          speed: 0.5 + Math.random() * 1.2,
-          wobble: Math.random() * 0.02,
-          phase: Math.random() * Math.PI * 2,
-          alpha: 0.6 + Math.random() * 0.4
-        });
-      }
-      setInterval(spawnHeart, 400);
-
-      // Cánh hoa đào
-      const petals = [];
-      function spawnPetal() {
-        petals.push({
-          x: Math.random() * w,
-          y: -10,
-          size: 8 + Math.random() * 14,
-          speedX: (Math.random() - 0.5) * 0.6,
-          speedY: 0.4 + Math.random() * 0.8,
-          rotation: Math.random() * 0.05,
-          angle: Math.random() * Math.PI * 2,
-          alpha: 0.3 + Math.random() * 0.4
-        });
-      }
-      setInterval(spawnPetal, 300);
-
-      // Ngôi sao lấp lánh
-      const sparkles = [];
-      function spawnSparkle() {
-        sparkles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          size: 4 + Math.random() * 8,
-          life: 0,
-          maxLife: 30 + Math.random() * 40,
-          alpha: 1
-        });
-      }
-      setInterval(spawnSparkle, 200);
-
-      // ----- VÒNG LẶP CHÍNH -----
-      let frame = 0;
+      // ----- Animation -----
       function draw() {
-        frame++;
         ctx.clearRect(0, 0, w, h);
 
-        // Bong bóng
-        if (frame % 2 === 0) {
-          for (let i = 0; i < 8; i++) {
-            const x = (Math.sin(frame * 0.01 + i * 1.2) * 0.5 + 0.5) * w;
-            const y = (Math.cos(frame * 0.015 + i * 1.8) * 0.5 + 0.5) * h;
-            const r = 6 + Math.sin(frame * 0.02 + i) * 4;
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(340, 60%, 80%, ${0.1 + Math.sin(frame*0.01 + i)*0.05})`;
-            ctx.shadowColor = 'rgba(255,200,200,0.1)';
-            ctx.shadowBlur = 20;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-          }
-        }
-
-        // Trái tim rơi
-        hearts.forEach((h, idx) => {
-          h.y += h.speed;
-          h.x += Math.sin(h.phase + frame * h.wobble) * 0.5;
-          if (h.y > h + 30) { hearts.splice(idx, 1); return; }
-          ctx.font = `${h.size}px sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.globalAlpha = h.alpha * (1 - h.y / (h + 50));
-          ctx.fillText('❤️', h.x, h.y);
-          ctx.globalAlpha = 1;
-        });
-
-        // Cánh hoa
-        petals.forEach((p, idx) => {
-          p.x += p.speedX + Math.sin(p.angle + frame * 0.02) * 0.3;
-          p.y += p.speedY;
-          p.angle += p.rotation;
-          if (p.y > h + 20) { petals.splice(idx, 1); return; }
-          ctx.font = `${p.size}px sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.globalAlpha = p.alpha;
-          ctx.fillText('🌸', p.x, p.y);
-          ctx.globalAlpha = 1;
-        });
-
-        // Ngôi sao
-        sparkles.forEach((s, idx) => {
-          s.life++;
-          if (s.life > s.maxLife) { sparkles.splice(idx, 1); return; }
-          const alpha = s.alpha * (1 - s.life / s.maxLife);
+        // ---- Vẽ bong bóng ----
+        bubbles.forEach(b => {
+          b.x += b.dx;
+          b.y += b.dy;
+          if (b.y < -20) { b.y = h + 20; b.x = Math.random() * w; }
+          if (b.x < -20 || b.x > w + 20) b.dx *= -1;
           ctx.beginPath();
-          ctx.arc(s.x, s.y, s.size * (1 - s.life / s.maxLife * 0.5), 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 215, 100, ${alpha * 0.8})`;
-          ctx.shadowColor = 'rgba(255, 215, 100, 0.3)';
-          ctx.shadowBlur = 20;
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.fillStyle = b.color;
+          ctx.shadowColor = 'rgba(255,200,200,0.1)';
+          ctx.shadowBlur = 15;
           ctx.fill();
           ctx.shadowBlur = 0;
         });
 
-        // --- Vẽ nhân vật chibi (dùng ảnh hoặc emoji) ---
-        if (characters.length > 0) {
-          characters.forEach((c, idx) => {
-            // Di chuyển tự do
-            c.x += c.speedX;
-            c.y += c.speedY;
-            if (c.x < 30 || c.x > w - 30) c.speedX *= -1;
-            if (c.y < 30 || c.y > h - 30) c.speedY *= -1;
-            if (Math.random() < 0.005) {
-              c.speedX += (Math.random() - 0.5) * 0.3;
-              c.speedY += (Math.random() - 0.5) * 0.3;
-              const maxSpeed = 1.2;
-              const sp = Math.hypot(c.speedX, c.speedY);
-              if (sp > maxSpeed) {
-                c.speedX = (c.speedX / sp) * maxSpeed;
-                c.speedY = (c.speedY / sp) * maxSpeed;
-              }
-            }
+        // ---- Sao băng ----
+        stars.forEach(s => {
+          if (!s.active) return;
+          s.x += Math.cos(s.angle) * s.speed;
+          s.y += Math.sin(s.angle) * s.speed;
+          s.life++;
+          if (s.life > s.maxLife || s.x > w || s.y > h) {
+            s.active = false;
+            setTimeout(() => {
+              s.x = -20;
+              s.y = Math.random() * h * 0.5;
+              s.life = 0;
+              s.active = true;
+            }, 1000 + Math.random() * 3000);
+          }
+          ctx.beginPath();
+          ctx.moveTo(s.x, s.y);
+          ctx.lineTo(s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
+          ctx.strokeStyle = `rgba(255, 220, 200, ${s.alpha * (1 - s.life/s.maxLife)})`;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        });
 
-            // Vẽ
-            if (c.img && c.img.complete && c.img.naturalWidth > 0) {
-              const imgSize = c.size * 1.2;
-              ctx.save();
-              ctx.translate(c.x, c.y);
-              ctx.rotate(c.rotation);
-              ctx.drawImage(c.img, -imgSize/2, -imgSize/2, imgSize, imgSize);
-              ctx.restore();
-            } else {
-              // Fallback emoji
-              ctx.font = `${c.size * 1.5}px sans-serif`;
-              ctx.textAlign = 'center';
-              ctx.textBaseline = 'middle';
-              ctx.fillText(c.emoji || '🌸', c.x, c.y);
+        // ---- Vẽ nhân vật chibi (dùng ảnh hoặc emoji) ----
+        characters.forEach((c) => {
+          // Di chuyển tự do, không đuổi bắt
+          c.x += c.speedX;
+          c.y += c.speedY;
+          if (c.x < 30 || c.x > w - 30) c.speedX *= -1;
+          if (c.y < 30 || c.y > h - 30) c.speedY *= -1;
+          // Thỉnh thoảng đổi hướng
+          if (Math.random() < 0.005) {
+            c.speedX += (Math.random() - 0.5) * 0.3;
+            c.speedY += (Math.random() - 0.5) * 0.3;
+            const maxSpeed = 1.2;
+            const sp = Math.hypot(c.speedX, c.speedY);
+            if (sp > maxSpeed) {
+              c.speedX = (c.speedX / sp) * maxSpeed;
+              c.speedY = (c.speedY / sp) * maxSpeed;
             }
-          });
-        }
+          }
 
-        // Trái tim bay ra từ nhân vật
-        if (characters.length > 0 && Math.random() < 0.02) {
+          // Vẽ
+          if (c.img && c.img.complete && c.img.naturalWidth > 0) {
+            const imgSize = c.size * 1.2;
+            ctx.save();
+            ctx.translate(c.x, c.y);
+            ctx.rotate(c.rotation);
+            ctx.drawImage(c.img, -imgSize/2, -imgSize/2, imgSize, imgSize);
+            ctx.restore();
+          } else {
+            // Fallback emoji
+            ctx.font = `${c.size * 1.5}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(c.emoji || '🌸', c.x, c.y);
+          }
+        });
+
+        // ---- Trái tim bay lên từ nhân vật (random) ----
+        if (characters.length > 0 && Math.random() < 0.03) {
           const c = characters[Math.floor(Math.random() * characters.length)];
           ctx.font = '20px sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.globalAlpha = 0.3;
-          ctx.fillText('💕', c.x + (Math.random() - 0.5) * 40, c.y - 30 - Math.random() * 20);
+          ctx.fillText('❤️', c.x + (Math.random() - 0.5) * 40, c.y - 30 - Math.random() * 20);
           ctx.globalAlpha = 1;
         }
 
         requestAnimationFrame(draw);
       }
 
-      // Khởi động
-      setTimeout(() => {
-        if (characters.length === 0) initCharacters();
-        draw();
-      }, 300);
+      draw();
     })();
 
 
     // =============================================================
-    //  PHẦN 2: LOGIC CÂU HỎI & FORMPREE
+    // 2. LOGIC CHÍNH CỦA WEB (câu hỏi, điều hướng, formspree)
     // =============================================================
 
     const questions = [
@@ -638,14 +663,23 @@
         div.className = 'option' + (selected.includes(choice) ? ' selected' : '');
         const emoji = choice.match(/^.{1,2}/)?.[0] || '🌸';
         const label = choice.replace(/^.{1,2}\s*/, '');
-        div.innerHTML = `<span class="emoji">${emoji}</span><span class="label">${label}</span><span class="check">✓</span>`;
+        div.innerHTML = `
+          <span class="emoji">${emoji}</span>
+          <span class="label">${label}</span>
+          <span class="check">✓</span>
+        `;
         div.dataset.value = choice;
         div.addEventListener('click', function() {
           const val = this.dataset.value;
           const arr = answers[qData.id] || [];
           const idx = arr.indexOf(val);
-          if (idx > -1) { arr.splice(idx, 1); this.classList.remove('selected'); }
-          else { arr.push(val); this.classList.add('selected'); }
+          if (idx > -1) {
+            arr.splice(idx, 1);
+            this.classList.remove('selected');
+          } else {
+            arr.push(val);
+            this.classList.add('selected');
+          }
           answers[qData.id] = arr;
           const btn = document.getElementById(`next${stepIndex}`);
           if (btn) btn.disabled = (arr.length === 0);
@@ -661,7 +695,10 @@
       });
 
       const btn = document.getElementById(`next${stepIndex}`);
-      if (btn) { const arr = answers[qData.id] || []; btn.disabled = (arr.length === 0); }
+      if (btn) {
+        const arr = answers[qData.id] || [];
+        btn.disabled = (arr.length === 0);
+      }
     }
 
     function showStep(index) {
@@ -678,10 +715,16 @@
     }
 
     function nextStep() {
-      if (currentStep === 5) { submitAndFinish(); }
-      else if (currentStep < totalSteps - 1) { showStep(currentStep + 1); }
+      if (currentStep === 5) {
+        submitAndFinish();
+      } else if (currentStep < totalSteps - 1) {
+        showStep(currentStep + 1);
+      }
     }
-    function prevStep() { if (currentStep > 0) showStep(currentStep - 1); }
+
+    function prevStep() {
+      if (currentStep > 0) showStep(currentStep - 1);
+    }
 
     function submitAndFinish() {
       const btn = document.querySelector('.step.active .btn-group button:last-child');
@@ -695,16 +738,33 @@
       fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ _subject: '💗 Kết quả khảo sát crush', message, timestamp: new Date().toLocaleString('vi-VN') })
+        body: JSON.stringify({
+          _subject: '💗 Kết quả khảo sát crush',
+          message: message,
+          timestamp: new Date().toLocaleString('vi-VN')
+        })
       })
-      .then(res => { if (res.ok) showStep(6); else { alert('❌ Gửi lỗi, dữ liệu vẫn lưu tạm.'); if(btn) btn.disabled=false; } })
-      .catch(() => { alert('⚠️ Mất kết nối, bạn vẫn có thể chụp màn hình gửi tớ nhé!'); if(btn) btn.disabled=false; });
+      .then(response => {
+        if (response.ok) {
+          showStep(6);
+        } else {
+          alert('❌ Gửi lỗi, nhưng dữ liệu vẫn lưu tạm.');
+          if (btn) btn.disabled = false;
+        }
+      })
+      .catch(() => {
+        alert('⚠️ Mất kết nối, bạn vẫn có thể chụp màn hình gửi tớ nhé!');
+        if (btn) btn.disabled = false;
+      });
     }
 
     function resetAll() {
       for (let key in answers) delete answers[key];
       document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-      for (let i = 1; i <= 5; i++) { const btn = document.getElementById(`next${i}`); if(btn) btn.disabled = true; }
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById(`next${i}`);
+        if (btn) btn.disabled = true;
+      }
       showStep(0);
     }
 
@@ -721,17 +781,23 @@
     createDots();
     showStep(0);
 
-    // Hiệu ứng gõ chữ
+    // gõ chữ
     (function typeEffect() {
       const el = document.getElementById('typing-title');
       const text = '🌸 Nè, cho tớ hỏi chút';
       let index = 0;
       el.textContent = '';
-      function type() { if (index < text.length) { el.textContent += text.charAt(index); index++; setTimeout(type, 50 + Math.random()*30); } }
+      function type() {
+        if (index < text.length) {
+          el.textContent += text.charAt(index);
+          index++;
+          setTimeout(type, 50 + Math.random() * 30);
+        }
+      }
       setTimeout(type, 400);
     })();
 
-    // Ripple
+    // ripple
     document.querySelectorAll('button').forEach(btn => {
       btn.addEventListener('click', function(e) {
         const rect = this.getBoundingClientRect();
