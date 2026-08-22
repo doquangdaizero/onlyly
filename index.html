@@ -3,170 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Douyin Particle Heart</title>
+    <title>3D Particle Bouquet - Douyin Effect</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        canvas {
-            background-color: #000;
-        }
+        body { margin: 0; padding: 0; background-color: #000; overflow: hidden; }
+        canvas { display: block; }
     </style>
 </head>
 <body>
-    <canvas id="heartCanvas" width="640" height="640"></canvas>
-
+    <canvas id="bouquet"></canvas>
     <script>
-        const canvas = document.getElementById('heartCanvas');
+        const canvas = document.getElementById('bouquet');
         const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        const CANVAS_WIDTH = 640;
-        const CANVAS_HEIGHT = 640;
-        const CANVAS_CENTER_X = CANVAS_WIDTH / 2;
-        const CANVAS_CENTER_Y = CANVAS_HEIGHT / 2;
-        const IMAGE_ENLARGE = 11;
-        const HEART_COLOR = "#ffb6c1"; // Màu hồng phấn hạt như Python
+        const particles = [];
+        // Tông màu hoa hồng phấn và đỏ rực như video
+        const colors = ['#ff69b4', '#ffb6c1', '#dc143c', '#fff0f5']; 
+        const green = '#228b22'; // Màu cành xanh
 
-        function heartFunction(t, shrinkRatio = IMAGE_ENLARGE) {
-            let x = 16 * Math.pow(Math.sin(t), 3);
-            let y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-            
-            x *= shrinkRatio;
-            y *= shrinkRatio;
-            x += CANVAS_CENTER_X;
-            y += CANVAS_CENTER_Y;
-            return [x, y];
+        function createParticle(x, y, z, color) {
+            return { x, y, z, color, size: Math.random() * 1.5 + 0.5 };
         }
 
-        function scatterInside(x, y, beta = 0.15) {
-            const ratioX = -beta * Math.log(Math.random());
-            const ratioY = -beta * Math.log(Math.random());
-            const dx = ratioX * (x - CANVAS_CENTER_X);
-            const dy = ratioY * (y - CANVAS_CENTER_Y);
-            return [x - dx, y - dy];
-        }
+        // Hàm tạo các hạt rải rác trong khối cầu (Tán hoa)
+        function addSphere(cx, cy, cz, radius, isFlower, count) {
+            for (let i = 0; i < count; i++) {
+                const u = Math.random(), v = Math.random();
+                const theta = u * 2.0 * Math.PI;
+                const phi = Math.acos(2.0 * v - 1.0);
+                const r = Math.cbrt(Math.random()) * radius;
 
-        function shrink(x, y, ratio) {
-            const force = -1 / Math.pow((Math.pow(x - CANVAS_CENTER_X, 2) + Math.pow(y - CANVAS_CENTER_Y, 2)), 0.6);
-            const dx = ratio * force * (x - CANVAS_CENTER_X);
-            const dy = ratio * force * (y - CANVAS_CENTER_Y);
-            return [x - dx, y - dy];
-        }
-
-        function curve(p) {
-            return (2 * (2 * Math.sin(4 * p))) / (2 * Math.PI);
-        }
-
-        class Heart {
-            constructor(generateFrame = 20) {
-                this.points = [];
-                this.edgeDiffusionPoints = [];
-                this.centerDiffusionPoints = [];
-                this.allPoints = {};
-                this.generateFrame = generateFrame;
-
-                this.build(2000);
-                for (let frame = 0; frame < generateFrame; frame++) {
-                    this.calc(frame);
-                }
-            }
-
-            build(number) {
-                for (let i = 0; i < number; i++) {
-                    const t = Math.random() * 2 * Math.PI;
-                    const [x, y] = heartFunction(t);
-                    this.points.push([x, y]);
-                }
-
-                for (let pt of this.points) {
-                    for (let i = 0; i < 3; i++) {
-                        const [x, y] = scatterInside(pt[0], pt[1], 0.05);
-                        this.edgeDiffusionPoints.push([x, y]);
-                    }
-                }
-
-                for (let i = 0; i < 4000; i++) {
-                    const pt = this.points[Math.floor(Math.random() * this.points.length)];
-                    const [x, y] = scatterInside(pt[0], pt[1], 0.17);
-                    this.centerDiffusionPoints.push([x, y]);
-                }
-            }
-
-            calcPosition(x, y, ratio) {
-                const force = 1 / Math.pow((Math.pow(x - CANVAS_CENTER_X, 2) + Math.pow(y - CANVAS_CENTER_Y, 2)), 0.520);
-                const dx = ratio * force * (x - CANVAS_CENTER_X) + (Math.random() * 2 - 1);
-                const dy = ratio * force * (y - CANVAS_CENTER_Y) + (Math.random() * 2 - 1);
-                return [x - dx, y - dy];
-            }
-
-            calc(generateFrame) {
-                const ratio = 10 * curve((generateFrame / 10) * Math.PI);
-                const haloRadius = Math.floor(4 + 6 * (1 + curve((generateFrame / 10) * Math.PI)));
-                const haloNumber = Math.floor(3000 + 4000 * Math.abs(Math.pow(curve((generateFrame / 10) * Math.PI), 2)));
-                const allPoints = [];
-
-                for (let i = 0; i < haloNumber; i++) {
-                    const t = Math.random() * 2 * Math.PI;
-                    let [x, y] = heartFunction(t, 11.6);
-                    [x, y] = shrink(x, y, haloRadius);
-                    x += Math.floor(Math.random() * 29 - 14);
-                    y += Math.floor(Math.random() * 29 - 14);
-                    const size = Math.random() < 0.33 ? 1 : 2;
-                    allPoints.push([x, y, size]);
-                }
-
-                for (let pt of this.points) {
-                    const [x, y] = this.calcPosition(pt[0], pt[1], ratio);
-                    const size = Math.floor(Math.random() * 3) + 1;
-                    allPoints.push([x, y, size]);
-                }
-
-                for (let pt of this.edgeDiffusionPoints) {
-                    const [x, y] = this.calcPosition(pt[0], pt[1], ratio);
-                    const size = Math.floor(Math.random() * 2) + 1;
-                    allPoints.push([x, y, size]);
-                }
-
-                for (let pt of this.centerDiffusionPoints) {
-                    const [x, y] = this.calcPosition(pt[0], pt[1], ratio);
-                    const size = Math.random() < 0.5 ? 1 : 2;
-                    allPoints.push([x, y, size]);
-                }
-
-                this.allPoints[generateFrame] = allPoints;
-            }
-
-            render(renderFrame) {
-                ctx.fillStyle = HEART_COLOR;
-                const points = this.allPoints[renderFrame % this.generateFrame];
-                for (let pt of points) {
-                    ctx.fillRect(pt[0], pt[1], pt[2], pt[2]);
-                }
+                const x = cx + r * Math.sin(phi) * Math.cos(theta);
+                const y = cy + r * Math.sin(phi) * Math.sin(theta);
+                const z = cz + r * Math.cos(phi);
+                
+                let color = isFlower ? colors[Math.floor(Math.random() * colors.length)] : green;
+                particles.push(createParticle(x, y, z, color));
             }
         }
 
-        const heart = new Heart();
-        let frame = 0;
+        // Hàm tạo hạt cho thân cây
+        function addStem(cx, y1, y2, radius, count) {
+            for(let i = 0; i < count; i++) {
+                const y = y1 + Math.random() * (y2 - y1);
+                const r = Math.random() * radius;
+                const theta = Math.random() * 2 * Math.PI;
+                const x = cx + r * Math.cos(theta);
+                const z = r * Math.sin(theta);
+                particles.push(createParticle(x, y, z, green));
+            }
+        }
 
+        // 1. Dựng khung Bó Hoa 3D
+        addSphere(0, -50, 0, 70, true, 3000); // Tâm lõi hoa
+        addSphere(-50, -30, 35, 55, true, 2000); // Các đóa xung quanh
+        addSphere(50, -30, -35, 55, true, 2000);
+        addSphere(-40, -40, -45, 55, true, 2000);
+        addSphere(40, -40, 45, 55, true, 2000);
+        addSphere(0, -90, 0, 60, true, 2000); // Chóp trên
+        addSphere(0, -50, 0, 130, true, 1000); // Hào quang bụi phấn
+        
+        // 2. Dựng cành
+        addStem(0, 10, 180, 10, 2000);
+
+        let time = 0;
         function draw() {
-            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-            heart.render(frame);
-            frame++;
-            setTimeout(() => {
-                requestAnimationFrame(draw);
-            }, 100);
-        }
+            // Tạo vệt mờ lưu ảnh (Motion Blur)
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            time += 0.02;
+            const angle = time * 0.5; // Tốc độ xoay 3D
+            const beat = 1 + 0.03 * Math.sin(time * 3); // Nhịp đập bồng bềnh
 
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2 + 50);
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                
+                // Thuật toán xoay 3D trục Y
+                let rx = p.x * Math.cos(angle) - p.z * Math.sin(angle);
+                let rz = p.x * Math.sin(angle) + p.z * Math.cos(angle);
+                let ry = p.y;
+
+                // Thêm hiệu ứng nhiễu loạn và đập
+                rx *= beat;
+                ry *= beat;
+                rx += Math.sin(time * 2 + i) * 1.5;
+                ry += Math.cos(time * 2 + i) * 1.5;
+
+                // Chiếu không gian 3D lên mặt phẳng 2D (Perspective Projection)
+                const scale = 600 / (600 + rz);
+                const px = rx * scale;
+                const py = ry * scale;
+
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = Math.min(1, scale * 0.8);
+                ctx.fillRect(px, py, p.size * scale, p.size * scale);
+            }
+            
+            ctx.restore();
+            requestAnimationFrame(draw);
+        }
         draw();
     </script>
 </body>
