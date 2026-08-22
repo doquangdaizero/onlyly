@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💖 Hỏi crush xíu nè</title>
+  <title>💕 Hỏi crush xíu nè</title>
   <style>
     /* ---------- Reset & toàn cục ---------- */
     * {
@@ -13,7 +13,7 @@
     }
     body {
       font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-      background: linear-gradient(145deg, #fff9f0 0%, #ffe8d6 100%);
+      background: linear-gradient(145deg, #fce4ec 0%, #f8bbd0 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -23,12 +23,12 @@
     .container {
       max-width: 550px;
       width: 100%;
-      background: rgba(255, 248, 240, 0.7);
+      background: rgba(255, 245, 247, 0.8);
       backdrop-filter: blur(12px);
       border-radius: 48px;
       padding: 30px 28px 40px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 215, 180, 0.4);
+      box-shadow: 0 25px 50px -12px rgba(233, 30, 99, 0.25);
+      border: 1px solid rgba(244, 143, 177, 0.5);
       transition: all 0.3s ease;
     }
 
@@ -49,27 +49,20 @@
     h1 {
       font-size: 28px;
       font-weight: 700;
-      color: #3d2c1e;
+      color: #4a1e2c;
       margin-bottom: 8px;
       letter-spacing: -0.5px;
     }
     .sub {
       font-size: 16px;
-      color: #7a5e4a;
+      color: #7a4a5a;
       margin-bottom: 24px;
       font-weight: 400;
-      border-left: 4px solid #f9a67a;
+      border-left: 4px solid #f06292;
       padding-left: 14px;
-      background: rgba(249, 166, 122, 0.08);
+      background: rgba(240, 98, 146, 0.08);
       border-radius: 0 12px 12px 0;
       line-height: 1.5;
-    }
-
-    .question {
-      font-size: 20px;
-      font-weight: 600;
-      color: #2f2116;
-      margin-bottom: 18px;
     }
 
     /* ---------- Các lựa chọn dạng thẻ ---------- */
@@ -85,9 +78,9 @@
       border-radius: 60px;
       font-size: 16px;
       font-weight: 500;
-      color: #3d2c1e;
+      color: #4a1e2c;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-      border: 2px solid #f0ddd0;
+      border: 2px solid #f8d7e0;
       cursor: pointer;
       transition: all 0.2s ease;
       user-select: none;
@@ -95,14 +88,14 @@
     }
     .option:hover {
       transform: scale(1.03);
-      border-color: #f9a67a;
-      background: #fff3ea;
+      border-color: #f06292;
+      background: #fce4ec;
     }
     .option.selected {
-      border-color: #e8834a;
-      background: #ffe3d4;
-      box-shadow: 0 8px 18px rgba(232, 131, 74, 0.25);
-      color: #2f2116;
+      border-color: #e91e63;
+      background: #f8bbd0;
+      box-shadow: 0 8px 18px rgba(233, 30, 99, 0.25);
+      color: #4a1e2c;
     }
 
     /* ---------- Nút ---------- */
@@ -113,7 +106,7 @@
       margin-top: 8px;
     }
     button {
-      background: #e8834a;
+      background: #e91e63;
       border: none;
       padding: 14px 32px;
       border-radius: 60px;
@@ -122,13 +115,13 @@
       color: white;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 6px 16px rgba(232, 131, 74, 0.3);
+      box-shadow: 0 6px 16px rgba(233, 30, 99, 0.3);
       letter-spacing: 0.3px;
     }
     button:hover {
-      background: #d9733a;
+      background: #d81b60;
       transform: scale(1.02);
-      box-shadow: 0 10px 24px rgba(232, 131, 74, 0.4);
+      box-shadow: 0 10px 24px rgba(233, 30, 99, 0.4);
     }
     button:disabled {
       opacity: 0.4;
@@ -137,29 +130,29 @@
       box-shadow: none;
     }
     .btn-secondary {
-      background: #d9c6b8;
+      background: #d4a0b0;
       box-shadow: none;
     }
     .btn-secondary:hover {
-      background: #cbb6a6;
+      background: #c48a9c;
     }
 
     /* ---------- Lời nhắn dễ thương ---------- */
     .note {
       margin: 16px 0 20px;
       padding: 16px 20px;
-      background: rgba(255, 235, 220, 0.6);
+      background: rgba(252, 228, 236, 0.7);
       border-radius: 28px;
       font-size: 15px;
-      color: #4f3626;
+      color: #5a2d3a;
       font-style: italic;
       text-align: center;
-      border: 1px dashed #e8c9b5;
+      border: 1px dashed #f48fb1;
       line-height: 1.6;
     }
     .note strong {
       font-style: normal;
-      color: #c76a34;
+      color: #c2185b;
     }
 
     /* ---------- Progress ---------- */
@@ -173,11 +166,11 @@
       width: 10px;
       height: 10px;
       border-radius: 20px;
-      background: #dfccc0;
+      background: #e8c8d0;
       transition: 0.3s;
     }
     .dot.active {
-      background: #e8834a;
+      background: #e91e63;
       width: 28px;
     }
 
@@ -276,9 +269,9 @@
     <div class="note" style="font-size: 18px; border: none; background: transparent;">
       <span style="display: block; font-size: 40px; margin-bottom: 10px;">🥰</span>
       <strong>“Giữ ấm cơ thể và giữ trọn nụ cười nhé”</strong> <br />
-      <span style="font-size: 14px; color: #7a5e4a;">— từ một người thầm thương cậu</span>
+      <span style="font-size: 14px; color: #7a4a5a;">— từ một người thầm thương cậu</span>
     </div>
-    <div class="note" style="background: rgba(232, 131, 74, 0.08);">
+    <div class="note" style="background: rgba(233, 30, 99, 0.08);">
       📌 Tớ đã nhận được câu trả lời của cậu rồi (cảm ơn vì đã chia sẻ).
     </div>
     <div class="btn-group" style="justify-content: center;">
@@ -290,56 +283,11 @@
 <script>
   // ---------- DỮ LIỆU CÂU HỎI (5 câu) ----------
   const questions = [
-    { // q1 – phá băng
-      id: 'q1',
-      choices: [
-        '📖 Cuốn sách đọc mãi không chán',
-        '🎵 Album nghe đi nghe lại cả đời',
-        '🍽️ Ăn tối với 3 người nổi tiếng nào',
-        '🌟 Điều nhỏ nhặt làm ngày cậu tốt hơn',
-        '🎬 Phim tài liệu hay nhất từng xem'
-      ]
-    },
-    { // q2 – sở thích đam mê
-      id: 'q2',
-      choices: [
-        '🔥 Điều đang low-key mê mẩn dạo này',
-        '🗣️ Chủ đề kể 30 phút không nghỉ',
-        '🤯 Sở thích bất thường nhất',
-        '🌟 Kỹ năng muốn học ngay lập tức',
-        '😆 Điều kỳ cục nhất từng tin hồi nhỏ'
-      ]
-    },
-    { // q3 – tính cách
-      id: 'q3',
-      choices: [
-        '👀 Ấn tượng đầu tiên về tớ',
-        '🏠 Hướng nội hay hướng ngoại',
-        '💪 Điều làm cậu thấy là chính mình',
-        '⚡ Điều tiếp năng lượng cho cậu',
-        '🤫 Điều tự hào nhưng ít kể'
-      ]
-    },
-    { // q4 – kỷ niệm
-      id: 'q4',
-      choices: [
-        '🎁 Món quà tuyệt vời nhất từng nhận',
-        '🌙 Kỷ niệm thơ ấu đáng nhớ',
-        '🤐 Câu chuyện chưa kể cho ai',
-        '😳 Khoảnh khắc xấu hổ nhất',
-        '👨‍👩‍👧‍👦 Người quan trọng nhất trong gia đình'
-      ]
-    },
-    { // q5 – tương lai
-      id: 'q5',
-      choices: [
-        '💼 Nếu không làm công việc hiện tại?',
-        '🌍 Quốc gia khao khát đặt chân đến',
-        '💍 Đám cưới nhỏ ấm cúng hay hoành tráng',
-        '⭐ Một điều ước duy nhất',
-        '🗓️ 5 năm nữa cậu ở đâu?'
-      ]
-    }
+    { id: 'q1', choices: ['📖 Cuốn sách đọc mãi không chán', '🎵 Album nghe đi nghe lại cả đời', '🍽️ Ăn tối với 3 người nổi tiếng nào', '🌟 Điều nhỏ nhặt làm ngày cậu tốt hơn', '🎬 Phim tài liệu hay nhất từng xem'] },
+    { id: 'q2', choices: ['🔥 Điều đang low-key mê mẩn dạo này', '🗣️ Chủ đề kể 30 phút không nghỉ', '🤯 Sở thích bất thường nhất', '🌟 Kỹ năng muốn học ngay lập tức', '😆 Điều kỳ cục nhất từng tin hồi nhỏ'] },
+    { id: 'q3', choices: ['👀 Ấn tượng đầu tiên về tớ', '🏠 Hướng nội hay hướng ngoại', '💪 Điều làm cậu thấy là chính mình', '⚡ Điều tiếp năng lượng cho cậu', '🤫 Điều tự hào nhưng ít kể'] },
+    { id: 'q4', choices: ['🎁 Món quà tuyệt vời nhất từng nhận', '🌙 Kỷ niệm thơ ấu đáng nhớ', '🤐 Câu chuyện chưa kể cho ai', '😳 Khoảnh khắc xấu hổ nhất', '👨‍👩‍👧‍👦 Người quan trọng nhất trong gia đình'] },
+    { id: 'q5', choices: ['💼 Nếu không làm công việc hiện tại?', '🌍 Quốc gia khao khát đặt chân đến', '💍 Đám cưới nhỏ ấm cúng hay hoành tráng', '⭐ Một điều ước duy nhất', '🗓️ 5 năm nữa cậu ở đâu?'] }
   ];
 
   // ---------- STATE ----------
@@ -347,12 +295,12 @@
   const totalSteps = 7; // 0(chào) + 5 câu hỏi + 1(kết thúc) = 7
   const answers = {};
 
-  // ---------- FORMPREE ENDPOINT (THAY LINK CỦA BẠN VÀO ĐÂY) ----------
-  const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';  // 👈 SỬA LẠI
+  // ---------- FORMPREE ENDPOINT (ĐÃ GẮN LINK CỦA MÀY) ----------
+  const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
 
   // ---------- RENDER OPTIONS ----------
   function renderOptions(stepIndex) {
-    const qData = questions[stepIndex - 1]; // step 0 là chào, nên step 1 -> questions[0]
+    const qData = questions[stepIndex - 1];
     if (!qData) return;
     const container = document.getElementById(qData.id);
     if (!container) return;
@@ -405,7 +353,6 @@
   }
 
   function nextStep() {
-    // Nếu đang ở step 5 (câu hỏi cuối) thì gửi dữ liệu
     if (currentStep === 5) {
       submitAndFinish();
     } else if (currentStep < totalSteps - 1) {
@@ -420,23 +367,15 @@
   // ---------- GỬI DỮ LIỆU LÊN FORMPREE ----------
   function submitAndFinish() {
     const btn = document.querySelector('.step.active .btn-group button:last-child');
-    if (btn) btn.disabled = true; // chống spam
+    if (btn) btn.disabled = true;
 
-    // Gom câu trả lời
-    const labels = [
-      '💬 Phá băng',
-      '🎯 Sở thích & đam mê',
-      '🧠 Tính cách & giá trị',
-      '📖 Kỷ niệm & quá khứ',
-      '🚀 Tương lai & ước mơ'
-    ];
+    const labels = ['💬 Phá băng', '🎯 Sở thích & đam mê', '🧠 Tính cách & giá trị', '📖 Kỷ niệm & quá khứ', '🚀 Tương lai & ước mơ'];
     let message = '💌 Câu trả lời từ crush:\n\n';
     questions.forEach((q, idx) => {
       const items = answers[q.id] || [];
       message += `${labels[idx]}: ${items.length ? items.join(', ') : 'Không chọn'}\n`;
     });
 
-    // Gửi POST
     fetch(FORMSPREE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -448,13 +387,13 @@
     })
     .then(response => {
       if (response.ok) {
-        showStep(6); // chuyển sang bước cảm ơn
+        showStep(6);
       } else {
         alert('❌ Có lỗi gửi dữ liệu, nhưng câu trả lời vẫn được lưu tạm. Thử lại sau nhé!');
         if (btn) btn.disabled = false;
       }
     })
-    .catch(err => {
+    .catch(() => {
       alert('⚠️ Không kết nối được, nhưng đừng lo – hãy chụp màn hình câu trả lời gửi tớ nhé!');
       if (btn) btn.disabled = false;
     });
