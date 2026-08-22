@@ -1,94 +1,100 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💕 Hỏi crush xíu nè</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Một vài câu hỏi vui ✨</title>
   <style>
-    /* ----- Reset & base ----- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ---------- Reset & nền ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-      background: linear-gradient(145deg, #fce4ec, #f8bbd0);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
+      background: linear-gradient(135deg, #e0f2fe 0%, #fae8ff 40%, #fef3c7 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      overflow-x: hidden;
       position: relative;
+      overflow-x: hidden;
     }
 
-    /* ----- Nền trái tim bay ----- */
-    .hearts-bg {
+    /* ---------- Bong bóng bay (hiệu ứng nền) ---------- */
+    .bubble {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(2px);
+      animation: floatUp linear infinite;
       pointer-events: none;
-      overflow: hidden;
       z-index: 0;
     }
-    .heart {
-      position: absolute;
-      font-size: 1.2rem;
-      color: rgba(233, 30, 99, 0.2);
-      animation: floatHeart linear infinite;
-      user-select: none;
-    }
-    @keyframes floatHeart {
-      0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.2) rotate(720deg); opacity: 0; }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
 
-    /* ----- Container chính ----- */
+    /* ---------- Container chính ---------- */
     .container {
+      max-width: 560px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      border-radius: 56px;
+      padding: 32px 28px 40px;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.5);
       position: relative;
       z-index: 1;
-      max-width: 550px;
-      width: 100%;
-      background: rgba(255, 245, 247, 0.85);
-      backdrop-filter: blur(12px);
-      border-radius: 48px;
-      padding: 30px 28px 40px;
-      box-shadow: 0 25px 50px -12px rgba(233, 30, 99, 0.3);
-      border: 1px solid rgba(244, 143, 177, 0.5);
-      transition: box-shadow 0.3s ease;
+      transition: all 0.3s ease;
     }
 
-    /* ----- Các step với hiệu ứng slide + scale ----- */
+    /* ---------- Hiệu ứng bước ---------- */
     .step {
       display: none;
-      animation: stepIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .step.active {
       display: block;
     }
-    @keyframes stepIn {
-      0% { opacity: 0; transform: scale(0.9) translateY(30px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(30px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* ---------- Tiêu đề & phụ đề ---------- */
     h1 {
       font-size: 28px;
       font-weight: 700;
-      color: #4a1e2c;
-      margin-bottom: 8px;
-      letter-spacing: -0.5px;
+      color: #1e293b;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
     }
     .sub {
-      font-size: 16px;
-      color: #7a4a5a;
+      font-size: 15px;
+      color: #64748b;
       margin-bottom: 24px;
       font-weight: 400;
-      border-left: 4px solid #f06292;
-      padding-left: 14px;
-      background: rgba(240, 98, 146, 0.08);
-      border-radius: 0 12px 12px 0;
+      padding-left: 16px;
+      border-left: 4px solid #94a3b8;
       line-height: 1.5;
+      background: rgba(148, 163, 184, 0.06);
+      border-radius: 0 12px 12px 0;
     }
 
-    /* ----- Các option với hiệu ứng pop và glow ----- */
+    /* ---------- Tuỳ chỉnh màu sắc cho từng step ---------- */
+    .step[data-step="0"] .sub { border-color: #818cf8; }
+    .step[data-step="1"] .sub { border-color: #f472b6; }
+    .step[data-step="2"] .sub { border-color: #34d399; }
+    .step[data-step="3"] .sub { border-color: #fbbf24; }
+    .step[data-step="4"] .sub { border-color: #a78bfa; }
+    .step[data-step="5"] .sub { border-color: #fb923c; }
+    .step[data-step="6"] .sub { border-color: #94a3b8; }
+
+    /* ---------- Option (thẻ chọn) ---------- */
     .options {
       display: flex;
       flex-wrap: wrap;
@@ -99,11 +105,11 @@
       background: white;
       padding: 12px 22px;
       border-radius: 60px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
-      color: #4a1e2c;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-      border: 2px solid #f8d7e0;
+      color: #1e293b;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 2px solid #e2e8f0;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
       user-select: none;
@@ -111,312 +117,239 @@
       position: relative;
     }
     .option:hover {
-      transform: scale(1.05) translateY(-2px);
-      border-color: #f06292;
-      background: #fce4ec;
-      box-shadow: 0 8px 20px rgba(233, 30, 99, 0.15);
+      transform: scale(1.04) rotate(-1deg);
+      border-color: #94a3b8;
+      background: #f8fafc;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     }
     .option.selected {
-      border-color: #e91e63;
-      background: #f8bbd0;
-      box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
-      color: #4a1e2c;
+      border-color: #6366f1;
+      background: #e0e7ff;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
       transform: scale(1.02);
-      animation: popSelected 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      color: #1e293b;
+      font-weight: 600;
     }
-    @keyframes popSelected {
-      0% { transform: scale(0.8); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1.02); }
-    }
-    /* hiệu ứng lấp lánh nhẹ cho option đã chọn */
     .option.selected::after {
-      content: '✨';
-      position: absolute;
-      right: -8px;
-      top: -8px;
-      font-size: 14px;
-      animation: sparkle 1s infinite alternate;
-    }
-    @keyframes sparkle {
-      0% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
-      100% { opacity: 1; transform: scale(1.2) rotate(20deg); }
+      content: " ✓";
+      color: #6366f1;
+      font-weight: 700;
     }
 
-    /* ----- Nút bấm có hiệu ứng pulse và ripple ----- */
+    /* ---------- Nút ---------- */
     .btn-group {
       display: flex;
       justify-content: flex-end;
       gap: 12px;
       margin-top: 8px;
-      flex-wrap: wrap;
     }
     button {
-      background: #e91e63;
+      background: #6366f1;
       border: none;
       padding: 14px 32px;
       border-radius: 60px;
       font-weight: 600;
-      font-size: 17px;
+      font-size: 16px;
       color: white;
       cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 6px 16px rgba(233, 30, 99, 0.3);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 6px 16px rgba(99, 102, 241, 0.25);
       letter-spacing: 0.3px;
-      position: relative;
-      overflow: hidden;
     }
-    button:hover:not(:disabled) {
-      background: #d81b60;
-      transform: scale(1.04);
-      box-shadow: 0 10px 28px rgba(233, 30, 99, 0.4);
-    }
-    button:active:not(:disabled) {
-      transform: scale(0.96);
+    button:hover {
+      background: #4f46e5;
+      transform: scale(1.03);
+      box-shadow: 0 10px 28px rgba(99, 102, 241, 0.35);
     }
     button:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       pointer-events: none;
       transform: none;
       box-shadow: none;
     }
-    /* Hiệu ứng ripple khi click */
-    button .ripple {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
-      transform: scale(0);
-      animation: rippleAnim 0.6s linear;
-      pointer-events: none;
-    }
-    @keyframes rippleAnim {
-      to { transform: scale(4); opacity: 0; }
-    }
-    /* Hiệu ứng pulse nhẹ cho nút chính */
-    .btn-primary {
-      animation: pulseBtn 2s infinite;
-    }
-    @keyframes pulseBtn {
-      0% { box-shadow: 0 0 0 0 rgba(233,30,99,0.4); }
-      70% { box-shadow: 0 0 0 12px rgba(233,30,99,0); }
-      100% { box-shadow: 0 0 0 0 rgba(233,30,99,0); }
-    }
-
     .btn-secondary {
-      background: #d4a0b0;
+      background: #cbd5e1;
       box-shadow: none;
+      color: #1e293b;
     }
-    .btn-secondary:hover:not(:disabled) {
-      background: #c48a9c;
-      transform: scale(1.04);
-      box-shadow: 0 6px 16px rgba(180, 100, 120, 0.3);
+    .btn-secondary:hover {
+      background: #b0bed0;
+      transform: scale(1.02);
     }
 
-    /* ----- Lời nhắn dễ thương ----- */
+    /* ---------- Lời nhắn (không lãng mạn) ---------- */
     .note {
       margin: 16px 0 20px;
-      padding: 16px 20px;
-      background: rgba(252, 228, 236, 0.7);
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.5);
       border-radius: 28px;
-      font-size: 15px;
-      color: #5a2d3a;
-      font-style: italic;
+      font-size: 14px;
+      color: #334155;
       text-align: center;
-      border: 1px dashed #f48fb1;
+      border: 1px solid #e2e8f0;
       line-height: 1.6;
-      transition: all 0.3s ease;
+      font-style: normal;
     }
     .note strong {
-      font-style: normal;
-      color: #c2185b;
+      color: #4f46e5;
+      font-weight: 600;
     }
 
-    /* ----- Dots progress ----- */
+    /* ---------- Dấu chấm tiến trình ---------- */
     .dots {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin: 24px 0 12px;
+      margin: 20px 0 16px;
     }
     .dot {
       width: 10px;
       height: 10px;
       border-radius: 20px;
-      background: #e8c8d0;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
+      background: #d1d5db;
+      transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .dot.active {
-      background: #e91e63;
+      background: #6366f1;
       width: 28px;
-      box-shadow: 0 0 12px rgba(233,30,99,0.4);
-    }
-    .dot.active::after {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 20px;
-      border: 2px solid rgba(233,30,99,0.2);
-      animation: dotPulse 1s infinite;
-    }
-    @keyframes dotPulse {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.8); opacity: 0; }
     }
 
-    /* ----- Confetti canvas ----- */
-    #confetti-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ----- Responsive ----- */
+    /* ---------- Responsive ---------- */
     @media (max-width: 480px) {
-      .container { padding: 24px 18px 32px; }
-      h1 { font-size: 24px; }
-      .option { padding: 10px 18px; font-size: 15px; }
-      button { padding: 12px 24px; font-size: 15px; }
+      .container { padding: 24px 16px 30px; }
+      h1 { font-size: 22px; }
+      .option { padding: 10px 16px; font-size: 14px; }
+      button { padding: 12px 22px; font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Nền trái tim bay -->
-<div class="hearts-bg" id="heartsBg"></div>
+<!-- Bong bóng nền (tự động tạo bằng JS) -->
+<div id="bubble-container"></div>
 
-<!-- Confetti canvas -->
-<canvas id="confetti-canvas"></canvas>
-
-<!-- Container chính -->
 <div class="container" id="app">
+  <!-- Dấu chấm tiến trình -->
   <div class="dots" id="dots"></div>
 
-  <!-- Step 0 -->
+  <!-- Step 0: Chào hỏi -->
   <div class="step active" data-step="0">
-    <h1>🌸 Nè, cho tớ hỏi xíu</h1>
-    <div class="sub">✨ Mấy câu này chỉ để tớ hiểu cậu hơn thôi</div>
-    <div class="note">
-      💬 <strong>“Hôm nay cậu có gì vui không?”</strong><br>
-      (không có thì… hãy để tớ làm niềm vui nha)
-    </div>
+    <h1>✨ Nè, cho hỏi xíu</h1>
+    <div class="sub">Mấy câu này chỉ để hiểu bạn hơn thôi</div>
+    <div class="note">💬 Hôm nay có điều gì thú vị không? <br />(nếu không thì… cũng không sao, mình cùng tạo ra nhé)</div>
     <div class="btn-group">
-      <button class="btn-primary" onclick="nextStep()">Bắt đầu nào →</button>
+      <button onclick="nextStep()">Bắt đầu nào →</button>
     </div>
   </div>
 
-  <!-- Step 1 -->
+  <!-- Step 1 đến 5: các câu hỏi -->
   <div class="step" data-step="1">
-    <h1>💬 Câu hỏi phá băng</h1>
-    <div class="sub">Chọn một vài điều cậu thích nhé</div>
+    <h1>💬 Chủ đề bất ngờ</h1>
+    <div class="sub">Chọn những điều bạn thấy thú vị</div>
     <div class="options" id="q1"></div>
-    <div class="note">🌟 Tớ muốn biết những điều nhỏ nhặt làm cậu vui</div>
+    <div class="note">🎯 Mình muốn biết những điều nhỏ nhặt làm bạn cười</div>
     <div class="btn-group">
       <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next1" class="btn-primary" disabled onclick="nextStep()">Tiếp theo →</button>
+      <button id="next1" disabled onclick="nextStep()">Tiếp theo →</button>
     </div>
   </div>
 
-  <!-- Step 2 -->
   <div class="step" data-step="2">
-    <h1>🎯 Sở thích & đam mê</h1>
-    <div class="sub">Cậu đang mê mẩn điều gì?</div>
+    <h1>🎧 Đam mê & sở thích</h1>
+    <div class="sub">Bạn đang mê mẩn điều gì dạo này?</div>
     <div class="options" id="q2"></div>
-    <div class="note">🔥 Tớ cũng muốn biết cậu đam mê gì để cùng chia sẻ</div>
+    <div class="note">🔥 Cùng chia sẻ đam mê để biết thêm về nhau nhé</div>
     <div class="btn-group">
       <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next2" class="btn-primary" disabled onclick="nextStep()">Tiếp theo →</button>
+      <button id="next2" disabled onclick="nextStep()">Tiếp theo →</button>
     </div>
   </div>
 
-  <!-- Step 3 -->
   <div class="step" data-step="3">
-    <h1>🧠 Tính cách & giá trị</h1>
-    <div class="sub">Điều gì làm nên con người cậu?</div>
+    <h1>🧠 Tính cách riêng</h1>
+    <div class="sub">Điều gì tạo nên con người bạn?</div>
     <div class="options" id="q3"></div>
-    <div class="note">💎 Tớ trân trọng con người thật của cậu</div>
+    <div class="note">🌟 Mình thích con người thật của bạn, cứ là chính mình</div>
     <div class="btn-group">
       <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next3" class="btn-primary" disabled onclick="nextStep()">Tiếp theo →</button>
+      <button id="next3" disabled onclick="nextStep()">Tiếp theo →</button>
     </div>
   </div>
 
-  <!-- Step 4 -->
   <div class="step" data-step="4">
-    <h1>📖 Kỷ niệm & quá khứ</h1>
-    <div class="sub">Những câu chuyện đã làm nên cậu</div>
+    <h1>📖 Kỷ niệm nhỏ</h1>
+    <div class="sub">Những câu chuyện đã làm nên bạn</div>
     <div class="options" id="q4"></div>
-    <div class="note">🌙 Tớ muốn nghe câu chuyện của cậu</div>
+    <div class="note">🌙 Mình thích nghe những câu chuyện của bạn</div>
     <div class="btn-group">
       <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next4" class="btn-primary" disabled onclick="nextStep()">Tiếp theo →</button>
+      <button id="next4" disabled onclick="nextStep()">Tiếp theo →</button>
     </div>
   </div>
 
-  <!-- Step 5 -->
   <div class="step" data-step="5">
-    <h1>🚀 Tương lai & ước mơ</h1>
-    <div class="sub">Cậu thấy mình ở đâu trong 5 năm nữa?</div>
+    <h1>🚀 Tương lai gần</h1>
+    <div class="sub">5 năm tới bạn thấy mình ở đâu?</div>
     <div class="options" id="q5"></div>
-    <div class="note">✨ Tớ tin cậu sẽ làm được những điều tuyệt vời</div>
+    <div class="note">✨ Mình tin bạn sẽ làm được nhiều điều thú vị</div>
     <div class="btn-group">
       <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next5" class="btn-primary" disabled onclick="nextStep()">🎉 Xem kết quả</button>
+      <button id="next5" disabled onclick="nextStep()">🎉 Xem kết quả</button>
     </div>
   </div>
 
   <!-- Step 6: Cảm ơn -->
   <div class="step" data-step="6">
-    <h1>💖 Cảm ơn cậu nha!</h1>
-    <div class="sub">Tớ đã biết thêm rất nhiều về cậu đó</div>
-    <div class="note" style="font-size: 18px; border: none; background: transparent;">
-      <span style="display: block; font-size: 40px; margin-bottom: 10px;">🥰</span>
-      <strong>“Giữ ấm cơ thể và giữ trọn nụ cười nhé”</strong><br>
-      <span style="font-size: 14px; color: #7a4a5a;">— từ một người thầm thương cậu</span>
+    <h1>🎉 Cảm ơn bạn nha!</h1>
+    <div class="sub">Mình đã biết thêm nhiều điều về bạn</div>
+    <div class="note" style="font-size: 18px; border: none; background: transparent; padding: 10px 0;">
+      <span style="display: block; font-size: 48px; margin-bottom: 8px;">😊</span>
+      <strong>“Giữ mãi nụ cười và năng lượng tích cực nhé”</strong>
     </div>
-    <div class="note" style="background: rgba(233, 30, 99, 0.08);">
-      📌 Tớ đã nhận được câu trả lời của cậu rồi (cảm ơn vì đã chia sẻ).
+    <div class="note" style="background: rgba(99, 102, 241, 0.06); border-color: #c7d2fe;">
+      📌 Mình đã nhận được câu trả lời của bạn rồi. Cảm ơn vì đã chia sẻ!
     </div>
     <div class="btn-group" style="justify-content: center;">
-      <button class="btn-secondary" onclick="resetAll()">🔄 Làm lại cho vui</button>
+      <button onclick="resetAll()">🔄 Làm lại cho vui</button>
     </div>
   </div>
 </div>
 
 <script>
-  // ---------- DỮ LIỆU CÂU HỎI ----------
+  // ---------- TẠO BONG BÓNG NỀN ----------
+  (function createBubbles() {
+    const container = document.getElementById('bubble-container');
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      const size = 20 + Math.random() * 70;
+      bubble.style.width = size + 'px';
+      bubble.style.height = size + 'px';
+      bubble.style.left = Math.random() * 100 + '%';
+      bubble.style.animationDuration = 12 + Math.random() * 20 + 's';
+      bubble.style.animationDelay = Math.random() * 15 + 's';
+      bubble.style.background = `rgba(255,255,255,${0.15 + Math.random() * 0.25})`;
+      container.appendChild(bubble);
+    }
+  })();
+
+  // ---------- DỮ LIỆU CÂU HỎI (5 câu) ----------
   const questions = [
-    { id: 'q1', choices: ['📖 Sách đọc mãi không chán', '🎵 Album nghe đi nghe lại', '🍽️ Ăn tối với 3 người nổi tiếng', '🌟 Điều nhỏ làm ngày vui hơn', '🎬 Phim tài liệu hay nhất'] },
-    { id: 'q2', choices: ['🔥 Điều low-key mê mẩn', '🗣️ Chủ đề kể 30 phút không nghỉ', '🤯 Sở thích bất thường nhất', '🌟 Kỹ năng muốn học ngay', '😆 Điều kỳ cục từng tin hồi nhỏ'] },
-    { id: 'q3', choices: ['👀 Ấn tượng đầu tiên về tớ', '🏠 Hướng nội hay ngoại', '💪 Điều làm cậu là chính mình', '⚡ Điều tiếp năng lượng', '🤫 Điều tự hào nhưng ít kể'] },
-    { id: 'q4', choices: ['🎁 Món quà tuyệt vời nhất', '🌙 Kỷ niệm thơ ấu đáng nhớ', '🤐 Câu chuyện chưa kể', '😳 Khoảnh khắc xấu hổ nhất', '👨‍👩‍👧‍👦 Người quan trọng nhất gia đình'] },
-    { id: 'q5', choices: ['💼 Nếu không làm công việc hiện tại?', '🌍 Quốc gia khao khát đến', '💍 Đám cưới nhỏ hay hoành tráng', '⭐ Một điều ước duy nhất', '🗓️ 5 năm nữa cậu ở đâu?'] }
+    { id: 'q1', choices: ['📖 Sách hay đọc mãi', '🎵 Album nghe không chán', '🍽️ Bữa tối mơ ước', '🌟 Điều nhỏ làm vui', '🎬 Phim tài liệu ấn tượng'] },
+    { id: 'q2', choices: ['🔥 Đam mê thầm kín', '🗣️ Chủ đề nói 30p', '🤯 Sở thích lạ nhất', '🌟 Kỹ năng muốn học', '😆 Điều kỳ cục hồi nhỏ'] },
+    { id: 'q3', choices: ['👀 Ấn tượng đầu tiên về mình', '🏠 Hướng nội/ngoại', '💪 Điều làm bạn là bạn', '⚡ Năng lượng từ đâu', '🤫 Điều tự hào ít kể'] },
+    { id: 'q4', choices: ['🎁 Quà tặng đáng nhớ', '🌙 Kỷ niệm thơ ấu', '🤐 Chuyện chưa kể ai', '😳 Khoảnh khắc ngại nhất', '👨‍👩‍👧‍👦 Người thân yêu nhất'] },
+    { id: 'q5', choices: ['💼 Nghề mơ ước', '🌍 Nơi muốn đến', '💍 Đám cưới mơ ước', '⭐ Một điều ước', '🗓️ 5 năm tới'] }
   ];
 
   // ---------- STATE ----------
   let currentStep = 0;
   const totalSteps = 7;
   const answers = {};
-  const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
 
-  // ---------- TẠO NỀN TRÁI TIM ----------
-  function createHearts() {
-    const container = document.getElementById('heartsBg');
-    const emojis = ['❤️', '💕', '💖', '💗', '💝', '🌸', '🌺'];
-    for (let i = 0; i < 25; i++) {
-      const span = document.createElement('span');
-      span.className = 'heart';
-      span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      span.style.left = Math.random() * 100 + '%';
-      span.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
-      span.style.animationDuration = (15 + Math.random() * 25) + 's';
-      span.style.animationDelay = (Math.random() * 20) + 's';
-      container.appendChild(span);
-    }
-  }
-  createHearts();
+  // ---------- FORMPREE ENDPOINT (của bạn) ----------
+  const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
 
   // ---------- RENDER OPTIONS ----------
   function renderOptions(stepIndex) {
@@ -442,10 +375,6 @@
         } else {
           arr.push(val);
           this.classList.add('selected');
-          // thêm hiệu ứng pop nhẹ nếu chọn mới
-          this.style.animation = 'none';
-          this.offsetHeight; // trigger reflow
-          this.style.animation = 'popSelected 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
         }
         answers[qData.id] = arr;
         const btn = document.getElementById(`next${stepIndex}`);
@@ -465,13 +394,7 @@
   function showStep(index) {
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
     const target = document.querySelector(`.step[data-step="${index}"]`);
-    if (target) {
-      target.classList.add('active');
-      // Reset animation để chạy lại mỗi lần hiển thị
-      target.style.animation = 'none';
-      target.offsetHeight;
-      target.style.animation = 'stepIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
-    }
+    if (target) target.classList.add('active');
 
     document.querySelectorAll('.dot').forEach((dot, i) => {
       dot.classList.toggle('active', i === index);
@@ -494,82 +417,13 @@
     if (currentStep > 0) showStep(currentStep - 1);
   }
 
-  // ---------- RIPPLE EFFECT CHO NÚT ----------
-  document.addEventListener('click', function(e) {
-    const btn = e.target.closest('button');
-    if (!btn || btn.disabled) return;
-    const rect = btn.getBoundingClientRect();
-    const ripple = document.createElement('span');
-    ripple.className = 'ripple';
-    const size = Math.max(rect.width, rect.height);
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
-    ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
-    btn.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 600);
-  });
-
-  // ---------- CONFETTI ----------
-  function startConfetti() {
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const colors = ['#e91e63', '#f06292', '#f8bbd0', '#f48fb1', '#ff80ab', '#ff4081'];
-    const particles = [];
-    for (let i = 0; i < 150; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height - canvas.height,
-        w: 6 + Math.random() * 8,
-        h: 4 + Math.random() * 6,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        vx: (Math.random() - 0.5) * 6,
-        vy: 2 + Math.random() * 4,
-        rot: Math.random() * 360,
-        rotSpeed: (Math.random() - 0.5) * 8,
-        opacity: 0.8 + Math.random() * 0.2
-      });
-    }
-    let frame = 0;
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let active = false;
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.04;
-        p.rot += p.rotSpeed;
-        if (p.y < canvas.height + 20) active = true;
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot * Math.PI / 180);
-        ctx.globalAlpha = p.opacity * (1 - Math.max(0, (p.y - canvas.height + 50) / 50));
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-        ctx.restore();
-      });
-      if (active || frame < 200) {
-        requestAnimationFrame(animate);
-        frame++;
-      } else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-    animate();
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  }
-
   // ---------- GỬI DỮ LIỆU ----------
   function submitAndFinish() {
     const btn = document.querySelector('.step.active .btn-group button:last-child');
     if (btn) btn.disabled = true;
 
-    const labels = ['💬 Phá băng', '🎯 Sở thích & đam mê', '🧠 Tính cách & giá trị', '📖 Kỷ niệm & quá khứ', '🚀 Tương lai & ước mơ'];
-    let message = '💌 Câu trả lời từ crush:\n\n';
+    const labels = ['💬 Chủ đề bất ngờ', '🎧 Đam mê & sở thích', '🧠 Tính cách riêng', '📖 Kỷ niệm nhỏ', '🚀 Tương lai gần'];
+    let message = '📝 Câu trả lời từ bạn:\n\n';
     questions.forEach((q, idx) => {
       const items = answers[q.id] || [];
       message += `${labels[idx]}: ${items.length ? items.join(', ') : 'Không chọn'}\n`;
@@ -579,22 +433,21 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        _subject: '📝 Kết quả khảo sát crush!',
+        _subject: '📝 Kết quả khảo sát thú vị',
         message: message,
         timestamp: new Date().toLocaleString('vi-VN')
       })
     })
-    .then(res => {
-      if (res.ok) {
+    .then(response => {
+      if (response.ok) {
         showStep(6);
-        startConfetti(); // Bắn confetti khi thành công
       } else {
-        alert('❌ Có lỗi gửi dữ liệu, nhưng câu trả lời vẫn được lưu tạm. Thử lại sau nhé!');
+        alert('❌ Có lỗi gửi dữ liệu. Thử lại sau nhé!');
         if (btn) btn.disabled = false;
       }
     })
     .catch(() => {
-      alert('⚠️ Không kết nối được, nhưng đừng lo – hãy chụp màn hình câu trả lời gửi tớ nhé!');
+      alert('⚠️ Không kết nối được. Nhưng bạn vẫn có thể chụp màn hình gửi mình!');
       if (btn) btn.disabled = false;
     });
   }
@@ -608,13 +461,9 @@
       if (btn) btn.disabled = true;
     }
     showStep(0);
-    // Xóa confetti nếu đang có
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
-  // ---------- TẠO DOTS ----------
+  // ---------- DOTS ----------
   function createDots() {
     const container = document.getElementById('dots');
     container.innerHTML = '';
