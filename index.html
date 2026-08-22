@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💫 Chút chuyện với cậu</title>
+  <title>💗 Chút chuyện với cậu</title>
   <style>
-    /* ---------- RESET & FONT ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -18,13 +17,13 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
-      background: linear-gradient(145deg, #fff5e6 0%, #ffe0d4 100%);
-      overflow-x: hidden;
+      background: linear-gradient(145deg, #fce4ec 0%, #fbe9e7 40%, #fff3e0 100%);
+      overflow: hidden;
       position: relative;
     }
 
-    /* ---------- NỀN PARTICLES (bong bóng bay) ---------- */
-    #particles-canvas {
+    /* ----- Các lớp hiệu ứng nền ----- */
+    #bg-canvas {
       position: fixed;
       top: 0;
       left: 0;
@@ -33,156 +32,148 @@
       pointer-events: none;
       z-index: 0;
     }
-
-    /* ---------- HIỆU ỨNG ÁNH SÁNG NỀN ---------- */
-    .glow-bg {
+    .glow {
       position: fixed;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.3;
+      filter: blur(90px);
+      opacity: 0.25;
       z-index: 0;
       pointer-events: none;
     }
-    .glow-1 {
-      width: 400px;
-      height: 400px;
-      top: -100px;
+    .g1 {
+      width: 500px;
+      height: 500px;
+      top: -150px;
       left: -100px;
-      background: #ffd5b3;
+      background: #f8bbd0;
     }
-    .glow-2 {
+    .g2 {
       width: 500px;
       height: 500px;
       bottom: -150px;
-      right: -150px;
-      background: #ffb08c;
+      right: -100px;
+      background: #ffccbc;
     }
-    .glow-3 {
+    .g3 {
       width: 300px;
       height: 300px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #ffe3b0;
+      top: 40%;
+      left: 30%;
+      background: #ffe0b2;
       opacity: 0.2;
     }
 
-    /* ---------- CONTAINER CHÍNH ---------- */
+    /* ----- Container ----- */
     .container {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       max-width: 560px;
       width: 100%;
-      background: rgba(255, 250, 245, 0.75);
-      backdrop-filter: blur(16px);
-      border-radius: 56px;
-      padding: 32px 28px 40px;
-      box-shadow: 0 30px 60px -20px rgba(160, 100, 70, 0.2),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 215, 190, 0.5);
-      transition: all 0.4s ease;
+      background: rgba(255, 250, 245, 0.7);
+      backdrop-filter: blur(14px);
+      border-radius: 60px;
+      padding: 30px 26px 38px;
+      box-shadow: 0 30px 60px -20px rgba(180, 80, 80, 0.25),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 200, 190, 0.4);
     }
 
-    /* ---------- DOTS TIẾN TRÌNH ---------- */
+    /* ----- Dots ----- */
     .dots {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 20px;
-      background: #f0cfc0;
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      background: #efd0ca;
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .dot.active {
-      width: 32px;
-      background: #e07c4a;
-      box-shadow: 0 0 16px rgba(224, 124, 74, 0.3);
+      width: 34px;
+      background: #e86f6f;
+      box-shadow: 0 0 20px rgba(232, 111, 111, 0.4);
     }
     .dot.passed {
-      background: #f0b090;
+      background: #f5a0a0;
     }
 
-    /* ---------- CÁC BƯỚC ---------- */
+    /* ----- Steps ----- */
     .step {
       display: none;
-      animation: fadeSlide 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      animation: fadeIn 0.7s cubic-bezier(0.23, 1, 0.32, 1);
     }
     .step.active {
       display: block;
     }
-
-    @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateY(30px) scale(0.96); }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px) scale(0.95); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ---------- TIÊU ĐỀ ---------- */
+    /* ----- Typography ----- */
     h1 {
       font-size: 28px;
-      font-weight: 600;
-      color: #4d3226;
+      font-weight: 700;
+      color: #4a2a2a;
+      margin-bottom: 4px;
       letter-spacing: -0.3px;
-      margin-bottom: 6px;
-      background: linear-gradient(135deg, #c06a3e, #e08a5a);
+      background: linear-gradient(135deg, #d45a5a, #e88a6a);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .sub {
       font-size: 16px;
-      color: #8a6a5a;
-      margin-bottom: 22px;
+      color: #7a5a5a;
+      margin-bottom: 20px;
       padding-left: 16px;
-      border-left: 3px solid #ecc0aa;
+      border-left: 4px solid #f5b0a0;
       font-weight: 400;
       line-height: 1.5;
     }
-
-    /* ---------- LỜI NHẮN (note) ---------- */
     .note {
-      margin: 16px 0 22px;
+      margin: 14px 0 20px;
       padding: 14px 20px;
-      background: rgba(235, 200, 180, 0.2);
+      background: rgba(245, 200, 190, 0.15);
       backdrop-filter: blur(4px);
-      border-radius: 30px;
+      border-radius: 32px;
       font-size: 15px;
-      color: #5a4034;
+      color: #5a3e3e;
       text-align: center;
-      border: 1px solid rgba(220, 180, 160, 0.3);
+      border: 1px solid rgba(235, 180, 170, 0.3);
       line-height: 1.7;
       font-weight: 400;
     }
     .note strong {
+      color: #d45a5a;
       font-weight: 600;
-      color: #d07a4a;
     }
 
-    /* ---------- CÁC LỰA CHỌN ---------- */
+    /* ----- Options (thẻ chọn) ----- */
     .options {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
     @media (max-width: 480px) {
       .options {
         grid-template-columns: 1fr;
       }
     }
-
     .option {
-      background: rgba(255, 250, 245, 0.7);
+      background: rgba(255, 248, 245, 0.7);
       backdrop-filter: blur(4px);
       padding: 14px 16px;
-      border-radius: 20px;
+      border-radius: 24px;
       font-size: 15px;
       font-weight: 500;
-      color: #4d3226;
-      border: 1.5px solid rgba(210, 175, 155, 0.35);
+      color: #4a2a2a;
+      border: 1.5px solid rgba(210, 160, 150, 0.3);
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       display: flex;
@@ -190,25 +181,27 @@
       gap: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
       user-select: none;
+      transform: perspective(500px) rotateX(0deg) rotateY(0deg);
       position: relative;
       overflow: hidden;
     }
-    .option::before {
+    .option::after {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(224, 124, 74, 0.06), rgba(255, 190, 140, 0.06));
+      border-radius: 24px;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(232, 111, 111, 0.08), transparent 70%);
       opacity: 0;
       transition: opacity 0.4s;
+      pointer-events: none;
     }
     .option:hover {
-      transform: translateY(-3px) scale(1.02);
-      border-color: #e0a080;
-      box-shadow: 0 12px 28px -8px rgba(160, 100, 70, 0.15);
-      background: rgba(255, 250, 245, 0.9);
+      transform: perspective(500px) rotateX(2deg) rotateY(4deg) translateY(-4px);
+      border-color: #e88a6a;
+      box-shadow: 0 12px 28px -8px rgba(180, 80, 80, 0.2);
+      background: rgba(255, 248, 245, 0.95);
     }
-    .option:hover::before {
+    .option:hover::after {
       opacity: 1;
     }
     .option .emoji {
@@ -222,28 +215,24 @@
     }
     .option .check {
       opacity: 0;
-      transform: scale(0.5);
+      transform: scale(0.5) rotate(-30deg);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       font-size: 18px;
-      color: #d07a4a;
+      color: #d45a5a;
     }
     .option.selected {
-      border-color: #d07a4a;
-      background: rgba(235, 200, 180, 0.25);
-      box-shadow: 0 8px 24px -6px rgba(208, 122, 74, 0.2),
-                  inset 0 0 0 1px rgba(208, 122, 74, 0.15);
-      transform: translateY(-2px);
+      border-color: #d45a5a;
+      background: rgba(245, 200, 190, 0.25);
+      box-shadow: 0 8px 24px -6px rgba(212, 90, 90, 0.2),
+                  inset 0 0 0 1px rgba(212, 90, 90, 0.15);
+      transform: perspective(500px) rotateX(1deg) rotateY(2deg) translateY(-2px);
     }
     .option.selected .check {
       opacity: 1;
-      transform: scale(1);
-    }
-    .option.selected::before {
-      opacity: 1;
-      background: linear-gradient(135deg, rgba(224, 124, 74, 0.08), rgba(255, 190, 140, 0.08));
+      transform: scale(1) rotate(0deg);
     }
 
-    /* ---------- NHÓM NÚT ---------- */
+    /* ----- Buttons ----- */
     .btn-group {
       display: flex;
       justify-content: flex-end;
@@ -253,7 +242,7 @@
     button {
       padding: 14px 32px;
       border: none;
-      border-radius: 40px;
+      border-radius: 48px;
       font-weight: 600;
       font-size: 16px;
       cursor: pointer;
@@ -262,17 +251,30 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #d07a4a;
-      color: white;
-      box-shadow: 0 6px 20px -6px rgba(208, 122, 74, 0.35);
+      background: #d45a5a;
+      color: #fff;
+      box-shadow: 0 6px 20px -6px rgba(212, 90, 90, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    button .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
     }
     button:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px -8px rgba(208, 122, 74, 0.45);
-      background: #c06a3e;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -8px rgba(212, 90, 90, 0.45);
+      background: #c04a4a;
     }
     button:active:not(:disabled) {
-      transform: scale(0.96);
+      transform: scale(0.94);
     }
     button:disabled {
       opacity: 0.35;
@@ -281,72 +283,72 @@
       box-shadow: none;
     }
     .btn-secondary {
-      background: rgba(200, 170, 155, 0.25);
+      background: rgba(190, 150, 140, 0.2);
       backdrop-filter: blur(4px);
-      color: #5a4034;
+      color: #5a3e3e;
       box-shadow: none;
-      border: 1px solid rgba(200, 170, 155, 0.2);
+      border: 1px solid rgba(190, 150, 140, 0.2);
     }
     .btn-secondary:hover:not(:disabled) {
-      background: rgba(200, 170, 155, 0.45);
+      background: rgba(190, 150, 140, 0.4);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
       transform: translateY(-2px);
     }
 
-    /* ---------- STEP KẾT THÚC ---------- */
+    /* ----- Step cuối ----- */
     .step-final .big-emoji {
       font-size: 56px;
       display: block;
       text-align: center;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       animation: float 3s ease-in-out infinite;
     }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-12px); }
     }
     .step-final .note {
-      background: rgba(235, 200, 180, 0.15);
-      border: 1px solid rgba(220, 180, 160, 0.25);
+      background: rgba(245, 200, 190, 0.15);
+      border-color: rgba(235, 180, 170, 0.25);
     }
 
-    /* ---------- RESPONSIVE ---------- */
+    /* Responsive */
     @media (max-width: 480px) {
-      .container { padding: 24px 18px 32px; }
+      .container { padding: 24px 16px 30px; }
       h1 { font-size: 24px; }
       .option { padding: 12px 14px; font-size: 14px; }
-      button { padding: 12px 24px; font-size: 15px; }
+      button { padding: 12px 20px; font-size: 15px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Các vùng sáng nền -->
-  <div class="glow-bg glow-1"></div>
-  <div class="glow-bg glow-2"></div>
-  <div class="glow-bg glow-3"></div>
+  <!-- Các lớp glow -->
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="glow g3"></div>
 
-  <!-- Canvas particles -->
-  <canvas id="particles-canvas"></canvas>
+  <!-- Canvas cho hiệu ứng nền và nhân vật chibi -->
+  <canvas id="bg-canvas"></canvas>
 
-  <!-- Container chính -->
+  <!-- Container -->
   <div class="container" id="app">
     <div class="dots" id="dots"></div>
 
-    <!-- STEP 0: CHÀO -->
+    <!-- STEP 0: Chào -->
     <div class="step active" data-step="0">
-      <h1>☁️ Nè, cho tớ hỏi chút</h1>
+      <h1 id="typing-title">🌸 Nè, cho tớ hỏi chút</h1>
       <div class="sub">Chỉ là vài câu để tớ hiểu cậu hơn thôi</div>
       <div class="note">
         💬 <strong>“Hôm nay cậu có điều gì nhẹ nhàng không?”</strong><br />
         (nếu không có, thì để tớ gửi cậu một chút nắng)
       </div>
       <div class="btn-group">
-        <button onclick="nextStep()">Bắt đầu ✦</button>
+        <button onclick="nextStep()" id="startBtn">Bắt đầu ✦</button>
       </div>
     </div>
 
-    <!-- STEP 1: PHÁ BĂNG -->
+    <!-- STEP 1–5: giống các bước trước, chỉ thay đổi nội dung -->
     <div class="step" data-step="1">
       <h1>🌿 Vài điều nhỏ xinh</h1>
       <div class="sub">Chọn những gì cậu thấy hợp</div>
@@ -358,7 +360,6 @@
       </div>
     </div>
 
-    <!-- STEP 2: SỞ THÍCH -->
     <div class="step" data-step="2">
       <h1>🎐 Cậu thích điều gì?</h1>
       <div class="sub">Những điều đang làm cậu rung động</div>
@@ -370,7 +371,6 @@
       </div>
     </div>
 
-    <!-- STEP 3: TÍNH CÁCH -->
     <div class="step" data-step="3">
       <h1>🌙 Con người cậu</h1>
       <div class="sub">Điều gì làm nên cậu?</div>
@@ -382,7 +382,6 @@
       </div>
     </div>
 
-    <!-- STEP 4: KỶ NIỆM -->
     <div class="step" data-step="4">
       <h1>📖 Chuyện cũ</h1>
       <div class="sub">Những mảnh ghép đã tạo nên cậu</div>
@@ -394,7 +393,6 @@
       </div>
     </div>
 
-    <!-- STEP 5: TƯƠNG LAI -->
     <div class="step" data-step="5">
       <h1>🌟 Phía trước</h1>
       <div class="sub">Cậu thấy mình ở đâu trong những ngày sắp tới?</div>
@@ -406,17 +404,17 @@
       </div>
     </div>
 
-    <!-- STEP 6: CẢM ƠN -->
+    <!-- STEP 6: Cảm ơn -->
     <div class="step step-final" data-step="6">
-      <span class="big-emoji">🌅</span>
-      <h1 style="text-align:center; -webkit-text-fill-color: #4d3226; background: none; color:#4d3226;">Cảm ơn cậu</h1>
+      <span class="big-emoji">💗</span>
+      <h1 style="text-align:center; -webkit-text-fill-color: #4a2a2a; background: none; color:#4a2a2a;">Cảm ơn cậu</h1>
       <div class="sub" style="text-align:center; border-left: none; padding-left:0;">Tớ đã có thêm một chút hiểu về cậu</div>
-      <div class="note" style="font-size:17px; border: none; background: rgba(235,200,180,0.15);">
-        <span style="display:block; font-size:32px; margin-bottom:4px;">🍊</span>
+      <div class="note" style="font-size:17px; border: none; background: rgba(245,200,190,0.15);">
+        <span style="display:block; font-size:32px; margin-bottom:4px;">🍰</span>
         <strong>“Hãy luôn như những điều cậu đã chọn”</strong><br />
-        <span style="font-size:14px; color:#7a5a4a;">— một người thầm thương cậu</span>
+        <span style="font-size:14px; color:#7a5a5a;">— từ một người thầm thương cậu</span>
       </div>
-      <div class="note" style="background: rgba(235,200,180,0.08); font-style: normal;">
+      <div class="note" style="background: rgba(245,200,190,0.08); font-style: normal;">
         📬 Tớ đã nhận được câu trả lời của cậu.
       </div>
       <div class="btn-group" style="justify-content:center;">
@@ -426,13 +424,13 @@
   </div>
 
   <script>
-    // ---------- PARTICLES (bong bóng bay) ----------
-    (function initParticles() {
-      const canvas = document.getElementById('particles-canvas');
+    // ============================================================
+    // 1. BACKGROUND CANVAS – hiệu ứng sao băng + bong bóng + CHIBI
+    // ============================================================
+    (function initBg() {
+      const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
       let w, h;
-      const particles = [];
-      const COUNT = 45;
 
       function resize() {
         w = canvas.width = window.innerWidth;
@@ -441,45 +439,215 @@
       window.addEventListener('resize', resize);
       resize();
 
-      class Particle {
-        constructor() { this.reset(); }
-        reset() {
-          this.x = Math.random() * w;
-          this.y = Math.random() * h;
-          this.r = 2 + Math.random() * 8;
-          this.dx = (Math.random() - 0.5) * 0.25;
-          this.dy = -0.15 - Math.random() * 0.3;
-          this.alpha = 0.2 + Math.random() * 0.35;
-          this.color = `hsla(${20 + Math.random()*25}, 70%, 75%, ${this.alpha})`;
-        }
-        update() {
-          this.x += this.dx;
-          this.y += this.dy;
-          if (this.y < -20) { this.reset(); this.y = h + 20; }
-          if (this.x < -20 || this.x > w + 20) this.dx *= -1;
-        }
-        draw() {
+      // ----- Bong bóng -----
+      const bubbles = [];
+      for (let i = 0; i < 30; i++) {
+        bubbles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 2 + Math.random() * 10,
+          dx: (Math.random() - 0.5) * 0.3,
+          dy: -0.1 - Math.random() * 0.4,
+          alpha: 0.1 + Math.random() * 0.3,
+          color: `hsla(340, 70%, 80%, ${0.1 + Math.random()*0.3})`
+        });
+      }
+
+      // ----- Sao băng (shooting stars) -----
+      const stars = [];
+      for (let i = 0; i < 12; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          len: 4 + Math.random() * 12,
+          speed: 1 + Math.random() * 3,
+          angle: Math.PI / 4 + (Math.random() - 0.5) * 0.3,
+          alpha: 0.1 + Math.random() * 0.3,
+          life: 0,
+          maxLife: 100 + Math.random() * 200,
+          active: true
+        });
+      }
+
+      // ----- NHÂN VẬT CHIBI -----
+      // Cô gái (đuổi) và cậu bé (chạy)
+      const girl = {
+        x: 100,
+        y: 100,
+        targetX: 200,
+        targetY: 200,
+        speed: 1.2,
+        size: 28,
+        color: '#f8a5b0',
+        hairColor: '#d45a5a',
+        dressColor: '#ffb3b3'
+      };
+      const boy = {
+        x: 300,
+        y: 300,
+        targetX: 350,
+        targetY: 350,
+        speed: 1.0,
+        size: 26,
+        color: '#a8d0e6',
+        hairColor: '#5a7a8a',
+        shirtColor: '#8ab8d4'
+      };
+
+      // Hàm vẽ chibi đơn giản (dạng tròn + tóc + mắt)
+      function drawChibi(ctx, x, y, size, color, hairColor, dressColor, isGirl) {
+        // body
+        ctx.shadowColor = 'rgba(0,0,0,0.1)';
+        ctx.shadowBlur = 10;
+        // thân
+        ctx.beginPath();
+        ctx.ellipse(x, y + size * 0.2, size * 0.5, size * 0.6, 0, 0, Math.PI * 2);
+        ctx.fillStyle = dressColor || color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        // đầu
+        ctx.beginPath();
+        ctx.arc(x, y - size * 0.1, size * 0.45, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        // tóc (dạng vành)
+        ctx.beginPath();
+        ctx.arc(x, y - size * 0.3, size * 0.48, 0, Math.PI * 2);
+        ctx.fillStyle = hairColor;
+        ctx.fill();
+        // mắt
+        ctx.fillStyle = '#2a1a1a';
+        ctx.beginPath();
+        ctx.arc(x - size * 0.15, y - size * 0.1, size * 0.06, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + size * 0.15, y - size * 0.1, size * 0.06, 0, Math.PI * 2);
+        ctx.fill();
+        // miệng cười
+        ctx.beginPath();
+        ctx.arc(x, y + size * 0.02, size * 0.08, 0, Math.PI);
+        ctx.strokeStyle = '#2a1a1a';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        // nơ hoặc tai
+        if (isGirl) {
+          ctx.fillStyle = '#ff6b6b';
           ctx.beginPath();
-          ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
-          ctx.fillStyle = this.color;
-          ctx.shadowColor = 'rgba(220, 170, 150, 0.15)';
-          ctx.shadowBlur = 18;
+          ctx.ellipse(x + size * 0.45, y - size * 0.25, size * 0.1, size * 0.06, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.ellipse(x - size * 0.45, y - size * 0.25, size * 0.1, size * 0.06, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Cập nhật vị trí nhân vật (di chuyển ngẫu nhiên quanh màn hình)
+      function updateChibi(person, isGirl) {
+        // di chuyển đến target
+        const dx = person.targetX - person.x;
+        const dy = person.targetY - person.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist > 2) {
+          person.x += (dx / dist) * person.speed;
+          person.y += (dy / dist) * person.speed;
+        } else {
+          // chọn target mới (trong vùng an toàn)
+          person.targetX = 60 + Math.random() * (w - 120);
+          person.targetY = 60 + Math.random() * (h - 120);
+        }
+        // giữ trong màn hình
+        person.x = Math.max(30, Math.min(w - 30, person.x));
+        person.y = Math.max(30, Math.min(h - 30, person.y));
+
+        // Nếu là girl, hướng về boy (đuổi)
+        if (isGirl) {
+          const dxb = boy.x - girl.x;
+          const dyb = boy.y - girl.y;
+          const distb = Math.hypot(dxb, dyb);
+          if (distb > 60) {
+            // girl đuổi boy
+            girl.x += (dxb / distb) * (girl.speed * 0.6);
+            girl.y += (dyb / distb) * (girl.speed * 0.6);
+          } else {
+            // Khi đuổi kịp, boy chạy nhanh hơn
+            boy.speed = 1.4;
+            // boy chạy trốn
+            const angle = Math.atan2(girl.y - boy.y, girl.x - boy.x);
+            boy.x += Math.cos(angle) * boy.speed * 1.5;
+            boy.y += Math.sin(angle) * boy.speed * 1.5;
+          }
+        }
+      }
+
+      // Animation loop
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+
+        // ---- Vẽ bong bóng ----
+        bubbles.forEach(b => {
+          b.x += b.dx;
+          b.y += b.dy;
+          if (b.y < -20) { b.y = h + 20; b.x = Math.random() * w; }
+          if (b.x < -20 || b.x > w + 20) b.dx *= -1;
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.fillStyle = b.color;
+          ctx.shadowColor = 'rgba(255,200,200,0.1)';
+          ctx.shadowBlur = 15;
           ctx.fill();
           ctx.shadowBlur = 0;
+        });
+
+        // ---- Vẽ sao băng ----
+        stars.forEach(s => {
+          if (!s.active) return;
+          s.x += Math.cos(s.angle) * s.speed;
+          s.y += Math.sin(s.angle) * s.speed;
+          s.life++;
+          if (s.life > s.maxLife || s.x > w || s.y > h) {
+            s.active = false;
+            setTimeout(() => {
+              s.x = -20;
+              s.y = Math.random() * h * 0.5;
+              s.life = 0;
+              s.active = true;
+            }, 1000 + Math.random() * 3000);
+          }
+          ctx.beginPath();
+          ctx.moveTo(s.x, s.y);
+          ctx.lineTo(s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
+          ctx.strokeStyle = `rgba(255, 220, 200, ${s.alpha * (1 - s.life/s.maxLife)})`;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        });
+
+        // ---- Cập nhật & vẽ chibi ----
+        updateChibi(girl, true);
+        updateChibi(boy, false);
+        // Vẽ boy trước (để girl đè lên)
+        drawChibi(ctx, boy.x, boy.y, boy.size, boy.color, boy.hairColor, boy.shirtColor, false);
+        drawChibi(ctx, girl.x, girl.y, girl.size, girl.color, girl.hairColor, girl.dressColor, true);
+
+        // Thêm trái tim bay lên từ girl
+        if (Math.random() < 0.03) {
+          const heartX = girl.x + (Math.random() - 0.5) * 30;
+          const heartY = girl.y - 20;
+          ctx.font = '18px sans-serif';
+          ctx.fillStyle = 'rgba(255, 80, 120, 0.3)';
+          ctx.fillText('❤️', heartX, heartY);
         }
-      }
 
-      for (let i = 0; i < COUNT; i++) particles.push(new Particle());
-
-      function animate() {
-        ctx.clearRect(0, 0, w, h);
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animate);
+        requestAnimationFrame(draw);
       }
-      animate();
+      draw();
     })();
 
-    // ---------- DỮ LIỆU CÂU HỎI ----------
+
+    // ============================================================
+    // 2. LOGIC CHÍNH CỦA WEB (câu hỏi, điều hướng, formspree)
+    // ============================================================
+
+    // ----- Dữ liệu câu hỏi (5 câu) -----
     const questions = [
       { id: 'q1', choices: ['📖 Sách', '🎵 Nhạc', '🍽️ Ăn uống', '🌟 Điều nhỏ vui', '🎬 Phim ảnh'] },
       { id: 'q2', choices: ['🔥 Đam mê', '🗣️ Kể chuyện', '🤯 Sở thích lạ', '🌟 Kỹ năng mới', '😆 Kỷ niệm vui'] },
@@ -488,15 +656,15 @@
       { id: 'q5', choices: ['💼 Công việc', '🌍 Du lịch', '💍 Hôn nhân', '⭐ Điều ước', '🗓️ Tương lai'] }
     ];
 
-    // ---------- STATE ----------
+    // ----- State -----
     let currentStep = 0;
-    const totalSteps = 7;
+    const totalSteps = 7; // 0 chào + 5 câu hỏi + 1 cảm ơn
     const answers = {};
 
-    // ---------- FORMPREE (đã gắn link của bạn) ----------
+    // ----- Formspree -----
     const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
 
-    // ---------- RENDER OPTIONS ----------
+    // ----- Render options -----
     function renderOptions(stepIndex) {
       const qData = questions[stepIndex - 1];
       if (!qData) return;
@@ -531,6 +699,14 @@
           const btn = document.getElementById(`next${stepIndex}`);
           if (btn) btn.disabled = (arr.length === 0);
         });
+        // Thêm hiệu ứng xoay 3D theo chuột
+        div.addEventListener('mousemove', function(e) {
+          const rect = this.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          this.style.setProperty('--mx', (x + 0.5) * 100 + '%');
+          this.style.setProperty('--my', (y + 0.5) * 100 + '%');
+        });
         container.appendChild(div);
       });
 
@@ -541,7 +717,7 @@
       }
     }
 
-    // ---------- ĐIỀU HƯỚNG ----------
+    // ----- Điều hướng -----
     function showStep(index) {
       document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
       const target = document.querySelector(`.step[data-step="${index}"]`);
@@ -569,7 +745,7 @@
       if (currentStep > 0) showStep(currentStep - 1);
     }
 
-    // ---------- GỬI DỮ LIỆU ----------
+    // ----- Gửi dữ liệu -----
     function submitAndFinish() {
       const btn = document.querySelector('.step.active .btn-group button:last-child');
       if (btn) btn.disabled = true;
@@ -585,7 +761,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          _subject: '🌷 Kết quả khảo sát',
+          _subject: '💗 Kết quả khảo sát crush',
           message: message,
           timestamp: new Date().toLocaleString('vi-VN')
         })
@@ -594,17 +770,17 @@
         if (response.ok) {
           showStep(6);
         } else {
-          alert('❌ Gửi không thành công, nhưng dữ liệu vẫn được lưu tạm.');
+          alert('❌ Gửi lỗi, nhưng dữ liệu vẫn lưu tạm.');
           if (btn) btn.disabled = false;
         }
       })
       .catch(() => {
-        alert('⚠️ Mất kết nối, nhưng bạn vẫn có thể chụp màn hình gửi tớ nhé!');
+        alert('⚠️ Mất kết nối, bạn vẫn có thể chụp màn hình gửi tớ nhé!');
         if (btn) btn.disabled = false;
       });
     }
 
-    // ---------- RESET ----------
+    // ----- Reset -----
     function resetAll() {
       for (let key in answers) delete answers[key];
       document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
@@ -615,7 +791,7 @@
       showStep(0);
     }
 
-    // ---------- DOTS ----------
+    // ----- Tạo dots -----
     function createDots() {
       const container = document.getElementById('dots');
       container.innerHTML = '';
@@ -626,9 +802,42 @@
       }
     }
 
-    // ---------- KHỞI TẠO ----------
+    // ----- Khởi tạo -----
     createDots();
     showStep(0);
+
+    // ----- Hiệu ứng gõ chữ ở step 0 -----
+    (function typeEffect() {
+      const el = document.getElementById('typing-title');
+      const text = '🌸 Nè, cho tớ hỏi chút';
+      let index = 0;
+      el.textContent = '';
+      function type() {
+        if (index < text.length) {
+          el.textContent += text.charAt(index);
+          index++;
+          setTimeout(type, 50 + Math.random() * 30);
+        }
+      }
+      setTimeout(type, 400);
+    })();
+
+    // ----- Hiệu ứng ripple cho nút -----
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.width = '30px';
+        ripple.style.height = '30px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
 
     // Phím mũi tên
     document.addEventListener('keydown', (e) => {
