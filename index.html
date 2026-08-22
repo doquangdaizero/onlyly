@@ -268,7 +268,7 @@
   <div class="container" id="app">
     <div class="dots" id="dots"></div>
 
-    <!-- STEP 0: Chào -->
+    <!-- STEP 0 -->
     <div class="step active" data-step="0">
       <h1 id="typing-title">🌸 Nè, cho tớ hỏi chút</h1>
       <div class="sub">Chỉ là vài câu để tớ hiểu cậu hơn thôi</div>
@@ -279,7 +279,7 @@
       <div class="btn-group"><button onclick="nextStep()" id="startBtn">Bắt đầu ✦</button></div>
     </div>
 
-    <!-- STEP 1..5: câu hỏi (giữ nguyên) -->
+    <!-- STEP 1..5 -->
     <div class="step" data-step="1">
       <h1>🌿 Vài điều nhỏ xinh</h1>
       <div class="sub">Chọn những gì cậu thấy hợp</div>
@@ -352,7 +352,7 @@
 
   <script>
     // =============================================================
-    //  PHẦN 1: BACKGROUND CANVAS – chạy ảnh chibi + hiệu ứng cute
+    //  PHẦN 1: BACKGROUND CANVAS – dùng ẢNH CHIBI từ cùng thư mục
     // =============================================================
     (function initBg() {
       const canvas = document.getElementById('bg-canvas');
@@ -362,10 +362,9 @@
       window.addEventListener('resize', resize);
       resize();
 
-      // ---------- ẢNH CHIBI ----------
-      // 👉 THAY ĐƯỜNG DẪN ẢNH CỦA BẠN VÀO ĐÂY
-      // Nếu bạn có 4 ảnh, thay lần lượt vào mảng dưới.
-      // Ảnh sẽ được load và hiển thị ngẫu nhiên.
+      // ----- ĐƯỜNG DẪN ẢNH (cùng thư mục với index.html) -----
+      // 👉 Mày chỉ cần đặt tên file ảnh đúng như dưới đây,
+      // hoặc sửa tên cho khớp với file của mày.
       const imageUrls = [
         'Screenshot 2026-08-22 144206.png',  // 👈 thay link ảnh 1
         'Screenshot 2026-08-22 144220.png',  // 👈 thay link ảnh 2
@@ -376,54 +375,49 @@
       // Load ảnh
       const images = [];
       let loadedCount = 0;
+      let allLoaded = false;
+
       imageUrls.forEach((url, idx) => {
         const img = new Image();
-        img.crossOrigin = 'anonymous';
+        img.crossOrigin = 'anonymous'; // nếu cần
         img.onload = () => {
           loadedCount++;
           if (loadedCount === imageUrls.length) {
-            // tất cả ảnh đã load xong, bắt đầu animation
+            allLoaded = true;
             initCharacters();
           }
         };
         img.onerror = () => {
-          // nếu lỗi, dùng hình vẽ thay thế (emoji)
+          // nếu lỗi, vẫn tiếp tục nhưng sẽ dùng fallback
           loadedCount++;
-          if (loadedCount === imageUrls.length) initCharacters();
+          if (loadedCount === imageUrls.length) {
+            allLoaded = true;
+            initCharacters();
+          }
         };
         img.src = url;
         images[idx] = img;
       });
 
-      // Nếu không load được ảnh, dùng emoji làm fallback
-      function drawFallback(ctx, x, y, size, emoji) {
-        ctx.font = `${size * 1.8}px sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(emoji, x, y);
-      }
-
-      // ---------- TẠO NHÂN VẬT CHIBI ----------
+      // Tạo nhân vật
       let characters = [];
       function initCharacters() {
         characters = [];
-        const count = Math.min(images.length, 6); // tối đa 6 nhân vật
+        const count = Math.min(images.length, 6);
         for (let i = 0; i < count; i++) {
           const img = images[i % images.length];
           characters.push({
             x: Math.random() * w,
             y: Math.random() * h,
-            size: 40 + Math.random() * 30,
+            size: 50 + Math.random() * 30, // kích thước ảnh
             speedX: (Math.random() - 0.5) * 0.8,
             speedY: (Math.random() - 0.5) * 0.8,
             img: img,
-            angle: Math.random() * 0.2 - 0.1,
             emoji: ['🌸','🌼','🌺','🌸','🌻','💮'][i % 6],
-            // hiệu ứng xoay nhẹ
             rotation: 0
           });
         }
-        // nếu không có ảnh nào load được, tạo nhân vật bằng emoji
+        // Nếu không load được ảnh nào, dùng emoji
         if (characters.length === 0) {
           for (let i = 0; i < 4; i++) {
             characters.push({
@@ -439,11 +433,15 @@
         }
       }
 
-      // Nếu ảnh chưa load xong, vẫn chạy hiệu ứng nền với fallback
-      let fallbackMode = false;
+      // Nếu ảnh chưa load xong, vẫn khởi tạo nhân vật tạm
+      setTimeout(() => {
+        if (!allLoaded) {
+          initCharacters();
+        }
+      }, 1000);
 
-      // ---------- HIỆU ỨNG CUTE ----------
-      // 1. Trái tim rơi
+      // ----- HIỆU ỨNG -----
+      // Trái tim rơi
       const hearts = [];
       function spawnHeart() {
         hearts.push({
@@ -458,7 +456,7 @@
       }
       setInterval(spawnHeart, 400);
 
-      // 2. Cánh hoa đào rơi
+      // Cánh hoa đào
       const petals = [];
       function spawnPetal() {
         petals.push({
@@ -474,7 +472,7 @@
       }
       setInterval(spawnPetal, 300);
 
-      // 3. Ngôi sao lấp lánh (xuất hiện ngẫu nhiên)
+      // Ngôi sao lấp lánh
       const sparkles = [];
       function spawnSparkle() {
         sparkles.push({
@@ -488,16 +486,14 @@
       }
       setInterval(spawnSparkle, 200);
 
-      // ---------- VÒNG LẶP CHÍNH ----------
+      // ----- VÒNG LẶP CHÍNH -----
       let frame = 0;
       function draw() {
         frame++;
         ctx.clearRect(0, 0, w, h);
 
-        // ---- Vẽ bong bóng (có sẵn từ trước) ----
-        // (tao sẽ tạo lại bong bóng trong vòng lặp này để đơn giản)
+        // Bong bóng
         if (frame % 2 === 0) {
-          // vẽ một vài bong bóng lơ lửng
           for (let i = 0; i < 8; i++) {
             const x = (Math.sin(frame * 0.01 + i * 1.2) * 0.5 + 0.5) * w;
             const y = (Math.cos(frame * 0.015 + i * 1.8) * 0.5 + 0.5) * h;
@@ -512,7 +508,7 @@
           }
         }
 
-        // ---- Vẽ trái tim rơi ----
+        // Trái tim rơi
         hearts.forEach((h, idx) => {
           h.y += h.speed;
           h.x += Math.sin(h.phase + frame * h.wobble) * 0.5;
@@ -525,7 +521,7 @@
           ctx.globalAlpha = 1;
         });
 
-        // ---- Vẽ cánh hoa đào ----
+        // Cánh hoa
         petals.forEach((p, idx) => {
           p.x += p.speedX + Math.sin(p.angle + frame * 0.02) * 0.3;
           p.y += p.speedY;
@@ -539,7 +535,7 @@
           ctx.globalAlpha = 1;
         });
 
-        // ---- Vẽ ngôi sao lấp lánh ----
+        // Ngôi sao
         sparkles.forEach((s, idx) => {
           s.life++;
           if (s.life > s.maxLife) { sparkles.splice(idx, 1); return; }
@@ -553,20 +549,17 @@
           ctx.shadowBlur = 0;
         });
 
-        // ---- Vẽ nhân vật chibi (dùng ảnh hoặc emoji) ----
+        // --- Vẽ nhân vật chibi (dùng ảnh hoặc emoji) ---
         if (characters.length > 0) {
           characters.forEach((c, idx) => {
-            // Di chuyển ngẫu nhiên
+            // Di chuyển tự do
             c.x += c.speedX;
             c.y += c.speedY;
-            // Đổi hướng khi chạm biên
             if (c.x < 30 || c.x > w - 30) c.speedX *= -1;
             if (c.y < 30 || c.y > h - 30) c.speedY *= -1;
-            // Thỉnh thoảng đổi hướng ngẫu nhiên
             if (Math.random() < 0.005) {
               c.speedX += (Math.random() - 0.5) * 0.3;
               c.speedY += (Math.random() - 0.5) * 0.3;
-              // giới hạn tốc độ
               const maxSpeed = 1.2;
               const sp = Math.hypot(c.speedX, c.speedY);
               if (sp > maxSpeed) {
@@ -575,9 +568,8 @@
               }
             }
 
-            // Vẽ ảnh hoặc emoji
+            // Vẽ
             if (c.img && c.img.complete && c.img.naturalWidth > 0) {
-              // Vẽ ảnh
               const imgSize = c.size * 1.2;
               ctx.save();
               ctx.translate(c.x, c.y);
@@ -591,15 +583,10 @@
               ctx.textBaseline = 'middle';
               ctx.fillText(c.emoji || '🌸', c.x, c.y);
             }
-
-            // Vẽ bóng đổ nhẹ
-            ctx.shadowColor = 'rgba(0,0,0,0.05)';
-            ctx.shadowBlur = 10;
-            ctx.shadowBlur = 0;
           });
         }
 
-        // ---- Thêm hiệu ứng trái tim bay từ nhân vật (random) ----
+        // Trái tim bay ra từ nhân vật
         if (characters.length > 0 && Math.random() < 0.02) {
           const c = characters[Math.floor(Math.random() * characters.length)];
           ctx.font = '20px sans-serif';
@@ -613,16 +600,16 @@
         requestAnimationFrame(draw);
       }
 
-      // Khởi động sau khi load ảnh (hoặc ngay lập tức)
+      // Khởi động
       setTimeout(() => {
         if (characters.length === 0) initCharacters();
         draw();
-      }, 500);
+      }, 300);
     })();
 
 
     // =============================================================
-    //  PHẦN 2: LOGIC CÂU HỎI, FORMPREE (giữ nguyên)
+    //  PHẦN 2: LOGIC CÂU HỎI & FORMPREE
     // =============================================================
 
     const questions = [
