@@ -1,493 +1,527 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Một vài câu hỏi vui ✨</title>
-  <style>
-    /* ---------- Reset & nền ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
-      background: linear-gradient(135deg, #e0f2fe 0%, #fae8ff 40%, #fef3c7 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>💌 Hỏi crush xíu nè</title>
+    <style>
+        /* ---------- Reset & Font ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(145deg, #d4e9f7 0%, #fce4ec 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
 
-    /* ---------- Bong bóng bay (hiệu ứng nền) ---------- */
-    .bubble {
-      position: fixed;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(2px);
-      animation: floatUp linear infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(100vh) scale(0.8); opacity: 0.6; }
-      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-    }
+        /* ---------- Nền hiệu ứng (sao / bong bóng) ---------- */
+        .stars, .bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+            width: 6px;
+            height: 6px;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: floatUp var(--duration) ease-in infinite;
+            width: 20px;
+            height: 20px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
 
-    /* ---------- Container chính ---------- */
-    .container {
-      max-width: 560px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(16px);
-      border-radius: 56px;
-      padding: 32px 28px 40px;
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.5);
-      position: relative;
-      z-index: 1;
-      transition: all 0.3s ease;
-    }
+        /* ---------- Container chính ---------- */
+        .container {
+            max-width: 560px;
+            width: 100%;
+            background: rgba(255, 248, 245, 0.75);
+            backdrop-filter: blur(14px);
+            border-radius: 56px;
+            padding: 32px 30px 42px;
+            box-shadow: 0 30px 60px -15px rgba(90, 120, 160, 0.25);
+            border: 1px solid rgba(200, 225, 240, 0.6);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
 
-    /* ---------- Hiệu ứng bước ---------- */
-    .step {
-      display: none;
-      animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .step.active {
-      display: block;
-    }
-    @keyframes slideUp {
-      0% { opacity: 0; transform: translateY(30px) scale(0.97); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
+        /* ---------- Step animation ---------- */
+        .step {
+            display: none;
+            animation: fadeSlide 0.5s cubic-bezier(0.2, 0.8, 0.4, 1);
+        }
+        .step.active {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(18px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-    /* ---------- Tiêu đề & phụ đề ---------- */
-    h1 {
-      font-size: 28px;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 6px;
-      letter-spacing: -0.3px;
-    }
-    .sub {
-      font-size: 15px;
-      color: #64748b;
-      margin-bottom: 24px;
-      font-weight: 400;
-      padding-left: 16px;
-      border-left: 4px solid #94a3b8;
-      line-height: 1.5;
-      background: rgba(148, 163, 184, 0.06);
-      border-radius: 0 12px 12px 0;
-    }
+        /* ---------- Typography ---------- */
+        h1 {
+            font-size: 28px;
+            font-weight: 650;
+            color: #2a4a5c;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+        .sub {
+            font-size: 16px;
+            color: #5d7b8a;
+            margin-bottom: 22px;
+            font-weight: 400;
+            border-left: 4px solid #8bc1d4;
+            padding-left: 16px;
+            background: rgba(139, 193, 212, 0.08);
+            border-radius: 0 14px 14px 0;
+            line-height: 1.6;
+        }
 
-    /* ---------- Tuỳ chỉnh màu sắc cho từng step ---------- */
-    .step[data-step="0"] .sub { border-color: #818cf8; }
-    .step[data-step="1"] .sub { border-color: #f472b6; }
-    .step[data-step="2"] .sub { border-color: #34d399; }
-    .step[data-step="3"] .sub { border-color: #fbbf24; }
-    .step[data-step="4"] .sub { border-color: #a78bfa; }
-    .step[data-step="5"] .sub { border-color: #fb923c; }
-    .step[data-step="6"] .sub { border-color: #94a3b8; }
+        /* ---------- Options (thẻ lựa chọn) ---------- */
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .option {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 12px 22px;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f3d4a;
+            border: 2px solid #d9eaf0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+            flex: 0 1 auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+        .option:hover {
+            transform: translateY(-3px) scale(1.02);
+            border-color: #90c8db;
+            background: rgba(235, 248, 255, 0.8);
+            box-shadow: 0 8px 20px rgba(100, 170, 200, 0.15);
+        }
+        .option.selected {
+            border-color: #6baec9;
+            background: rgba(200, 235, 248, 0.6);
+            box-shadow: 0 8px 22px rgba(90, 170, 200, 0.2);
+            color: #0f2d3a;
+            transform: translateY(-2px);
+        }
 
-    /* ---------- Option (thẻ chọn) ---------- */
-    .options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    .option {
-      background: white;
-      padding: 12px 22px;
-      border-radius: 60px;
-      font-size: 15px;
-      font-weight: 500;
-      color: #1e293b;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      border: 2px solid #e2e8f0;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      user-select: none;
-      flex: 0 1 auto;
-      position: relative;
-    }
-    .option:hover {
-      transform: scale(1.04) rotate(-1deg);
-      border-color: #94a3b8;
-      background: #f8fafc;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    }
-    .option.selected {
-      border-color: #6366f1;
-      background: #e0e7ff;
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
-      transform: scale(1.02);
-      color: #1e293b;
-      font-weight: 600;
-    }
-    .option.selected::after {
-      content: " ✓";
-      color: #6366f1;
-      font-weight: 700;
-    }
+        /* ---------- Buttons ---------- */
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #7fb9cf;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 17px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 20px rgba(90, 170, 200, 0.25);
+            letter-spacing: 0.3px;
+            flex: 1 0 auto;
+        }
+        button:hover {
+            background: #68a7c0;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(90, 170, 200, 0.35);
+        }
+        button:disabled {
+            opacity: 0.35;
+            pointer-events: none;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-secondary {
+            background: #c7dae3;
+            box-shadow: none;
+            color: #2d4a57;
+        }
+        .btn-secondary:hover {
+            background: #b6ccd8;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+        }
 
-    /* ---------- Nút ---------- */
-    .btn-group {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 8px;
-    }
-    button {
-      background: #6366f1;
-      border: none;
-      padding: 14px 32px;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 16px;
-      color: white;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 6px 16px rgba(99, 102, 241, 0.25);
-      letter-spacing: 0.3px;
-    }
-    button:hover {
-      background: #4f46e5;
-      transform: scale(1.03);
-      box-shadow: 0 10px 28px rgba(99, 102, 241, 0.35);
-    }
-    button:disabled {
-      opacity: 0.35;
-      pointer-events: none;
-      transform: none;
-      box-shadow: none;
-    }
-    .btn-secondary {
-      background: #cbd5e1;
-      box-shadow: none;
-      color: #1e293b;
-    }
-    .btn-secondary:hover {
-      background: #b0bed0;
-      transform: scale(1.02);
-    }
+        /* ---------- Note box ---------- */
+        .note {
+            margin: 16px 0 20px;
+            padding: 16px 22px;
+            background: rgba(230, 245, 252, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            font-size: 15px;
+            color: #2f5263;
+            text-align: center;
+            border: 1px solid #cfe2ec;
+            line-height: 1.7;
+            font-style: italic;
+        }
+        .note strong {
+            font-style: normal;
+            color: #4b7f94;
+        }
 
-    /* ---------- Lời nhắn (không lãng mạn) ---------- */
-    .note {
-      margin: 16px 0 20px;
-      padding: 14px 20px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 28px;
-      font-size: 14px;
-      color: #334155;
-      text-align: center;
-      border: 1px solid #e2e8f0;
-      line-height: 1.6;
-      font-style: normal;
-    }
-    .note strong {
-      color: #4f46e5;
-      font-weight: 600;
-    }
+        /* ---------- Progress dots ---------- */
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0 16px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 30px;
+            background: #d4e2ea;
+            transition: 0.4s ease;
+        }
+        .dot.active {
+            background: #7fb9cf;
+            width: 32px;
+        }
 
-    /* ---------- Dấu chấm tiến trình ---------- */
-    .dots {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px 0 16px;
-    }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 20px;
-      background: #d1d5db;
-      transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .dot.active {
-      background: #6366f1;
-      width: 28px;
-    }
-
-    /* ---------- Responsive ---------- */
-    @media (max-width: 480px) {
-      .container { padding: 24px 16px 30px; }
-      h1 { font-size: 22px; }
-      .option { padding: 10px 16px; font-size: 14px; }
-      button { padding: 12px 22px; font-size: 14px; }
-    }
-  </style>
+        /* ---------- Responsive ---------- */
+        @media (max-width: 480px) {
+            .container { padding: 24px 18px 32px; }
+            h1 { font-size: 24px; }
+            .option { padding: 10px 16px; font-size: 15px; }
+            button { padding: 12px 20px; font-size: 15px; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- Bong bóng nền (tự động tạo bằng JS) -->
-<div id="bubble-container"></div>
+<!-- Hiệu ứng nền: sao nhấp nháy + bong bóng bay lên -->
+<div class="stars" id="stars"></div>
+<div class="bubbles" id="bubbles"></div>
 
 <div class="container" id="app">
-  <!-- Dấu chấm tiến trình -->
-  <div class="dots" id="dots"></div>
+    <div class="dots" id="dots"></div>
 
-  <!-- Step 0: Chào hỏi -->
-  <div class="step active" data-step="0">
-    <h1>✨ Nè, cho hỏi xíu</h1>
-    <div class="sub">Mấy câu này chỉ để hiểu bạn hơn thôi</div>
-    <div class="note">💬 Hôm nay có điều gì thú vị không? <br />(nếu không thì… cũng không sao, mình cùng tạo ra nhé)</div>
-    <div class="btn-group">
-      <button onclick="nextStep()">Bắt đầu nào →</button>
+    <!-- Step 0: Chào -->
+    <div class="step active" data-step="0">
+        <h1>🌿 Nè, cho tớ hỏi xíu</h1>
+        <div class="sub">✨ Mấy câu này chỉ để tớ hiểu cậu hơn thôi</div>
+        <div class="note">
+            💬 <strong>“Hôm nay cậu có gì vui không?”</strong><br/>
+            (nếu không… để tớ làm niềm vui cho cậu nha)
+        </div>
+        <div class="btn-group">
+            <button onclick="nextStep()">Bắt đầu →</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Step 1 đến 5: các câu hỏi -->
-  <div class="step" data-step="1">
-    <h1>💬 Chủ đề bất ngờ</h1>
-    <div class="sub">Chọn những điều bạn thấy thú vị</div>
-    <div class="options" id="q1"></div>
-    <div class="note">🎯 Mình muốn biết những điều nhỏ nhặt làm bạn cười</div>
-    <div class="btn-group">
-      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next1" disabled onclick="nextStep()">Tiếp theo →</button>
+    <!-- Step 1 -->
+    <div class="step" data-step="1">
+        <h1>💬 Phá băng</h1>
+        <div class="sub">Chọn điều cậu thấy thú vị</div>
+        <div class="options" id="q1"></div>
+        <div class="note">☁️ Tớ thích nghe những điều nhỏ nhặt làm cậu cười</div>
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="prevStep()">← Quay</button>
+            <button id="next1" disabled onclick="nextStep()">Tiếp →</button>
+        </div>
     </div>
-  </div>
 
-  <div class="step" data-step="2">
-    <h1>🎧 Đam mê & sở thích</h1>
-    <div class="sub">Bạn đang mê mẩn điều gì dạo này?</div>
-    <div class="options" id="q2"></div>
-    <div class="note">🔥 Cùng chia sẻ đam mê để biết thêm về nhau nhé</div>
-    <div class="btn-group">
-      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next2" disabled onclick="nextStep()">Tiếp theo →</button>
+    <!-- Step 2 -->
+    <div class="step" data-step="2">
+        <h1>🎯 Đam mê</h1>
+        <div class="sub">Cậu đang mê mẩn điều gì?</div>
+        <div class="options" id="q2"></div>
+        <div class="note">🔥 Tớ cũng có vài thứ muốn chia sẻ với cậu</div>
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="prevStep()">← Quay</button>
+            <button id="next2" disabled onclick="nextStep()">Tiếp →</button>
+        </div>
     </div>
-  </div>
 
-  <div class="step" data-step="3">
-    <h1>🧠 Tính cách riêng</h1>
-    <div class="sub">Điều gì tạo nên con người bạn?</div>
-    <div class="options" id="q3"></div>
-    <div class="note">🌟 Mình thích con người thật của bạn, cứ là chính mình</div>
-    <div class="btn-group">
-      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next3" disabled onclick="nextStep()">Tiếp theo →</button>
+    <!-- Step 3 -->
+    <div class="step" data-step="3">
+        <h1>🧠 Tính cách</h1>
+        <div class="sub">Cậu là phiên bản đặc biệt nhất</div>
+        <div class="options" id="q3"></div>
+        <div class="note">💫 Tớ trân trọng con người thật của cậu</div>
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="prevStep()">← Quay</button>
+            <button id="next3" disabled onclick="nextStep()">Tiếp →</button>
+        </div>
     </div>
-  </div>
 
-  <div class="step" data-step="4">
-    <h1>📖 Kỷ niệm nhỏ</h1>
-    <div class="sub">Những câu chuyện đã làm nên bạn</div>
-    <div class="options" id="q4"></div>
-    <div class="note">🌙 Mình thích nghe những câu chuyện của bạn</div>
-    <div class="btn-group">
-      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next4" disabled onclick="nextStep()">Tiếp theo →</button>
+    <!-- Step 4 -->
+    <div class="step" data-step="4">
+        <h1>📖 Kỷ niệm</h1>
+        <div class="sub">Những câu chuyện đã làm nên cậu</div>
+        <div class="options" id="q4"></div>
+        <div class="note">🌙 Tớ muốn nghe câu chuyện của cậu (nếu cậu muốn kể)</div>
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="prevStep()">← Quay</button>
+            <button id="next4" disabled onclick="nextStep()">Tiếp →</button>
+        </div>
     </div>
-  </div>
 
-  <div class="step" data-step="5">
-    <h1>🚀 Tương lai gần</h1>
-    <div class="sub">5 năm tới bạn thấy mình ở đâu?</div>
-    <div class="options" id="q5"></div>
-    <div class="note">✨ Mình tin bạn sẽ làm được nhiều điều thú vị</div>
-    <div class="btn-group">
-      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
-      <button id="next5" disabled onclick="nextStep()">🎉 Xem kết quả</button>
+    <!-- Step 5 -->
+    <div class="step" data-step="5">
+        <h1>🚀 Tương lai</h1>
+        <div class="sub">Cậu thấy mình ở đâu 5 năm nữa?</div>
+        <div class="options" id="q5"></div>
+        <div class="note">✨ Tớ tin cậu sẽ làm được những điều tuyệt vời</div>
+        <div class="btn-group">
+            <button class="btn-secondary" onclick="prevStep()">← Quay</button>
+            <button id="next5" disabled onclick="nextStep()">🎉 Xem kết quả</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Step 6: Cảm ơn -->
-  <div class="step" data-step="6">
-    <h1>🎉 Cảm ơn bạn nha!</h1>
-    <div class="sub">Mình đã biết thêm nhiều điều về bạn</div>
-    <div class="note" style="font-size: 18px; border: none; background: transparent; padding: 10px 0;">
-      <span style="display: block; font-size: 48px; margin-bottom: 8px;">😊</span>
-      <strong>“Giữ mãi nụ cười và năng lượng tích cực nhé”</strong>
+    <!-- Step 6: Cảm ơn -->
+    <div class="step" data-step="6">
+        <h1>💌 Cảm ơn cậu!</h1>
+        <div class="sub">Tớ đã biết thêm nhiều về cậu</div>
+        <div class="note" style="border: none; background: transparent; font-size: 18px;">
+            <span style="display: block; font-size: 44px;">☕</span>
+            <strong>“Cậu thật thú vị theo cách riêng của mình”</strong><br/>
+            <span style="font-size: 14px; color: #5d7b8a;">— từ một người thích được lắng nghe cậu</span>
+        </div>
+        <div class="note" style="background: rgba(200, 230, 240, 0.3);">
+            📥 Tớ đã nhận được câu trả lời của cậu rồi (cảm ơn vì đã chia sẻ)
+        </div>
+        <div class="btn-group" style="justify-content: center;">
+            <button onclick="resetAll()" style="flex: 0 1 auto;">🔄 Làm lại</button>
+        </div>
     </div>
-    <div class="note" style="background: rgba(99, 102, 241, 0.06); border-color: #c7d2fe;">
-      📌 Mình đã nhận được câu trả lời của bạn rồi. Cảm ơn vì đã chia sẻ!
-    </div>
-    <div class="btn-group" style="justify-content: center;">
-      <button onclick="resetAll()">🔄 Làm lại cho vui</button>
-    </div>
-  </div>
 </div>
 
 <script>
-  // ---------- TẠO BONG BÓNG NỀN ----------
-  (function createBubbles() {
-    const container = document.getElementById('bubble-container');
-    const count = 18;
-    for (let i = 0; i < count; i++) {
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble';
-      const size = 20 + Math.random() * 70;
-      bubble.style.width = size + 'px';
-      bubble.style.height = size + 'px';
-      bubble.style.left = Math.random() * 100 + '%';
-      bubble.style.animationDuration = 12 + Math.random() * 20 + 's';
-      bubble.style.animationDelay = Math.random() * 15 + 's';
-      bubble.style.background = `rgba(255,255,255,${0.15 + Math.random() * 0.25})`;
-      container.appendChild(bubble);
-    }
-  })();
+    // ---------- QUESTIONS ----------
+    const questions = [
+        { id: 'q1', choices: ['📖 Sách đọc mãi không chán', '🎵 Album nghe cả đời', '🍽️ Ăn tối với 3 người nổi tiếng', '🌟 Điều nhỏ làm ngày cậu tốt hơn', '🎬 Phim tài liệu hay nhất'] },
+        { id: 'q2', choices: ['🔥 Điều đang mê mẩn dạo này', '🗣️ Chủ đề kể 30 phút không nghỉ', '🤯 Sở thích bất thường nhất', '🌟 Kỹ năng muốn học ngay', '😆 Điều kỳ cục nhất từng tin hồi nhỏ'] },
+        { id: 'q3', choices: ['👀 Ấn tượng đầu tiên về tớ', '🏠 Hướng nội hay ngoại', '💪 Điều làm cậu thấy là chính mình', '⚡ Điều tiếp năng lượng cho cậu', '🤫 Điều tự hào nhưng ít kể'] },
+        { id: 'q4', choices: ['🎁 Món quà tuyệt nhất từng nhận', '🌙 Kỷ niệm thơ ấu đáng nhớ', '🤐 Chuyện chưa kể cho ai', '😳 Khoảnh khắc xấu hổ nhất', '👨‍👩‍👧 Người quan trọng nhất gia đình'] },
+        { id: 'q5', choices: ['💼 Nếu không làm công việc hiện tại?', '🌍 Quốc gia khao khát đến', '💍 Đám cưới nhỏ hay hoành tráng', '⭐ Một điều ước duy nhất', '🗓️ 5 năm nữa cậu ở đâu?'] }
+    ];
 
-  // ---------- DỮ LIỆU CÂU HỎI (5 câu) ----------
-  const questions = [
-    { id: 'q1', choices: ['📖 Sách hay đọc mãi', '🎵 Album nghe không chán', '🍽️ Bữa tối mơ ước', '🌟 Điều nhỏ làm vui', '🎬 Phim tài liệu ấn tượng'] },
-    { id: 'q2', choices: ['🔥 Đam mê thầm kín', '🗣️ Chủ đề nói 30p', '🤯 Sở thích lạ nhất', '🌟 Kỹ năng muốn học', '😆 Điều kỳ cục hồi nhỏ'] },
-    { id: 'q3', choices: ['👀 Ấn tượng đầu tiên về mình', '🏠 Hướng nội/ngoại', '💪 Điều làm bạn là bạn', '⚡ Năng lượng từ đâu', '🤫 Điều tự hào ít kể'] },
-    { id: 'q4', choices: ['🎁 Quà tặng đáng nhớ', '🌙 Kỷ niệm thơ ấu', '🤐 Chuyện chưa kể ai', '😳 Khoảnh khắc ngại nhất', '👨‍👩‍👧‍👦 Người thân yêu nhất'] },
-    { id: 'q5', choices: ['💼 Nghề mơ ước', '🌍 Nơi muốn đến', '💍 Đám cưới mơ ước', '⭐ Một điều ước', '🗓️ 5 năm tới'] }
-  ];
+    // ---------- STATE ----------
+    let currentStep = 0;
+    const totalSteps = 7;
+    const answers = {};
+    const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
 
-  // ---------- STATE ----------
-  let currentStep = 0;
-  const totalSteps = 7;
-  const answers = {};
+    // ---------- RENDER OPTIONS ----------
+    function renderOptions(stepIndex) {
+        const qData = questions[stepIndex - 1];
+        if (!qData) return;
+        const container = document.getElementById(qData.id);
+        if (!container) return;
+        container.innerHTML = '';
+        const selected = answers[qData.id] || [];
 
-  // ---------- FORMPREE ENDPOINT (của bạn) ----------
-  const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
+        qData.choices.forEach(choice => {
+            const div = document.createElement('div');
+            div.className = 'option' + (selected.includes(choice) ? ' selected' : '');
+            div.textContent = choice;
+            div.dataset.value = choice;
+            div.addEventListener('click', function() {
+                const val = this.dataset.value;
+                const arr = answers[qData.id] || [];
+                const idx = arr.indexOf(val);
+                if (idx > -1) {
+                    arr.splice(idx, 1);
+                    this.classList.remove('selected');
+                } else {
+                    arr.push(val);
+                    this.classList.add('selected');
+                }
+                answers[qData.id] = arr;
+                const btn = document.getElementById(`next${stepIndex}`);
+                if (btn) btn.disabled = (arr.length === 0);
+            });
+            container.appendChild(div);
+        });
 
-  // ---------- RENDER OPTIONS ----------
-  function renderOptions(stepIndex) {
-    const qData = questions[stepIndex - 1];
-    if (!qData) return;
-    const container = document.getElementById(qData.id);
-    if (!container) return;
-    container.innerHTML = '';
-    const selected = answers[qData.id] || [];
-
-    qData.choices.forEach(choice => {
-      const div = document.createElement('div');
-      div.className = 'option' + (selected.includes(choice) ? ' selected' : '');
-      div.textContent = choice;
-      div.dataset.value = choice;
-      div.addEventListener('click', function() {
-        const val = this.dataset.value;
-        const arr = answers[qData.id] || [];
-        const idx = arr.indexOf(val);
-        if (idx > -1) {
-          arr.splice(idx, 1);
-          this.classList.remove('selected');
-        } else {
-          arr.push(val);
-          this.classList.add('selected');
-        }
-        answers[qData.id] = arr;
         const btn = document.getElementById(`next${stepIndex}`);
-        if (btn) btn.disabled = (arr.length === 0);
-      });
-      container.appendChild(div);
-    });
-
-    const btn = document.getElementById(`next${stepIndex}`);
-    if (btn) {
-      const arr = answers[qData.id] || [];
-      btn.disabled = (arr.length === 0);
+        if (btn) {
+            const arr = answers[qData.id] || [];
+            btn.disabled = (arr.length === 0);
+        }
     }
-  }
 
-  // ---------- ĐIỀU HƯỚNG ----------
-  function showStep(index) {
-    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-    const target = document.querySelector(`.step[data-step="${index}"]`);
-    if (target) target.classList.add('active');
+    // ---------- NAVIGATION ----------
+    function showStep(index) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        const target = document.querySelector(`.step[data-step="${index}"]`);
+        if (target) target.classList.add('active');
 
-    document.querySelectorAll('.dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
 
-    if (index >= 1 && index <= 5) renderOptions(index);
-    currentStep = index;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function nextStep() {
-    if (currentStep === 5) {
-      submitAndFinish();
-    } else if (currentStep < totalSteps - 1) {
-      showStep(currentStep + 1);
+        if (index >= 1 && index <= 5) renderOptions(index);
+        currentStep = index;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }
 
-  function prevStep() {
-    if (currentStep > 0) showStep(currentStep - 1);
-  }
-
-  // ---------- GỬI DỮ LIỆU ----------
-  function submitAndFinish() {
-    const btn = document.querySelector('.step.active .btn-group button:last-child');
-    if (btn) btn.disabled = true;
-
-    const labels = ['💬 Chủ đề bất ngờ', '🎧 Đam mê & sở thích', '🧠 Tính cách riêng', '📖 Kỷ niệm nhỏ', '🚀 Tương lai gần'];
-    let message = '📝 Câu trả lời từ bạn:\n\n';
-    questions.forEach((q, idx) => {
-      const items = answers[q.id] || [];
-      message += `${labels[idx]}: ${items.length ? items.join(', ') : 'Không chọn'}\n`;
-    });
-
-    fetch(FORMSPREE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        _subject: '📝 Kết quả khảo sát thú vị',
-        message: message,
-        timestamp: new Date().toLocaleString('vi-VN')
-      })
-    })
-    .then(response => {
-      if (response.ok) {
-        showStep(6);
-      } else {
-        alert('❌ Có lỗi gửi dữ liệu. Thử lại sau nhé!');
-        if (btn) btn.disabled = false;
-      }
-    })
-    .catch(() => {
-      alert('⚠️ Không kết nối được. Nhưng bạn vẫn có thể chụp màn hình gửi mình!');
-      if (btn) btn.disabled = false;
-    });
-  }
-
-  // ---------- RESET ----------
-  function resetAll() {
-    for (let key in answers) delete answers[key];
-    document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-    for (let i = 1; i <= 5; i++) {
-      const btn = document.getElementById(`next${i}`);
-      if (btn) btn.disabled = true;
+    function nextStep() {
+        if (currentStep === 5) {
+            submitAndFinish();
+        } else if (currentStep < totalSteps - 1) {
+            showStep(currentStep + 1);
+        }
     }
+
+    function prevStep() {
+        if (currentStep > 0) showStep(currentStep - 1);
+    }
+
+    // ---------- SUBMIT ----------
+    function submitAndFinish() {
+        const btn = document.querySelector('.step.active .btn-group button:last-child');
+        if (btn) btn.disabled = true;
+
+        const labels = ['💬 Phá băng', '🎯 Đam mê', '🧠 Tính cách', '📖 Kỷ niệm', '🚀 Tương lai'];
+        let message = '💌 Câu trả lời từ crush:\n\n';
+        questions.forEach((q, idx) => {
+            const items = answers[q.id] || [];
+            message += `${labels[idx]}: ${items.length ? items.join(', ') : 'Không chọn'}\n`;
+        });
+
+        fetch(FORMSPREE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                _subject: '📝 Kết quả khảo sát crush!',
+                message: message,
+                timestamp: new Date().toLocaleString('vi-VN')
+            })
+        })
+        .then(response => {
+            if (response.ok) showStep(6);
+            else {
+                alert('❌ Lỗi gửi, nhưng câu trả lời vẫn được lưu tạm. Thử lại nhé!');
+                if (btn) btn.disabled = false;
+            }
+        })
+        .catch(() => {
+            alert('⚠️ Không kết nối, hãy chụp màn hình gửi tớ nhé!');
+            if (btn) btn.disabled = false;
+        });
+    }
+
+    // ---------- RESET ----------
+    function resetAll() {
+        for (let key in answers) delete answers[key];
+        document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+        for (let i = 1; i <= 5; i++) {
+            const btn = document.getElementById(`next${i}`);
+            if (btn) btn.disabled = true;
+        }
+        showStep(0);
+    }
+
+    // ---------- DOTS ----------
+    function createDots() {
+        const container = document.getElementById('dots');
+        container.innerHTML = '';
+        for (let i = 0; i < totalSteps; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            container.appendChild(dot);
+        }
+    }
+
+    // ---------- BACKGROUND EFFECTS ----------
+    function createStars() {
+        const container = document.getElementById('stars');
+        for (let i = 0; i < 45; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = 4 + Math.random() * 8;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (2 + Math.random() * 3) + 's');
+            star.style.animationDelay = (Math.random() * 3) + 's';
+            container.appendChild(star);
+        }
+    }
+
+    function createBubbles() {
+        const container = document.getElementById('bubbles');
+        for (let i = 0; i < 12; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = 15 + Math.random() * 35;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.setProperty('--duration', (8 + Math.random() * 12) + 's');
+            bubble.style.animationDelay = (Math.random() * 8) + 's';
+            bubble.style.opacity = 0.15 + Math.random() * 0.2;
+            container.appendChild(bubble);
+        }
+    }
+
+    // ---------- INIT ----------
+    createDots();
     showStep(0);
-  }
+    createStars();
+    createBubbles();
 
-  // ---------- DOTS ----------
-  function createDots() {
-    const container = document.getElementById('dots');
-    container.innerHTML = '';
-    for (let i = 0; i < totalSteps; i++) {
-      const dot = document.createElement('span');
-      dot.className = 'dot' + (i === 0 ? ' active' : '');
-      container.appendChild(dot);
-    }
-  }
-
-  // ---------- KHỞI TẠO ----------
-  createDots();
-  showStep(0);
-
-  // Phím tắt
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      const btn = document.querySelector('.step.active .btn-group button:not(.btn-secondary)');
-      if (btn && !btn.disabled) btn.click();
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      const btn = document.querySelector('.step.active .btn-group .btn-secondary');
-      if (btn) btn.click();
-    }
-  });
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            const btn = document.querySelector('.step.active .btn-group button:not(.btn-secondary)');
+            if (btn && !btn.disabled) btn.click();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            const btn = document.querySelector('.step.active .btn-group .btn-secondary');
+            if (btn) btn.click();
+        }
+    });
 </script>
 </body>
 </html>
