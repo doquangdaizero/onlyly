@@ -1,113 +1,404 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Particle Bouquet - Douyin Effect</title>
-    <style>
-        body { margin: 0; padding: 0; background-color: #000; overflow: hidden; }
-        canvas { display: block; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💖 Hỏi crush xíu nè</title>
+  <style>
+    /* ---------- Reset & toàn cục ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: linear-gradient(145deg, #fff9f0 0%, #ffe8d6 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 550px;
+      width: 100%;
+      background: rgba(255, 248, 240, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 30px 28px 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 215, 180, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    /* ---------- Nội dung ---------- */
+    .step {
+      display: none;
+      animation: fadeUp 0.5s ease;
+    }
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #3d2c1e;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .sub {
+      font-size: 16px;
+      color: #7a5e4a;
+      margin-bottom: 24px;
+      font-weight: 400;
+      border-left: 4px solid #f9a67a;
+      padding-left: 14px;
+      background: rgba(249, 166, 122, 0.08);
+      border-radius: 0 12px 12px 0;
+      line-height: 1.5;
+    }
+
+    .question {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2f2116;
+      margin-bottom: 18px;
+    }
+
+    /* ---------- Các lựa chọn dạng thẻ ---------- */
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .option {
+      background: white;
+      padding: 12px 22px;
+      border-radius: 60px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #3d2c1e;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      border: 2px solid #f0ddd0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      flex: 0 1 auto;
+    }
+    .option:hover {
+      transform: scale(1.03);
+      border-color: #f9a67a;
+      background: #fff3ea;
+    }
+    .option.selected {
+      border-color: #e8834a;
+      background: #ffe3d4;
+      box-shadow: 0 8px 18px rgba(232, 131, 74, 0.25);
+      color: #2f2116;
+    }
+
+    /* ---------- Nút ---------- */
+    .btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    button {
+      background: #e8834a;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 17px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 16px rgba(232, 131, 74, 0.3);
+      letter-spacing: 0.3px;
+    }
+    button:hover {
+      background: #d9733a;
+      transform: scale(1.02);
+      box-shadow: 0 10px 24px rgba(232, 131, 74, 0.4);
+    }
+    button:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-secondary {
+      background: #d9c6b8;
+      box-shadow: none;
+    }
+    .btn-secondary:hover {
+      background: #cbb6a6;
+    }
+
+    /* ---------- Lời nhắn dễ thương (kiểu ảnh đầu) ---------- */
+    .note {
+      margin: 16px 0 20px;
+      padding: 16px 20px;
+      background: rgba(255, 235, 220, 0.6);
+      border-radius: 28px;
+      font-size: 15px;
+      color: #4f3626;
+      font-style: italic;
+      text-align: center;
+      border: 1px dashed #e8c9b5;
+      line-height: 1.6;
+    }
+    .note strong {
+      font-style: normal;
+      color: #c76a34;
+    }
+
+    /* ---------- Progress ---------- */
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 24px 0 12px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 20px;
+      background: #dfccc0;
+      transition: 0.3s;
+    }
+    .dot.active {
+      background: #e8834a;
+      width: 28px;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 480px) {
+      .container { padding: 24px 18px 32px; }
+      h1 { font-size: 24px; }
+      .option { padding: 10px 18px; font-size: 15px; }
+      button { padding: 12px 24px; font-size: 15px; }
+    }
+  </style>
 </head>
 <body>
-    <canvas id="bouquet"></canvas>
-    <script>
-        const canvas = document.getElementById('bouquet');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
-        const particles = [];
-        // Tông màu hoa hồng phấn và đỏ rực như video
-        const colors = ['#ff69b4', '#ffb6c1', '#dc143c', '#fff0f5']; 
-        const green = '#228b22'; // Màu cành xanh
+<div class="container" id="app">
+  <!-- Dấu chấm tiến trình -->
+  <div class="dots" id="dots"></div>
 
-        function createParticle(x, y, z, color) {
-            return { x, y, z, color, size: Math.random() * 1.5 + 0.5 };
+  <!-- Step 0: Chào mừng -->
+  <div class="step active" data-step="0">
+    <h1>🌸 Nè, cho tớ hỏi xíu</h1>
+    <div class="sub">✨ Mấy câu này chỉ để tớ hiểu cậu hơn thôi</div>
+    <div class="note">
+      💬 <strong>“Hôm nay cậu có gì vui không?”</strong> <br>
+      (không có thì… hãy để tớ làm niềm vui nha)
+    </div>
+    <div class="btn-group">
+      <button onclick="nextStep()">Bắt đầu nào →</button>
+    </div>
+  </div>
+
+  <!-- Step 1: Ăn uống -->
+  <div class="step" data-step="1">
+    <h1>🍽️ Cậu thích món nào nhất?</h1>
+    <div class="sub">Chọn một vài món cậu hay ăn nhé</div>
+    <div class="options" id="q1"></div>
+    <div class="note">💭 Tớ sẽ ghi nhớ để sau này… rủ cậu đi ăn 😁</div>
+    <div class="btn-group">
+      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
+      <button id="next1" disabled onclick="nextStep()">Tiếp theo →</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Hoạt động -->
+  <div class="step" data-step="2">
+    <h1>🎧 Lúc rảnh cậu thích làm gì?</h1>
+    <div class="sub">Chọn những hoạt động làm cậu thư giãn</div>
+    <div class="options" id="q2"></div>
+    <div class="note">🎵 Tớ cũng thích nghe nhạc, mai này mình share tai nghe nhé</div>
+    <div class="btn-group">
+      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
+      <button id="next2" disabled onclick="nextStep()">Tiếp theo →</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Tính cách / vibe -->
+  <div class="step" data-step="3">
+    <h1>☕ Cậu thuộc tuýp người thế nào?</h1>
+    <div class="sub">Chọn 1-2 từ miêu tả bản thân</div>
+    <div class="options" id="q3"></div>
+    <div class="note">🌿 Tớ thích con người thật của cậu, không cần hoàn hảo đâu</div>
+    <div class="btn-group">
+      <button class="btn-secondary" onclick="prevStep()">← Quay lại</button>
+      <button id="next3" disabled onclick="nextStep()">Xem kết quả 🎉</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Kết thúc -->
+  <div class="step" data-step="4">
+    <h1>💖 Cảm ơn cậu nha!</h1>
+    <div class="sub">Tớ đã biết thêm một chút về cậu đó</div>
+    <div class="note" style="font-size: 18px; border: none; background: transparent;">
+      <span style="display: block; font-size: 40px; margin-bottom: 10px;">🥰</span>
+      <strong>“Giữ ấm cơ thể và giữ trọn nụ cười nhé”</strong> <br>
+      <span style="font-size: 14px; color: #7a5e4a;">— từ một người thầm thương cậu</span>
+    </div>
+    <div class="note" style="background: rgba(232, 131, 74, 0.08);">
+      📌 Tớ đã lưu hết câu trả lời của cậu rồi (trong máy tớ thôi, yên tâm).
+    </div>
+    <div class="btn-group" style="justify-content: center;">
+      <button onclick="resetAll()">🔄 Làm lại cho vui</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Dữ liệu câu hỏi ----------
+  const questions = [
+    { // step 1
+      id: 'q1',
+      choices: ['🍕 Pizza', '🍣 Sushi', '🍲 Lẩu', '🥩 Nướng', '🥟 Dimsum', '🍜 Ramen', '🌶️ Mì cay', '🦞 Tôm hùm', '🍗 Gà rán', '🥗 Salad']
+    },
+    { // step 2
+      id: 'q2',
+      choices: ['🎶 Nghe nhạc', '📚 Đọc sách', '🎮 Chơi game', '🏃 Chạy bộ', '📸 Chụp ảnh', '✈️ Du lịch', '🍳 Nấu ăn', '🧘 Thiền', '🐶 Chơi với thú cưng']
+    },
+    { // step 3
+      id: 'q3',
+      choices: ['🌞 Hướng ngoại', '🌙 Hướng nội', '🎨 Nghệ sĩ', '🧠 Lý trí', '💪 Mạnh mẽ', '🌸 Dịu dàng', '😄 Hài hước', '🧘 Điềm tĩnh', '🔥 Nhiệt huyết']
+    }
+  ];
+
+  // ---------- State ----------
+  let currentStep = 0;
+  const totalSteps = 5; // 0,1,2,3,4
+  const answers = {};   // lưu các lựa chọn
+
+  // ---------- Render options ----------
+  function renderOptions(stepIndex) {
+    const qData = questions[stepIndex - 1]; // vì step 0 là chào
+    if (!qData) return;
+    const container = document.getElementById(qData.id);
+    if (!container) return;
+    container.innerHTML = '';
+    const selected = answers[qData.id] || [];
+
+    qData.choices.forEach(choice => {
+      const div = document.createElement('div');
+      div.className = 'option' + (selected.includes(choice) ? ' selected' : '');
+      div.textContent = choice;
+      div.dataset.value = choice;
+      div.addEventListener('click', function(e) {
+        const val = this.dataset.value;
+        const arr = answers[qData.id] || [];
+        const idx = arr.indexOf(val);
+        if (idx > -1) {
+          arr.splice(idx, 1);
+          this.classList.remove('selected');
+        } else {
+          arr.push(val);
+          this.classList.add('selected');
         }
-
-        // Hàm tạo các hạt rải rác trong khối cầu (Tán hoa)
-        function addSphere(cx, cy, cz, radius, isFlower, count) {
-            for (let i = 0; i < count; i++) {
-                const u = Math.random(), v = Math.random();
-                const theta = u * 2.0 * Math.PI;
-                const phi = Math.acos(2.0 * v - 1.0);
-                const r = Math.cbrt(Math.random()) * radius;
-
-                const x = cx + r * Math.sin(phi) * Math.cos(theta);
-                const y = cy + r * Math.sin(phi) * Math.sin(theta);
-                const z = cz + r * Math.cos(phi);
-                
-                let color = isFlower ? colors[Math.floor(Math.random() * colors.length)] : green;
-                particles.push(createParticle(x, y, z, color));
-            }
+        answers[qData.id] = arr;
+        // kích hoạt nút tiếp nếu có ít nhất 1 lựa chọn
+        const btn = document.getElementById(`next${stepIndex}`);
+        if (btn) {
+          btn.disabled = arr.length === 0;
         }
+      });
+      container.appendChild(div);
+    });
 
-        // Hàm tạo hạt cho thân cây
-        function addStem(cx, y1, y2, radius, count) {
-            for(let i = 0; i < count; i++) {
-                const y = y1 + Math.random() * (y2 - y1);
-                const r = Math.random() * radius;
-                const theta = Math.random() * 2 * Math.PI;
-                const x = cx + r * Math.cos(theta);
-                const z = r * Math.sin(theta);
-                particles.push(createParticle(x, y, z, green));
-            }
-        }
+    // Kiểm tra nếu có lựa chọn cũ -> enable nút
+    const btn = document.getElementById(`next${stepIndex}`);
+    if (btn) {
+      const arr = answers[qData.id] || [];
+      btn.disabled = arr.length === 0;
+    }
+  }
 
-        // 1. Dựng khung Bó Hoa 3D
-        addSphere(0, -50, 0, 70, true, 3000); // Tâm lõi hoa
-        addSphere(-50, -30, 35, 55, true, 2000); // Các đóa xung quanh
-        addSphere(50, -30, -35, 55, true, 2000);
-        addSphere(-40, -40, -45, 55, true, 2000);
-        addSphere(40, -40, 45, 55, true, 2000);
-        addSphere(0, -90, 0, 60, true, 2000); // Chóp trên
-        addSphere(0, -50, 0, 130, true, 1000); // Hào quang bụi phấn
-        
-        // 2. Dựng cành
-        addStem(0, 10, 180, 10, 2000);
+  // ---------- Điều hướng ----------
+  function showStep(index) {
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`.step[data-step="${index}"]`);
+    if (target) target.classList.add('active');
 
-        let time = 0;
-        function draw() {
-            // Tạo vệt mờ lưu ảnh (Motion Blur)
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            time += 0.02;
-            const angle = time * 0.5; // Tốc độ xoay 3D
-            const beat = 1 + 0.03 * Math.sin(time * 3); // Nhịp đập bồng bềnh
+    // cập nhật dấu chấm
+    document.querySelectorAll('.dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
 
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2 + 50);
+    // nếu là step có câu hỏi (1,2,3) thì render options
+    if (index >= 1 && index <= 3) {
+      renderOptions(index);
+    }
 
-            for (let i = 0; i < particles.length; i++) {
-                const p = particles[i];
-                
-                // Thuật toán xoay 3D trục Y
-                let rx = p.x * Math.cos(angle) - p.z * Math.sin(angle);
-                let rz = p.x * Math.sin(angle) + p.z * Math.cos(angle);
-                let ry = p.y;
+    currentStep = index;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-                // Thêm hiệu ứng nhiễu loạn và đập
-                rx *= beat;
-                ry *= beat;
-                rx += Math.sin(time * 2 + i) * 1.5;
-                ry += Math.cos(time * 2 + i) * 1.5;
+  function nextStep() {
+    if (currentStep < totalSteps - 1) {
+      showStep(currentStep + 1);
+    }
+  }
 
-                // Chiếu không gian 3D lên mặt phẳng 2D (Perspective Projection)
-                const scale = 600 / (600 + rz);
-                const px = rx * scale;
-                const py = ry * scale;
+  function prevStep() {
+    if (currentStep > 0) {
+      showStep(currentStep - 1);
+    }
+  }
 
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = Math.min(1, scale * 0.8);
-                ctx.fillRect(px, py, p.size * scale, p.size * scale);
-            }
-            
-            ctx.restore();
-            requestAnimationFrame(draw);
-        }
-        draw();
-    </script>
+  function resetAll() {
+    // xoá answers
+    for (let key in answers) delete answers[key];
+    // reset tất cả option về unselected
+    document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+    // disable các nút next
+    for (let i = 1; i <= 3; i++) {
+      const btn = document.getElementById(`next${i}`);
+      if (btn) btn.disabled = true;
+    }
+    showStep(0);
+  }
+
+  // ---------- Tạo dots ----------
+  function createDots() {
+    const container = document.getElementById('dots');
+    container.innerHTML = '';
+    for (let i = 0; i < totalSteps; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      container.appendChild(dot);
+    }
+  }
+
+  // ---------- Khởi tạo ----------
+  createDots();
+  showStep(0);
+
+  // (Tùy chọn) Cho phép bấm phím mũi tên để điều hướng
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      const btn = document.querySelector('.step.active .btn-group button:not(.btn-secondary)');
+      if (btn && !btn.disabled) btn.click();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      const btn = document.querySelector('.step.active .btn-group .btn-secondary');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
 </body>
 </html>
