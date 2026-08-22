@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoa Hồng 3D - Douyin</title>
+    <title>Douyin Particle Heart</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background-color: #000; /* Nền đen làm nổi bật bông hoa */
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,108 +19,155 @@
             overflow: hidden;
         }
         canvas {
-            display: block;
+            background-color: #000;
         }
     </style>
 </head>
 <body>
-
-    <canvas id="flowerCanvas"></canvas>
+    <canvas id="heartCanvas" width="640" height="640"></canvas>
 
     <script>
-        var canvas = document.getElementById('flowerCanvas');
-        var ctx = canvas.getContext('2d');
-        
-        // Cài đặt kích thước
-        canvas.width = 600;
-        canvas.height = 600;
-        
-        var m = Math;
-        var C = m.cos;
-        var S = m.sin;
-        var P = m.pow;
-        var R = m.random;
-        var f = 600;
-        var h = -250;
-        var zBuffer = [];
-        
-        // Thuật toán vẽ cánh hoa và lá
-        function p(a, b, c) {
-            if (c > 60) {
-                return [
-                    S(a * 7) * (13 + 5 / (.2 + P(b * 4, 4))) - S(b) * 50,
-                    b * f + 50,
-                    625 + C(a * 7) * (13 + 5 / (.2 + P(b * 4, 4))) + b * 400,
-                    a * 1 - b / 2,
-                    a
-                ];
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const CANVAS_WIDTH = 640;
+        const CANVAS_HEIGHT = 640;
+        const CANVAS_CENTER_X = CANVAS_WIDTH / 2;
+        const CANVAS_CENTER_Y = CANVAS_HEIGHT / 2;
+        const IMAGE_ENLARGE = 11;
+        const HEART_COLOR = "#ffb6c1"; // Màu hồng phấn hạt như Python
+
+        function heartFunction(t, shrinkRatio = IMAGE_ENLARGE) {
+            let x = 16 * Math.pow(Math.sin(t), 3);
+            let y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+            
+            x *= shrinkRatio;
+            y *= shrinkRatio;
+            x += CANVAS_CENTER_X;
+            y += CANVAS_CENTER_Y;
+            return [x, y];
+        }
+
+        function scatterInside(x, y, beta = 0.15) {
+            const ratioX = -beta * Math.log(Math.random());
+            const ratioY = -beta * Math.log(Math.random());
+            const dx = ratioX * (x - CANVAS_CENTER_X);
+            const dy = ratioY * (y - CANVAS_CENTER_Y);
+            return [x - dx, y - dy];
+        }
+
+        function shrink(x, y, ratio) {
+            const force = -1 / Math.pow((Math.pow(x - CANVAS_CENTER_X, 2) + Math.pow(y - CANVAS_CENTER_Y, 2)), 0.6);
+            const dx = ratio * force * (x - CANVAS_CENTER_X);
+            const dy = ratio * force * (y - CANVAS_CENTER_Y);
+            return [x - dx, y - dy];
+        }
+
+        function curve(p) {
+            return (2 * (2 * Math.sin(4 * p))) / (2 * Math.PI);
+        }
+
+        class Heart {
+            constructor(generateFrame = 20) {
+                this.points = [];
+                this.edgeDiffusionPoints = [];
+                this.centerDiffusionPoints = [];
+                this.allPoints = {};
+                this.generateFrame = generateFrame;
+
+                this.build(2000);
+                for (let frame = 0; frame < generateFrame; frame++) {
+                    this.calc(frame);
+                }
             }
-            var A = a * 2 - 1;
-            var B = b * 2 - 1;
-            if (A * A + B * B < 1) {
-                if (c > 37) {
-                    var j = c & 1;
-                    var n = j ? 6 : 4;
-                    var o = .5 / (a + .01) + C(b * 125) * 3 - a * 300;
-                    var w = b * h;
-                    return [
-                        o * C(n) + w * S(n) + j * 610 - 390,
-                        o * S(n) - w * C(n) + 550 - j * 350,
-                        1180 + C(B + A) * 99 - j * 300,
-                        .4 - a * .1 + P(1 - B * B, -h * 6) * .15 - a * b * .4 + C(a + b) / 5 + P(C((o * (a + 1) + (B > 0 ? w : -w)) / 25), 30) * .1 * (1 - B * B),
-                        o / 1e3 + .7 - o * w * 3e-6
-                    ];
+
+            build(number) {
+                for (let i = 0; i < number; i++) {
+                    const t = Math.random() * 2 * Math.PI;
+                    const [x, y] = heartFunction(t);
+                    this.points.push([x, y]);
                 }
-                if (c > 32) {
-                    c = c * 1.16 - .15;
-                    var o = a * 45 - 20;
-                    var w = b * b * h;
-                    var z = o * S(c) + w * C(c) + 620;
-                    return [
-                        o * C(c) - w * S(c),
-                        28 + C(B * .5) * 99 - b * b * b * 60 - z / 2 - h,
-                        z,
-                        (b * b * .3 + P((1 - (A * A)), 7) * .15 + .3) * b,
-                        b * .7
-                    ];
+
+                for (let pt of this.points) {
+                    for (let i = 0; i < 3; i++) {
+                        const [x, y] = scatterInside(pt[0], pt[1], 0.05);
+                        this.edgeDiffusionPoints.push([x, y]);
+                    }
                 }
-                var o = A * (2 - b) * (80 - c * 2);
-                var w = 99 - C(A) * 120 - C(b) * (-h - c * 4.9) + C(P(1 - b, 7)) * 50 + c * 2;
-                var z = o * S(c) + w * C(c) + 700;
-                return [
-                    o * C(c) - w * S(c),
-                    B * 99 - C(P(b, 7)) * 50 - c / 3 - z / 1.35 + 450,
-                    z,
-                    (1 - b / 1.2) * .9 + a * .1,
-                    P((1 - b), 20) / 4 + .05
-                ];
+
+                for (let i = 0; i < 4000; i++) {
+                    const pt = this.points[Math.floor(Math.random() * this.points.length)];
+                    const [x, y] = scatterInside(pt[0], pt[1], 0.17);
+                    this.centerDiffusionPoints.push([x, y]);
+                }
+            }
+
+            calcPosition(x, y, ratio) {
+                const force = 1 / Math.pow((Math.pow(x - CANVAS_CENTER_X, 2) + Math.pow(y - CANVAS_CENTER_Y, 2)), 0.520);
+                const dx = ratio * force * (x - CANVAS_CENTER_X) + (Math.random() * 2 - 1);
+                const dy = ratio * force * (y - CANVAS_CENTER_Y) + (Math.random() * 2 - 1);
+                return [x - dx, y - dy];
+            }
+
+            calc(generateFrame) {
+                const ratio = 10 * curve((generateFrame / 10) * Math.PI);
+                const haloRadius = Math.floor(4 + 6 * (1 + curve((generateFrame / 10) * Math.PI)));
+                const haloNumber = Math.floor(3000 + 4000 * Math.abs(Math.pow(curve((generateFrame / 10) * Math.PI), 2)));
+                const allPoints = [];
+
+                for (let i = 0; i < haloNumber; i++) {
+                    const t = Math.random() * 2 * Math.PI;
+                    let [x, y] = heartFunction(t, 11.6);
+                    [x, y] = shrink(x, y, haloRadius);
+                    x += Math.floor(Math.random() * 29 - 14);
+                    y += Math.floor(Math.random() * 29 - 14);
+                    const size = Math.random() < 0.33 ? 1 : 2;
+                    allPoints.push([x, y, size]);
+                }
+
+                for (let pt of this.points) {
+                    const [x, y] = this.calcPosition(pt[0], pt[1], ratio);
+                    const size = Math.floor(Math.random() * 3) + 1;
+                    allPoints.push([x, y, size]);
+                }
+
+                for (let pt of this.edgeDiffusionPoints) {
+                    const [x, y] = this.calcPosition(pt[0], pt[1], ratio);
+                    const size = Math.floor(Math.random() * 2) + 1;
+                    allPoints.push([x, y, size]);
+                }
+
+                for (let pt of this.centerDiffusionPoints) {
+                    const [x, y] = this.calcPosition(pt[0], pt[1], ratio);
+                    const size = Math.random() < 0.5 ? 1 : 2;
+                    allPoints.push([x, y, size]);
+                }
+
+                this.allPoints[generateFrame] = allPoints;
+            }
+
+            render(renderFrame) {
+                ctx.fillStyle = HEART_COLOR;
+                const points = this.allPoints[renderFrame % this.generateFrame];
+                for (let pt of points) {
+                    ctx.fillRect(pt[0], pt[1], pt[2], pt[2]);
+                }
             }
         }
 
-        // Vòng lặp Render hoa
-        setInterval(function () {
-            for (var i = 0; i < 10000; i++) {
-                var a = R(), b = R(), c = i % 46 / .74;
-                var s = p(a, b, c);
-                if (s) {
-                    var z = s[2];
-                    var x = ~~(s[0] * f / z - h);
-                    var y = ~~(s[1] * f / z - h);
-                    var q = y * f + x;
-                    
-                    // Tính toán màu sắc và chiều sâu (Z-index)
-                    if (typeof zBuffer[q] === 'undefined' || zBuffer[q] > z) {
-                        zBuffer[q] = z;
-                        var r = ~(s[3] * h);
-                        var g = ~(s[4] * h);
-                        var blue = ~(s[3] * s[3] * -80);
-                        
-                        ctx.fillStyle = "rgb(" + r + "," + g + "," + blue + ")";
-                        ctx.fillRect(x, y, 1, 1); // Vẽ từng điểm ảnh
-                    }
-                }
-            }
-        }, 0);
+        const heart = new Heart();
+        let frame = 0;
+
+        function draw() {
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            heart.render(frame);
+            frame++;
+            setTimeout(() => {
+                requestAnimationFrame(draw);
+            }, 100);
+        }
+
+        draw();
     </script>
 </body>
 </html>
