@@ -72,33 +72,21 @@
             z-index: 2;
         }
 
-        .container {
+        .content {
             max-width: 440px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(24px);
-            border-radius: 28px;
-            padding: 40px 32px 36px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.6),
-                0 8px 30px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             text-align: center;
             opacity: 0;
             transform: translateY(20px) scale(0.97);
             animation: containerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             animation-delay: 0.2s;
-            max-height: 90vh;
-            overflow-y: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 350px;
+            padding: 20px 10px;
         }
-        .container::-webkit-scrollbar { width: 3px; }
-        .container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
 
         @keyframes containerIn {
             to {
@@ -126,10 +114,10 @@
 
         /* ===== TYPOGRAPHY ===== */
         .icon-wrap {
-            font-size: 52px;
-            margin-bottom: 12px;
+            font-size: 56px;
+            margin-bottom: 16px;
             display: inline-block;
-            filter: drop-shadow(0 0 40px rgba(232, 134, 122, 0.2));
+            filter: drop-shadow(0 0 50px rgba(232, 134, 122, 0.25));
             animation: iconPulse 3s ease-in-out infinite;
         }
         @keyframes iconPulse {
@@ -138,16 +126,16 @@
         }
 
         .greeting {
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             letter-spacing: 1.5px;
         }
         .greeting .hl {
             color: #f0a0a0;
             font-weight: 400;
-            text-shadow: 0 0 30px rgba(232, 134, 122, 0.15);
+            text-shadow: 0 0 40px rgba(232, 134, 122, 0.2);
         }
 
         /* ===== TYPEWRITER ===== */
@@ -161,9 +149,9 @@
             padding: 0 4px;
         }
         .typewriter-text {
-            font-size: 16px;
-            line-height: 2.2;
-            color: rgba(255, 255, 255, 0.85);
+            font-size: 17px;
+            line-height: 2.3;
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 300;
             text-align: left;
             width: 100%;
@@ -180,7 +168,7 @@
         .typewriter-text .highlight {
             color: #f0a0a0;
             font-weight: 400;
-            text-shadow: 0 0 20px rgba(232, 134, 122, 0.1);
+            text-shadow: 0 0 30px rgba(232, 134, 122, 0.15);
         }
         .typewriter-text .highlight-pink {
             color: #e8867a;
@@ -190,7 +178,7 @@
             display: inline-block;
             width: 2px;
             height: 1.1em;
-            background: rgba(232, 134, 122, 0.6);
+            background: rgba(232, 134, 122, 0.7);
             margin-left: 2px;
             vertical-align: text-bottom;
             animation: blink 0.8s step-end infinite;
@@ -254,10 +242,8 @@
                 max-height: 50vh;
                 overflow-y: auto;
             }
-            .container {
-                padding: 24px 20px 20px;
-                background: rgba(0, 0, 0, 0.6);
-                border-radius: 20px;
+            .content {
+                padding: 16px 10px;
                 min-height: 280px;
             }
             .right-panel {
@@ -265,19 +251,19 @@
                 min-height: 50vh;
                 height: 50vh;
             }
-            .greeting { font-size: 16px; }
-            .typewriter-text { font-size: 14px; line-height: 2; }
-            .icon-wrap { font-size: 40px; }
+            .greeting { font-size: 17px; }
+            .typewriter-text { font-size: 15px; line-height: 2.1; }
+            .icon-wrap { font-size: 44px; }
             .btn-action { padding: 11px 30px; font-size: 14px; }
         }
 
         @media (max-width: 480px) {
             .left-panel { padding: 8px 10px; max-height: 45vh; }
-            .container { padding: 18px 14px 16px; border-radius: 16px; min-height: 220px; }
-            .greeting { font-size: 14px; margin-bottom: 10px; }
-            .typewriter-text { font-size: 13px; line-height: 1.9; min-height: 80px; }
+            .content { padding: 12px 8px; min-height: 220px; }
+            .greeting { font-size: 15px; margin-bottom: 12px; }
+            .typewriter-text { font-size: 13px; line-height: 2; min-height: 80px; }
             .typewriter-wrap { min-height: 130px; }
-            .icon-wrap { font-size: 32px; margin-bottom: 8px; }
+            .icon-wrap { font-size: 36px; margin-bottom: 10px; }
             .btn-action { padding: 9px 22px; font-size: 13px; }
         }
     </style>
@@ -292,7 +278,7 @@
 
         <!-- ===== LEFT PANEL ===== -->
         <div class="left-panel">
-            <div class="container" id="container">
+            <div class="content" id="content">
                 <!-- Icon -->
                 <div class="icon-wrap" id="iconWrap">🌹</div>
 
