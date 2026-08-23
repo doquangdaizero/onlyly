@@ -289,11 +289,11 @@
         <div class="left-panel">
             <div class="container" id="container">
                 <!-- Icon -->
-                <div class="icon-wrap" id="iconWrap">🌹</div>
+                <div class="icon-wrap" id="iconWrap">💫</div>
 
                 <!-- Greeting -->
                 <div class="greeting" id="greeting">
-                    Gửi <span class="hl">em</span> yêu,
+                    Tặng <span class="hl">em</span> bó hoa này, mong nó sẽ làm em vui, dù chỉ một chút
                 </div>
 
                 <!-- Typewriter -->
@@ -304,7 +304,7 @@
                 <!-- Button -->
                 <div class="btn-wrap" id="btnWrap">
                     <button class="btn-action" id="btnAction">
-                        Đồng ý nghe anh nhé
+                        Đồng ý
                     </button>
                 </div>
             </div>
@@ -543,31 +543,32 @@
         setTimeout(resizeRenderer, 100);
 
         // =============================================================
-        // TYPEWRITER - GIỮ NGUYÊN CHỮ ĐÃ RA
+        // TYPEWRITER - SỬA LỖI
         // =============================================================
         const typewriterText = document.getElementById('typewriterText');
         const btnWrap = document.getElementById('btnWrap');
         const btnAction = document.getElementById('btnAction');
 
+        // Dùng plain text, không có HTML tag để tránh lỗi
         const lines = [
-            'Anh có vài điều <span class="highlight">nhỏ bé</span> muốn hỏi em.',
+            'Anh có vài điều nhỏ bé muốn hỏi em.',
             'Không phải chuyện gì quá lớn lao đâu,',
-            'chỉ là đôi điều anh luôn <span class="highlight">thầm mong</span> được nghe.',
+            'chỉ là đôi điều anh luôn thầm mong được nghe.',
             '',
-            '<span class="highlight-pink">Em có muốn lắng nghe không?</span>'
+            'Em có muốn lắng nghe không?'
         ];
 
         let currentLineIndex = 0;
         let currentCharIndex = 0;
-        let isTyping = false;
 
         function typeNextChar() {
             if (currentLineIndex >= lines.length) {
-                // Hoàn thành
-                typewriterText.innerHTML = lines.map((line, idx) => {
-                    if (line === '') return '<br>';
-                    return `<div class="line done">${line}</div>`;
-                }).join('');
+                // Hoàn thành - thêm highlight cho dòng cuối
+                const allLines = typewriterText.querySelectorAll('.line');
+                if (allLines.length > 0) {
+                    const lastLine = allLines[allLines.length - 1];
+                    lastLine.style.color = '#e8867a';
+                }
                 setTimeout(() => {
                     btnWrap.classList.add('show');
                 }, 500);
@@ -578,7 +579,6 @@
             
             if (line === '') {
                 // Dòng trống
-                const existingLines = typewriterText.querySelectorAll('.line');
                 const br = document.createElement('br');
                 typewriterText.appendChild(br);
                 currentLineIndex++;
@@ -600,7 +600,7 @@
             // Thêm từng ký tự
             if (currentCharIndex < line.length) {
                 const char = line.charAt(currentCharIndex);
-                currentDiv.innerHTML += char;
+                currentDiv.textContent += char;
                 currentCharIndex++;
                 const delay = char === ' ' ? 35 : 20;
                 setTimeout(typeNextChar, delay);
