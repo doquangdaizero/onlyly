@@ -49,7 +49,7 @@
             100% { opacity: var(--opacity-max); transform: scale(1.2); }
         }
 
-        /* ===== LAYOUT: LEFT (UI) + RIGHT (3D) ===== */
+        /* ===== LAYOUT ===== */
         .app-wrapper {
             display: flex;
             width: 100vw;
@@ -60,7 +60,7 @@
             overflow: hidden;
         }
 
-        /* ===== LEFT SIDE - UI ===== */
+        /* ===== LEFT PANEL ===== */
         .left-panel {
             flex: 0 0 45%;
             min-width: 340px;
@@ -73,21 +73,18 @@
         }
 
         .container {
-            max-width: 420px;
+            max-width: 440px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 36px 28px 32px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.6),
-                0 8px 30px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
+            padding: 40px 32px 36px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             text-align: center;
             opacity: 0;
-            transform: translateY(24px) scale(0.97);
-            animation: containerIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            transform: translateY(20px) scale(0.97);
+            animation: containerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             animation-delay: 0.2s;
             max-height: 90vh;
             overflow-y: auto;
@@ -95,15 +92,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 400px;
+            min-height: 350px;
         }
-        .container::-webkit-scrollbar {
-            width: 3px;
-        }
-        .container::-webkit-scrollbar-thumb {
-            background: rgba(232, 134, 122, 0.15);
-            border-radius: 10px;
-        }
+        .container::-webkit-scrollbar { width: 3px; }
+        .container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
 
         @keyframes containerIn {
             to {
@@ -112,7 +104,7 @@
             }
         }
 
-        /* ===== RIGHT SIDE - 3D ===== */
+        /* ===== RIGHT PANEL - 3D ===== */
         .right-panel {
             flex: 1;
             position: relative;
@@ -131,61 +123,53 @@
 
         /* ===== TYPOGRAPHY ===== */
         .icon-wrap {
-            font-size: 52px;
-            margin-bottom: 10px;
+            font-size: 48px;
+            margin-bottom: 12px;
             display: inline-block;
-            animation: iconFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(232, 134, 122, 0.2));
-        }
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
-            50% { transform: translateY(-8px) scale(1.05) rotate(-3deg); }
+            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.05));
         }
 
         .greeting {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.3);
-            margin-bottom: 16px;
-            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.25);
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
         }
         .greeting .hl {
-            color: #e8867a;
+            color: rgba(255, 255, 255, 0.6);
             font-weight: 400;
         }
 
         /* ===== TYPEWRITER ===== */
         .typewriter-wrap {
             width: 100%;
-            min-height: 180px;
+            min-height: 160px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 8px 0 16px;
-            padding: 0 8px;
+            margin: 4px 0 20px;
+            padding: 0 4px;
         }
         .typewriter-text {
-            font-size: 17px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.85);
+            font-size: 16px;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 300;
             text-align: center;
-            min-height: 100px;
             width: 100%;
+            min-height: 100px;
+            letter-spacing: 0.3px;
         }
         .typewriter-text .highlight {
-            color: #e8867a;
-            font-weight: 400;
-        }
-        .typewriter-text .highlight-pink {
-            color: #d4738a;
+            color: rgba(255, 255, 255, 0.95);
             font-weight: 400;
         }
         .typewriter-text .cursor {
             display: inline-block;
             width: 2px;
-            height: 1.2em;
-            background: #e8867a;
+            height: 1.1em;
+            background: rgba(255, 255, 255, 0.3);
             margin-left: 2px;
             vertical-align: text-bottom;
             animation: blink 0.8s step-end infinite;
@@ -197,10 +181,10 @@
 
         /* ===== BUTTON ===== */
         .btn-wrap {
-            margin-top: 12px;
+            margin-top: 8px;
             opacity: 0;
             transform: translateY(10px) scale(0.95);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             pointer-events: none;
         }
         .btn-wrap.show {
@@ -209,113 +193,33 @@
             pointer-events: auto;
         }
 
-        .btn-love {
-            position: relative;
-            padding: 14px 40px;
-            border: none;
+        .btn-action {
+            padding: 12px 36px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 50px;
-            background: linear-gradient(135deg, #e8867a, #d4738a);
-            color: #fff;
-            font-size: 17px;
-            font-weight: 600;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            font-weight: 400;
             font-family: 'Segoe UI', 'Poppins', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 30px rgba(232, 134, 122, 0.3);
             letter-spacing: 0.5px;
-            overflow: hidden;
+            backdrop-filter: blur(10px);
         }
-        .btn-love::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50px;
-            background: linear-gradient(135deg, #f09a8e, #d4738a);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: rgba(255, 255, 255, 0.9);
         }
-        .btn-love:hover::before {
-            opacity: 1;
-        }
-        .btn-love:hover {
-            transform: translateY(-2px) scale(1.04);
-            box-shadow: 0 8px 40px rgba(232, 134, 122, 0.5);
-        }
-        .btn-love:active {
+        .btn-action:active {
             transform: scale(0.96);
-        }
-        .btn-love .btn-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-love .heart-icon {
-            display: inline-block;
-            animation: heartBeat 1.2s ease-in-out infinite;
-        }
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            14% { transform: scale(1.3); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.2); }
-            56% { transform: scale(1); }
-        }
-
-        /* ===== POPUP ===== */
-        .popup {
-            position: fixed;
-            background: rgba(20, 20, 30, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(232, 134, 122, 0.08);
-            border-radius: 14px;
-            padding: 8px 16px;
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 12px;
-            color: #fff;
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
-            z-index: 1001;
-            pointer-events: none;
-            animation: popupIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            animation-delay: var(--delay, 0s);
-            opacity: 0;
-            transform: scale(0.9) translateY(8px);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            max-width: 90%;
-        }
-        .popup .icon { font-size: 14px; }
-        .popup .text { color: rgba(255, 255, 255, 0.6); font-size: 11px; }
-        .popup .badge {
-            background: rgba(232, 134, 122, 0.1);
-            padding: 1px 8px;
-            border-radius: 20px;
-            font-size: 8px;
-            color: #e8867a;
-            border: 1px solid rgba(232, 134, 122, 0.06);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        @keyframes popupIn {
-            0% { opacity: 0; transform: scale(0.9) translateY(8px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .popup.fade {
-            animation: popupOut 0.35s ease forwards;
-            animation-delay: var(--delay, 2s);
-        }
-        @keyframes popupOut {
-            0% { opacity: 1; transform: scale(1) translateY(0); }
-            100% { opacity: 0; transform: scale(0.9) translateY(-12px); }
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
-            .app-wrapper {
-                flex-direction: column;
-            }
+            .app-wrapper { flex-direction: column; }
             .left-panel {
                 flex: 0 0 auto;
                 min-width: unset;
@@ -325,32 +229,30 @@
                 overflow-y: auto;
             }
             .container {
-                padding: 24px 18px 20px;
-                max-height: 100%;
+                padding: 24px 20px 20px;
                 background: rgba(0, 0, 0, 0.6);
-                border-radius: 24px;
-                min-height: 300px;
+                border-radius: 20px;
+                min-height: 280px;
             }
             .right-panel {
                 flex: 1;
                 min-height: 50vh;
                 height: 50vh;
             }
-            .greeting { font-size: 17px; }
-            .typewriter-text { font-size: 15px; }
-            .icon-wrap { font-size: 40px; }
-            .btn-love { padding: 12px 30px; font-size: 15px; }
+            .greeting { font-size: 15px; }
+            .typewriter-text { font-size: 14px; line-height: 1.8; }
+            .icon-wrap { font-size: 36px; }
+            .btn-action { padding: 10px 28px; font-size: 14px; }
         }
 
         @media (max-width: 480px) {
             .left-panel { padding: 8px 10px; max-height: 45vh; }
-            .container { padding: 18px 14px 16px; border-radius: 20px; min-height: 250px; }
-            .greeting { font-size: 14px; margin-bottom: 10px; }
-            .typewriter-text { font-size: 13px; line-height: 1.6; min-height: 80px; }
+            .container { padding: 18px 14px 16px; border-radius: 16px; min-height: 220px; }
+            .greeting { font-size: 13px; margin-bottom: 12px; }
+            .typewriter-text { font-size: 13px; line-height: 1.7; min-height: 70px; }
             .typewriter-wrap { min-height: 120px; }
-            .icon-wrap { font-size: 32px; margin-bottom: 6px; }
-            .btn-love { padding: 10px 20px; font-size: 13px; }
-            .btn-love .btn-content { gap: 6px; }
+            .icon-wrap { font-size: 30px; margin-bottom: 8px; }
+            .btn-action { padding: 8px 20px; font-size: 13px; }
         }
     </style>
 </head>
@@ -366,11 +268,11 @@
         <div class="left-panel">
             <div class="container" id="container">
                 <!-- Icon -->
-                <div class="icon-wrap" id="iconWrap">💌</div>
+                <div class="icon-wrap" id="iconWrap">✉️</div>
 
                 <!-- Greeting -->
                 <div class="greeting" id="greeting">
-                    Gửi <span class="hl">em</span> yêu dấu...
+                    Gửi <span class="hl">em</span>,
                 </div>
 
                 <!-- Typewriter -->
@@ -380,25 +282,21 @@
                     </div>
                 </div>
 
-                <!-- ===== BUTTON ===== -->
+                <!-- Button -->
                 <div class="btn-wrap" id="btnWrap">
-                    <button class="btn-love" id="btnLove">
-                        <span class="btn-content">
-                            <span class="heart-icon">❤️</span>
-                            Đồng ý nhé em
-                            <span class="heart-icon">❤️</span>
-                        </span>
+                    <button class="btn-action" id="btnAction">
+                        Đồng ý
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- ===== RIGHT PANEL - 3D ROSE ===== -->
+        <!-- ===== RIGHT PANEL - 3D ===== -->
         <div class="right-panel" id="threeContainer"></div>
     </div>
 
     <!-- ============================================================= -->
-    <!-- THREE.JS SCRIPT -->
+    <!-- THREE.JS -->
     <!-- ============================================================= -->
     <script type="module">
         import * as THREE from 'three';
@@ -406,11 +304,10 @@
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
 
-        // --- Khởi tạo Scene, Camera, Renderer ---
         const container = document.getElementById('threeContainer');
         const scene = new THREE.Scene();
-        scene.add(new THREE.HemisphereLight(0xffe8e2, 0x26302a, 1.8));
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+        scene.add(new THREE.HemisphereLight(0xffffff, 0x26302a, 1.5));
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
         keyLight.position.set(2, 4, 5);
         scene.add(keyLight);
         
@@ -426,11 +323,10 @@
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.6;
+        controls.autoRotateSpeed = 0.5;
         controls.enableZoom = true;
         controls.zoomSpeed = 0.5;
 
-        // --- Tải mô hình và tạo hệ thống hạt ---
         const loader = new GLTFLoader();
         const PARTICLE_COUNT = 400000;
         let particleSystem;
@@ -604,7 +500,6 @@
             console.error('Error loading model:', error);
         });
 
-        // --- Resize Handler ---
         function resizeRenderer() {
             const width = container.clientWidth;
             const height = container.clientHeight;
@@ -616,7 +511,6 @@
         }
         window.addEventListener('resize', resizeRenderer);
 
-        // --- Animation Loop ---
         function animate() {
             requestAnimationFrame(animate);
             if (particleSystem) {
@@ -627,64 +521,27 @@
             renderer.render(scene, camera);
         }
         animate();
-
         setTimeout(resizeRenderer, 100);
 
         // =============================================================
-        // TYPEWRITER + UI SEQUENCE
+        // TYPEWRITER
         // =============================================================
         const typewriterText = document.getElementById('typewriterText');
         const btnWrap = document.getElementById('btnWrap');
-        const btnLove = document.getElementById('btnLove');
-        const iconWrap = document.getElementById('iconWrap');
+        const btnAction = document.getElementById('btnAction');
 
-        // Nội dung sẽ chạy từng chữ
         const lines = [
-            'Anh có vài điều <span class="highlight">nho nhỏ</span> muốn hỏi em...',
-            'Không phải gì to tát đâu,',
-            'chỉ là mấy câu <span class="highlight-pink">thầm thì</span> thôi mà.',
+            'Anh có vài điều muốn hỏi em,',
+            'không phải chuyện gì lớn đâu.',
+            'Chỉ là mấy câu nhỏ thôi.',
             '',
-            'Mà khoan... em có muốn nghe không? 💕'
+            'Em có sẵn sàng nghe không?'
         ];
-
-        const popupMessages = [
-            { icon: '💫', text: 'Anh ơi em đây nè...', badge: 'NGHE' },
-            { icon: '🌙', text: 'Em đang lắng nghe nè...', badge: 'CHÚ Ý' },
-            { icon: '✨', text: 'Anh nói đi ạ...', badge: 'SẴN SÀNG' },
-            { icon: '💕', text: 'Em đây, anh nói đi...', badge: 'NGHE' },
-            { icon: '🌹', text: 'Anh đang định hỏi gì thế?', badge: 'TÒ MÒ' },
-        ];
-
-        function showPopup(msg, delay = 0) {
-            const el = document.createElement('div');
-            el.className = 'popup';
-            el.style.setProperty('--delay', delay + 's');
-            el.innerHTML = `
-                <span class="icon">${msg.icon}</span>
-                <span class="text">${msg.text}</span>
-                <span class="badge">${msg.badge}</span>
-            `;
-            const x = 10 + Math.random() * (window.innerWidth * 0.35);
-            const y = 10 + Math.random() * (window.innerHeight * 0.65);
-            el.style.left = x + 'px';
-            el.style.top = y + 'px';
-            document.body.appendChild(el);
-
-            const duration = 2.0 + Math.random() * 2.0;
-            setTimeout(() => {
-                el.classList.add('fade');
-                el.style.setProperty('--delay', duration + 's');
-                setTimeout(() => {
-                    if (el.parentNode) el.remove();
-                }, duration * 1000 + 400);
-            }, duration * 1000);
-        }
 
         function typeLine(text, index, callback) {
             if (index < text.length) {
                 const char = text.charAt(index);
                 if (char === '<') {
-                    // Nếu gặp thẻ HTML, thêm toàn bộ thẻ vào
                     const closeTagIndex = text.indexOf('>', index);
                     if (closeTagIndex !== -1) {
                         const fullTag = text.substring(index, closeTagIndex + 1);
@@ -707,67 +564,38 @@
 
         function showLine(lineIndex) {
             if (lineIndex >= lines.length) {
-                // Hoàn thành tất cả dòng, hiển thị nút
-                typewriterText.innerHTML = lines[lines.length - 1] + ' 💖';
+                typewriterText.innerHTML = lines[lines.length - 1];
                 setTimeout(() => {
                     btnWrap.classList.add('show');
-                    // Popup kêu gọi ấn nút
-                    setTimeout(() => {
-                        showPopup({ icon: '💕', text: 'Ấn vào đi anh yêu...', badge: 'NHANH' }, 0.5);
-                    }, 500);
-                }, 600);
+                }, 500);
                 return;
             }
 
             const text = lines[lineIndex];
             if (text === '') {
-                // Dòng trống, chờ rồi qua dòng tiếp
                 setTimeout(() => showLine(lineIndex + 1), 400);
                 return;
             }
 
-            // Xóa nội dung cũ
             typewriterText.innerHTML = '';
-            
-            // Thêm dòng mới
             typeLine(text, 0, () => {
-                // Chờ một chút rồi chuyển dòng tiếp
                 setTimeout(() => {
-                    // Thêm xuống dòng nếu chưa phải dòng cuối
                     if (lineIndex < lines.length - 1) {
                         typewriterText.innerHTML += '<br>';
                     }
                     showLine(lineIndex + 1);
-                }, 600);
+                }, 500);
             });
         }
 
-        // Bắt sự kiện click nút
-        btnLove.addEventListener('click', () => {
+        btnAction.addEventListener('click', () => {
             window.location.href = 'survey.html?hacked=true&timestamp=' + Date.now();
         });
 
-        // Bắt đầu chạy typewriter sau 1 giây
-        setTimeout(() => {
-            showLine(0);
-            
-            // Popup ngẫu nhiên trong lúc chờ
-            let popupInterval = setInterval(() => {
-                const msg = popupMessages[Math.floor(Math.random() * popupMessages.length)];
-                showPopup(msg);
-            }, 2500);
-
-            // Dừng popup khi nút hiện
-            const checkBtn = setInterval(() => {
-                if (btnWrap.classList.contains('show')) {
-                    clearInterval(popupInterval);
-                    clearInterval(checkBtn);
-                }
-            }, 500);
-        }, 800);
+        setTimeout(() => showLine(0), 600);
 
         // =============================================================
-        // TẠO NỀN SAO
+        // NỀN SAO
         // =============================================================
         (function createStars() {
             const container2 = document.getElementById('starsBg');
@@ -786,8 +614,6 @@
                 container2.appendChild(el);
             }
         })();
-
-        console.log('💌 Gửi em yêu dấu...');
     </script>
 </body>
 </html>
