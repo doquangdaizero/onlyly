@@ -581,7 +581,7 @@
                 }
                 setTimeout(() => {
                     btnWrap.classList.add('show');
-                }, 800);
+                }, 1200);
                 return;
             }
 
@@ -591,7 +591,7 @@
                 const br = document.createElement('br');
                 typewriterText.appendChild(br);
                 currentLineIndex++;
-                setTimeout(typeNextChar, 300);
+                setTimeout(typeNextChar, 600);
                 return;
             }
 
@@ -606,7 +606,7 @@
             const currentDiv = lineDivs[currentLineIndex];
             if (!currentDiv) {
                 currentLineIndex++;
-                setTimeout(typeNextChar, 100);
+                setTimeout(typeNextChar, 200);
                 return;
             }
             
@@ -620,7 +620,7 @@
                 currentDiv.classList.add('done');
                 currentLineIndex++;
                 currentCharIndex = 0;
-                setTimeout(typeNextChar, 400);
+                setTimeout(typeNextChar, 800);
             }
         }
 
@@ -629,7 +629,7 @@
         });
 
         // BẮT ĐẦU TYPEWRITER SAU 3.5 GIÂY (khi greeting đã hiển thị xong)
-        setTimeout(typeNextChar, 5000);
+        setTimeout(typeNextChar, 6000);
 
         // =============================================================
         // NỀN SAO
