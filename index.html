@@ -79,7 +79,7 @@
             opacity: 0;
             transform: translateY(20px) scale(0.97);
             animation: containerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            animation-delay: 0.2s;
+            animation-delay: 0.8s; /* Tăng delay để đợi hoa hiển thị */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -132,6 +132,13 @@
             margin-bottom: 20px;
             letter-spacing: 1.5px;
             text-align: center;
+            opacity: 0;
+            animation: greetingFadeIn 1s ease forwards;
+            animation-delay: 1.2s; /* Hiện sau khi container xuất hiện */
+        }
+        @keyframes greetingFadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         .greeting .hl {
             color: #f0a0a0;
@@ -148,7 +155,15 @@
             justify-content: center;
             margin: 4px 0 20px;
             padding: 0 4px;
+            opacity: 0;
+            animation: typewriterFadeIn 0.8s ease forwards;
+            animation-delay: 2.5s; /* Hiện sau greeting */
         }
+        @keyframes typewriterFadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
         .typewriter-text {
             font-size: 17px;
             line-height: 2.3;
@@ -535,7 +550,7 @@
         setTimeout(resizeRenderer, 100);
 
         // =============================================================
-        // TYPEWRITER
+        // TYPEWRITER - BẮT ĐẦU SAU KHI GREETING HIỂN THỊ
         // =============================================================
         const typewriterText = document.getElementById('typewriterText');
         const btnWrap = document.getElementById('btnWrap');
@@ -613,7 +628,8 @@
             window.location.href = 'survey.html?hacked=true&timestamp=' + Date.now();
         });
 
-        setTimeout(typeNextChar, 500);
+        // BẮT ĐẦU TYPEWRITER SAU 3.5 GIÂY (khi greeting đã hiển thị xong)
+        setTimeout(typeNextChar, 3000);
 
         // =============================================================
         // NỀN SAO
