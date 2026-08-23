@@ -126,50 +126,66 @@
             font-size: 48px;
             margin-bottom: 12px;
             display: inline-block;
-            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.05));
+            filter: drop-shadow(0 0 30px rgba(232, 134, 122, 0.15));
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .greeting {
             font-size: 18px;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.25);
-            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 16px;
             letter-spacing: 1.5px;
         }
         .greeting .hl {
-            color: rgba(255, 255, 255, 0.6);
+            color: #e8867a;
             font-weight: 400;
         }
 
         /* ===== TYPEWRITER ===== */
         .typewriter-wrap {
             width: 100%;
-            min-height: 160px;
+            min-height: 180px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             margin: 4px 0 20px;
             padding: 0 4px;
         }
         .typewriter-text {
             font-size: 16px;
-            line-height: 2;
-            color: rgba(255, 255, 255, 0.8);
+            line-height: 2.2;
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 300;
-            text-align: center;
+            text-align: left;
             width: 100%;
-            min-height: 100px;
+            min-height: 120px;
             letter-spacing: 0.3px;
         }
+        .typewriter-text .line {
+            opacity: 0;
+            animation: fadeInLine 0.4s ease forwards;
+        }
+        .typewriter-text .line.done {
+            opacity: 1;
+        }
         .typewriter-text .highlight {
-            color: rgba(255, 255, 255, 0.95);
+            color: #e8867a;
+            font-weight: 400;
+        }
+        .typewriter-text .highlight-pink {
+            color: #d4738a;
             font-weight: 400;
         }
         .typewriter-text .cursor {
             display: inline-block;
             width: 2px;
             height: 1.1em;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(232, 134, 122, 0.5);
             margin-left: 2px;
             vertical-align: text-bottom;
             animation: blink 0.8s step-end infinite;
@@ -177,6 +193,10 @@
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
+        }
+        @keyframes fadeInLine {
+            0% { opacity: 0; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== BUTTON ===== */
@@ -194,11 +214,11 @@
         }
 
         .btn-action {
-            padding: 12px 36px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 13px 40px;
+            border: 1px solid rgba(232, 134, 122, 0.2);
             border-radius: 50px;
-            background: rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.7);
+            background: rgba(232, 134, 122, 0.06);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 15px;
             font-weight: 400;
             font-family: 'Segoe UI', 'Poppins', sans-serif;
@@ -208,10 +228,11 @@
             backdrop-filter: blur(10px);
         }
         .btn-action:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(232, 134, 122, 0.12);
+            border-color: rgba(232, 134, 122, 0.4);
             transform: translateY(-2px);
-            color: rgba(255, 255, 255, 0.9);
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(232, 134, 122, 0.1);
         }
         .btn-action:active {
             transform: scale(0.96);
@@ -240,7 +261,7 @@
                 height: 50vh;
             }
             .greeting { font-size: 15px; }
-            .typewriter-text { font-size: 14px; line-height: 1.8; }
+            .typewriter-text { font-size: 14px; line-height: 2; }
             .icon-wrap { font-size: 36px; }
             .btn-action { padding: 10px 28px; font-size: 14px; }
         }
@@ -248,9 +269,9 @@
         @media (max-width: 480px) {
             .left-panel { padding: 8px 10px; max-height: 45vh; }
             .container { padding: 18px 14px 16px; border-radius: 16px; min-height: 220px; }
-            .greeting { font-size: 13px; margin-bottom: 12px; }
-            .typewriter-text { font-size: 13px; line-height: 1.7; min-height: 70px; }
-            .typewriter-wrap { min-height: 120px; }
+            .greeting { font-size: 13px; margin-bottom: 10px; }
+            .typewriter-text { font-size: 13px; line-height: 1.9; min-height: 80px; }
+            .typewriter-wrap { min-height: 130px; }
             .icon-wrap { font-size: 30px; margin-bottom: 8px; }
             .btn-action { padding: 8px 20px; font-size: 13px; }
         }
@@ -268,24 +289,22 @@
         <div class="left-panel">
             <div class="container" id="container">
                 <!-- Icon -->
-                <div class="icon-wrap" id="iconWrap">✉️</div>
+                <div class="icon-wrap" id="iconWrap">🌹</div>
 
                 <!-- Greeting -->
                 <div class="greeting" id="greeting">
-                    Gửi <span class="hl">em</span>,
+                    Gửi <span class="hl">em</span> yêu,
                 </div>
 
                 <!-- Typewriter -->
                 <div class="typewriter-wrap">
-                    <div class="typewriter-text" id="typewriterText">
-                        <span class="cursor"></span>
-                    </div>
+                    <div class="typewriter-text" id="typewriterText"></div>
                 </div>
 
                 <!-- Button -->
                 <div class="btn-wrap" id="btnWrap">
                     <button class="btn-action" id="btnAction">
-                        Đồng ý
+                        Đồng ý nghe anh nhé
                     </button>
                 </div>
             </div>
@@ -306,7 +325,7 @@
 
         const container = document.getElementById('threeContainer');
         const scene = new THREE.Scene();
-        scene.add(new THREE.HemisphereLight(0xffffff, 0x26302a, 1.5));
+        scene.add(new THREE.HemisphereLight(0xffe8e2, 0x26302a, 1.5));
         const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
         keyLight.position.set(2, 4, 5);
         scene.add(keyLight);
@@ -524,75 +543,81 @@
         setTimeout(resizeRenderer, 100);
 
         // =============================================================
-        // TYPEWRITER
+        // TYPEWRITER - GIỮ NGUYÊN CHỮ ĐÃ RA
         // =============================================================
         const typewriterText = document.getElementById('typewriterText');
         const btnWrap = document.getElementById('btnWrap');
         const btnAction = document.getElementById('btnAction');
 
         const lines = [
-            'Anh có vài điều muốn hỏi em,',
-            'không phải chuyện gì lớn đâu.',
-            'Chỉ là mấy câu nhỏ thôi.',
+            'Anh có vài điều <span class="highlight">nhỏ bé</span> muốn hỏi em.',
+            'Không phải chuyện gì quá lớn lao đâu,',
+            'chỉ là đôi điều anh luôn <span class="highlight">thầm mong</span> được nghe.',
             '',
-            'Em có sẵn sàng nghe không?'
+            '<span class="highlight-pink">Em có muốn lắng nghe không?</span>'
         ];
 
-        function typeLine(text, index, callback) {
-            if (index < text.length) {
-                const char = text.charAt(index);
-                if (char === '<') {
-                    const closeTagIndex = text.indexOf('>', index);
-                    if (closeTagIndex !== -1) {
-                        const fullTag = text.substring(index, closeTagIndex + 1);
-                        typewriterText.innerHTML = text.substring(0, index) + fullTag + '<span class="cursor"></span>';
-                        setTimeout(() => typeLine(text, closeTagIndex + 1, callback), 15);
-                    } else {
-                        typewriterText.innerHTML = text.substring(0, index + 1) + '<span class="cursor"></span>';
-                        setTimeout(() => typeLine(text, index + 1, callback), 25);
-                    }
-                } else {
-                    typewriterText.innerHTML = text.substring(0, index + 1) + '<span class="cursor"></span>';
-                    const delay = char === ' ' ? 40 : 25;
-                    setTimeout(() => typeLine(text, index + 1, callback), delay);
-                }
-            } else {
-                typewriterText.innerHTML = text + '<span class="cursor"></span>';
-                callback();
-            }
-        }
+        let currentLineIndex = 0;
+        let currentCharIndex = 0;
+        let isTyping = false;
 
-        function showLine(lineIndex) {
-            if (lineIndex >= lines.length) {
-                typewriterText.innerHTML = lines[lines.length - 1];
+        function typeNextChar() {
+            if (currentLineIndex >= lines.length) {
+                // Hoàn thành
+                typewriterText.innerHTML = lines.map((line, idx) => {
+                    if (line === '') return '<br>';
+                    return `<div class="line done">${line}</div>`;
+                }).join('');
                 setTimeout(() => {
                     btnWrap.classList.add('show');
                 }, 500);
                 return;
             }
 
-            const text = lines[lineIndex];
-            if (text === '') {
-                setTimeout(() => showLine(lineIndex + 1), 400);
+            const line = lines[currentLineIndex];
+            
+            if (line === '') {
+                // Dòng trống
+                const existingLines = typewriterText.querySelectorAll('.line');
+                const br = document.createElement('br');
+                typewriterText.appendChild(br);
+                currentLineIndex++;
+                setTimeout(typeNextChar, 300);
                 return;
             }
 
-            typewriterText.innerHTML = '';
-            typeLine(text, 0, () => {
-                setTimeout(() => {
-                    if (lineIndex < lines.length - 1) {
-                        typewriterText.innerHTML += '<br>';
-                    }
-                    showLine(lineIndex + 1);
-                }, 500);
-            });
+            // Tạo div cho dòng mới nếu chưa có
+            let lineDivs = typewriterText.querySelectorAll('.line');
+            if (lineDivs.length <= currentLineIndex) {
+                const newDiv = document.createElement('div');
+                newDiv.className = 'line';
+                typewriterText.appendChild(newDiv);
+                lineDivs = typewriterText.querySelectorAll('.line');
+            }
+
+            const currentDiv = lineDivs[currentLineIndex];
+            
+            // Thêm từng ký tự
+            if (currentCharIndex < line.length) {
+                const char = line.charAt(currentCharIndex);
+                currentDiv.innerHTML += char;
+                currentCharIndex++;
+                const delay = char === ' ' ? 35 : 20;
+                setTimeout(typeNextChar, delay);
+            } else {
+                // Hoàn thành dòng hiện tại
+                currentDiv.classList.add('done');
+                currentLineIndex++;
+                currentCharIndex = 0;
+                setTimeout(typeNextChar, 400);
+            }
         }
 
         btnAction.addEventListener('click', () => {
             window.location.href = 'survey.html?hacked=true&timestamp=' + Date.now();
         });
 
-        setTimeout(() => showLine(0), 600);
+        setTimeout(typeNextChar, 500);
 
         // =============================================================
         // NỀN SAO
