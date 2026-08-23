@@ -289,11 +289,11 @@
         <div class="left-panel">
             <div class="container" id="container">
                 <!-- Icon -->
-                <div class="icon-wrap" id="iconWrap">💫</div>
+                <div class="icon-wrap" id="iconWrap">🌹</div>
 
                 <!-- Greeting -->
                 <div class="greeting" id="greeting">
-                    Tặng <span class="hl">em</span> bó hoa này, mong nó sẽ làm em vui, dù chỉ một chút
+                    Tặng <span class="hl">em</span> bó hoa này,
                 </div>
 
                 <!-- Typewriter -->
@@ -304,7 +304,7 @@
                 <!-- Button -->
                 <div class="btn-wrap" id="btnWrap">
                     <button class="btn-action" id="btnAction">
-                        Đồng ý
+                        Đồng ý nghe anh nhé
                     </button>
                 </div>
             </div>
@@ -549,7 +549,6 @@
         const btnWrap = document.getElementById('btnWrap');
         const btnAction = document.getElementById('btnAction');
 
-        // Dùng plain text, không có HTML tag để tránh lỗi
         const lines = [
             'Anh có vài điều nhỏ bé muốn hỏi em.',
             'Không phải chuyện gì quá lớn lao đâu,',
@@ -560,25 +559,32 @@
 
         let currentLineIndex = 0;
         let currentCharIndex = 0;
+        let isComplete = false;
 
         function typeNextChar() {
+            if (isComplete) return;
+
             if (currentLineIndex >= lines.length) {
-                // Hoàn thành - thêm highlight cho dòng cuối
+                isComplete = true;
+                // Highlight dòng cuối
                 const allLines = typewriterText.querySelectorAll('.line');
                 if (allLines.length > 0) {
                     const lastLine = allLines[allLines.length - 1];
-                    lastLine.style.color = '#e8867a';
+                    if (lastLine) {
+                        lastLine.style.color = '#e8867a';
+                        lastLine.style.fontWeight = '400';
+                    }
                 }
+                // Hiển thị nút
                 setTimeout(() => {
                     btnWrap.classList.add('show');
-                }, 500);
+                }, 400);
                 return;
             }
 
             const line = lines[currentLineIndex];
             
             if (line === '') {
-                // Dòng trống
                 const br = document.createElement('br');
                 typewriterText.appendChild(br);
                 currentLineIndex++;
@@ -586,7 +592,6 @@
                 return;
             }
 
-            // Tạo div cho dòng mới nếu chưa có
             let lineDivs = typewriterText.querySelectorAll('.line');
             if (lineDivs.length <= currentLineIndex) {
                 const newDiv = document.createElement('div');
@@ -596,8 +601,12 @@
             }
 
             const currentDiv = lineDivs[currentLineIndex];
+            if (!currentDiv) {
+                currentLineIndex++;
+                setTimeout(typeNextChar, 100);
+                return;
+            }
             
-            // Thêm từng ký tự
             if (currentCharIndex < line.length) {
                 const char = line.charAt(currentCharIndex);
                 currentDiv.textContent += char;
@@ -605,7 +614,6 @@
                 const delay = char === ' ' ? 35 : 20;
                 setTimeout(typeNextChar, delay);
             } else {
-                // Hoàn thành dòng hiện tại
                 currentDiv.classList.add('done');
                 currentLineIndex++;
                 currentCharIndex = 0;
