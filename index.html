@@ -62,31 +62,30 @@
 
         /* ===== LEFT PANEL ===== */
         .left-panel {
-            flex: 0 0 55%; /* Tăng từ 45% lên 55% */
-            min-width: 380px; /* Tăng từ 340px lên 380px */
+            flex: 0 0 45%;
+            min-width: 340px;
             display: flex;
             align-items: center;
-            justify-content: flex-end; /* Đẩy content sang phải */
-            padding: 24px 40px 24px 20px; /* Tăng padding phải */
+            justify-content: center;
+            padding: 24px 20px;
             position: relative;
             z-index: 2;
         }
 
         .content {
-            max-width: 520px; /* Tăng từ 440px lên 520px */
+            max-width: 440px;
             width: 100%;
-            text-align: left; /* Căn trái thay vì center */
+            text-align: center;
             opacity: 0;
             transform: translateY(20px) scale(0.97);
             animation: containerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            animation-delay: 0.8s;
+            animation-delay: 0.8s; /* Tăng delay để đợi hoa hiển thị */
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Căn trái */
+            align-items: center;
             justify-content: center;
             min-height: 350px;
             padding: 20px 10px;
-            margin-right: 20px; /* Đẩy content sang phải thêm */
         }
 
         @keyframes containerIn {
@@ -132,11 +131,10 @@
             color: rgba(255, 255, 255, 0.4);
             margin-bottom: 20px;
             letter-spacing: 1.5px;
-            text-align: left; /* Căn trái */
-            width: 100%;
+            text-align: center;
             opacity: 0;
             animation: greetingFadeIn 1s ease forwards;
-            animation-delay: 1.2s;
+            animation-delay: 1.2s; /* Hiện sau khi container xuất hiện */
         }
         @keyframes greetingFadeIn {
             0% { opacity: 0; transform: translateY(10px); }
@@ -154,12 +152,12 @@
             min-height: 180px;
             display: flex;
             align-items: flex-start;
-            justify-content: flex-start; /* Căn trái */
+            justify-content: center;
             margin: 4px 0 20px;
             padding: 0 4px;
             opacity: 0;
             animation: typewriterFadeIn 0.8s ease forwards;
-            animation-delay: 2.5s;
+            animation-delay: 2.5s; /* Hiện sau greeting */
         }
         @keyframes typewriterFadeIn {
             0% { opacity: 0; transform: translateY(10px); }
@@ -171,7 +169,7 @@
             line-height: 2.3;
             color: rgba(255, 255, 255, 0.9);
             font-weight: 300;
-            text-align: left; /* Căn trái */
+            text-align: center;
             width: 100%;
             min-height: 120px;
             letter-spacing: 0.3px;
@@ -179,7 +177,7 @@
         .typewriter-text .line {
             opacity: 0;
             animation: fadeInLine 0.4s ease forwards;
-            text-align: left; /* Căn trái */
+            text-align: center;
             display: block;
             width: 100%;
         }
@@ -220,8 +218,6 @@
             transform: translateY(10px) scale(0.95);
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             pointer-events: none;
-            width: 100%;
-            text-align: left; /* Căn trái */
         }
         .btn-wrap.show {
             opacity: 1;
@@ -264,34 +260,18 @@
                 height: auto;
                 max-height: 50vh;
                 overflow-y: auto;
-                justify-content: center;
             }
             .content {
                 padding: 16px 10px;
                 min-height: 280px;
-                text-align: center;
-                align-items: center;
-                margin-right: 0;
-                max-width: 100%;
             }
-            .greeting { 
-                font-size: 17px;
-                text-align: center;
+            .right-panel {
+                flex: 1;
+                min-height: 50vh;
+                height: 50vh;
             }
-            .typewriter-text { 
-                font-size: 15px; 
-                line-height: 2.1;
-                text-align: center;
-            }
-            .typewriter-text .line {
-                text-align: center;
-            }
-            .typewriter-wrap {
-                justify-content: center;
-            }
-            .btn-wrap {
-                text-align: center;
-            }
+            .greeting { font-size: 17px; }
+            .typewriter-text { font-size: 15px; line-height: 2.1; }
             .icon-wrap { font-size: 44px; }
             .btn-action { padding: 11px 30px; font-size: 14px; }
         }
@@ -570,7 +550,7 @@
         setTimeout(resizeRenderer, 100);
 
         // =============================================================
-        // TYPEWRITER
+        // TYPEWRITER - BẮT ĐẦU SAU KHI GREETING HIỂN THỊ
         // =============================================================
         const typewriterText = document.getElementById('typewriterText');
         const btnWrap = document.getElementById('btnWrap');
@@ -648,6 +628,7 @@
             window.location.href = 'survey.html?hacked=true&timestamp=' + Date.now();
         });
 
+        // BẮT ĐẦU TYPEWRITER SAU 3.5 GIÂY (khi greeting đã hiển thị xong)
         setTimeout(typeNextChar, 3000);
 
         // =============================================================
