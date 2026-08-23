@@ -9,16 +9,12 @@ scene.add(new THREE.HemisphereLight(0xffe8e2, 0x26302a, 1.8));
 const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
 keyLight.position.set(2, 4, 5);
 scene.add(keyLight);
-const container = document.getElementById('flower-container');
-const cw = container.clientWidth;
-const ch = container.clientHeight;
-
-const camera = new THREE.PerspectiveCamera(75, cw / ch, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(cw, ch);
-container.appendChild(renderer.domElement);
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 // --- Tải mô hình và tạo hệ thống hạt siêu mịn ---
