@@ -75,12 +75,14 @@
         .container {
             max-width: 440px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 200, 200, 0.06);
             backdrop-filter: blur(20px);
             border-radius: 28px;
             padding: 40px 32px 36px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 200, 200, 0.1);
+            box-shadow: 
+                0 20px 60px rgba(232, 134, 122, 0.05),
+                0 8px 30px rgba(0, 0, 0, 0.4);
             text-align: center;
             opacity: 0;
             transform: translateY(20px) scale(0.97);
@@ -95,7 +97,7 @@
             min-height: 350px;
         }
         .container::-webkit-scrollbar { width: 3px; }
-        .container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .container::-webkit-scrollbar-thumb { background: rgba(232, 134, 122, 0.2); border-radius: 10px; }
 
         @keyframes containerIn {
             to {
@@ -123,27 +125,28 @@
 
         /* ===== TYPOGRAPHY ===== */
         .icon-wrap {
-            font-size: 48px;
+            font-size: 52px;
             margin-bottom: 12px;
             display: inline-block;
-            filter: drop-shadow(0 0 30px rgba(232, 134, 122, 0.15));
+            filter: drop-shadow(0 0 40px rgba(232, 134, 122, 0.2));
             animation: iconPulse 3s ease-in-out infinite;
         }
         @keyframes iconPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.08); }
         }
 
         .greeting {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 220, 220, 0.6);
             margin-bottom: 16px;
             letter-spacing: 1.5px;
         }
         .greeting .hl {
-            color: #e8867a;
+            color: #f0a0a0;
             font-weight: 400;
+            text-shadow: 0 0 30px rgba(232, 134, 122, 0.15);
         }
 
         /* ===== TYPEWRITER ===== */
@@ -159,7 +162,7 @@
         .typewriter-text {
             font-size: 16px;
             line-height: 2.2;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 240, 240, 0.9);
             font-weight: 300;
             text-align: left;
             width: 100%;
@@ -174,18 +177,19 @@
             opacity: 1;
         }
         .typewriter-text .highlight {
-            color: #e8867a;
+            color: #f0a0a0;
             font-weight: 400;
+            text-shadow: 0 0 20px rgba(232, 134, 122, 0.1);
         }
         .typewriter-text .highlight-pink {
-            color: #d4738a;
+            color: #e8867a;
             font-weight: 400;
         }
         .typewriter-text .cursor {
             display: inline-block;
             width: 2px;
             height: 1.1em;
-            background: rgba(232, 134, 122, 0.5);
+            background: rgba(232, 134, 122, 0.6);
             margin-left: 2px;
             vertical-align: text-bottom;
             animation: blink 0.8s step-end infinite;
@@ -214,25 +218,26 @@
         }
 
         .btn-action {
-            padding: 13px 40px;
-            border: 1px solid rgba(232, 134, 122, 0.2);
+            padding: 14px 44px;
+            border: 1px solid rgba(232, 134, 122, 0.3);
             border-radius: 50px;
-            background: rgba(232, 134, 122, 0.06);
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 15px;
+            background: linear-gradient(135deg, rgba(232, 134, 122, 0.08), rgba(200, 100, 120, 0.08));
+            color: rgba(255, 230, 230, 0.9);
+            font-size: 16px;
             font-weight: 400;
             font-family: 'Segoe UI', 'Poppins', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
             backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(232, 134, 122, 0.02);
         }
         .btn-action:hover {
-            background: rgba(232, 134, 122, 0.12);
-            border-color: rgba(232, 134, 122, 0.4);
+            background: linear-gradient(135deg, rgba(232, 134, 122, 0.15), rgba(200, 100, 120, 0.15));
+            border-color: rgba(232, 134, 122, 0.5);
             transform: translateY(-2px);
             color: #fff;
-            box-shadow: 0 4px 30px rgba(232, 134, 122, 0.1);
+            box-shadow: 0 4px 40px rgba(232, 134, 122, 0.15);
         }
         .btn-action:active {
             transform: scale(0.96);
@@ -260,20 +265,20 @@
                 min-height: 50vh;
                 height: 50vh;
             }
-            .greeting { font-size: 15px; }
+            .greeting { font-size: 16px; }
             .typewriter-text { font-size: 14px; line-height: 2; }
-            .icon-wrap { font-size: 36px; }
-            .btn-action { padding: 10px 28px; font-size: 14px; }
+            .icon-wrap { font-size: 40px; }
+            .btn-action { padding: 11px 30px; font-size: 14px; }
         }
 
         @media (max-width: 480px) {
             .left-panel { padding: 8px 10px; max-height: 45vh; }
             .container { padding: 18px 14px 16px; border-radius: 16px; min-height: 220px; }
-            .greeting { font-size: 13px; margin-bottom: 10px; }
+            .greeting { font-size: 14px; margin-bottom: 10px; }
             .typewriter-text { font-size: 13px; line-height: 1.9; min-height: 80px; }
             .typewriter-wrap { min-height: 130px; }
-            .icon-wrap { font-size: 30px; margin-bottom: 8px; }
-            .btn-action { padding: 8px 20px; font-size: 13px; }
+            .icon-wrap { font-size: 32px; margin-bottom: 8px; }
+            .btn-action { padding: 9px 22px; font-size: 13px; }
         }
     </style>
 </head>
@@ -293,7 +298,7 @@
 
                 <!-- Greeting -->
                 <div class="greeting" id="greeting">
-                    Tặng <span class="hl">em</span> bó hoa này,
+                    Gửi <span class="hl">em</span> yêu,
                 </div>
 
                 <!-- Typewriter -->
@@ -543,7 +548,7 @@
         setTimeout(resizeRenderer, 100);
 
         // =============================================================
-        // TYPEWRITER - SỬA LỖI
+        // TYPEWRITER
         // =============================================================
         const typewriterText = document.getElementById('typewriterText');
         const btnWrap = document.getElementById('btnWrap');
@@ -566,7 +571,6 @@
 
             if (currentLineIndex >= lines.length) {
                 isComplete = true;
-                // Highlight dòng cuối
                 const allLines = typewriterText.querySelectorAll('.line');
                 if (allLines.length > 0) {
                     const lastLine = allLines[allLines.length - 1];
@@ -575,7 +579,6 @@
                         lastLine.style.fontWeight = '400';
                     }
                 }
-                // Hiển thị nút
                 setTimeout(() => {
                     btnWrap.classList.add('show');
                 }, 400);
