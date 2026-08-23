@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💫 Tìm em giữa hàng tỉ người...</title>
+    <title>💫 Gửi em...</title>
     
     <!-- Three.js Import Map -->
     <script type="importmap">
@@ -73,12 +73,12 @@
         }
 
         .container {
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             border-radius: 32px;
-            padding: 32px 24px 28px;
+            padding: 36px 28px 32px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.6),
@@ -91,6 +91,11 @@
             animation-delay: 0.2s;
             max-height: 90vh;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
         }
         .container::-webkit-scrollbar {
             width: 3px;
@@ -124,10 +129,10 @@
             height: 100% !important;
         }
 
-        /* ===== UI COMPONENTS ===== */
+        /* ===== TYPOGRAPHY ===== */
         .icon-wrap {
-            font-size: 48px;
-            margin-bottom: 8px;
+            font-size: 52px;
+            margin-bottom: 10px;
             display: inline-block;
             animation: iconFloat 3s ease-in-out infinite;
             filter: drop-shadow(0 0 30px rgba(232, 134, 122, 0.2));
@@ -137,206 +142,81 @@
             50% { transform: translateY(-8px) scale(1.05) rotate(-3deg); }
         }
 
-        .title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 2px;
-            letter-spacing: -0.3px;
-            text-shadow: 0 0 40px rgba(232, 134, 122, 0.1);
-        }
-        .title .hl {
-            background: linear-gradient(135deg, #e8867a, #d4738a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-        }
-        .sub {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 13px;
+        .greeting {
+            font-size: 20px;
             font-weight: 300;
-            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 16px;
+            letter-spacing: 2px;
         }
-        .sub .hl {
+        .greeting .hl {
             color: #e8867a;
             font-weight: 400;
         }
 
-        .spinner-wrap {
-            display: flex;
-            justify-content: center;
-            margin: 4px 0 16px;
-        }
-        .spinner {
-            position: relative;
-            width: 100px;
-            height: 100px;
-        }
-        .spinner svg {
-            width: 100px;
-            height: 100px;
-            transform: rotate(-90deg);
-        }
-        .spinner .bg-circle {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.05);
-            stroke-width: 3;
-        }
-        .spinner .progress-circle {
-            fill: none;
-            stroke: url(#grad);
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-dasharray: 282.743;
-            stroke-dashoffset: 282.743;
-            transition: stroke-dashoffset 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .spinner .center {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .spinner .pct {
-            font-size: 24px;
-            font-weight: 600;
-            color: #fff;
-            font-family: 'Courier New', monospace;
-            transition: all 0.5s ease;
-            text-shadow: 0 0 30px rgba(232, 134, 122, 0.1);
-        }
-        .spinner .pct.done {
-            color: #e8867a;
-        }
-        .spinner .label {
-            font-size: 9px;
-            color: rgba(255, 255, 255, 0.15);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 2px;
-            transition: all 0.5s ease;
-        }
-        .spinner .label.done {
-            color: #e8867a;
-        }
-
-        .status-bar {
+        /* ===== TYPEWRITER ===== */
+        .typewriter-wrap {
+            width: 100%;
+            min-height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            margin: 6px 0 12px;
-            min-height: 38px;
+            margin: 8px 0 16px;
+            padding: 0 8px;
         }
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            transition: all 0.5s ease;
-            flex-shrink: 0;
-        }
-        .status-dot.active {
-            background: #e8867a;
-            box-shadow: 0 0 25px rgba(232, 134, 122, 0.3);
-            animation: dotPulse 1.2s ease-in-out infinite;
-        }
-        .status-dot.done {
-            background: #d4738a;
-            box-shadow: 0 0 30px rgba(212, 115, 138, 0.2);
-            animation: none;
-        }
-        @keyframes dotPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
-        }
-        .status-text {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 12px;
+        .typewriter-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 300;
-            letter-spacing: 0.3px;
-            transition: all 0.5s ease;
+            text-align: center;
+            min-height: 100px;
+            width: 100%;
         }
-        .status-text .hl {
+        .typewriter-text .highlight {
             color: #e8867a;
             font-weight: 400;
         }
-        .status-text .done {
+        .typewriter-text .highlight-pink {
             color: #d4738a;
-            font-weight: 500;
+            font-weight: 400;
         }
-
-        .log-wrap {
-            text-align: left;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            min-height: 60px;
-            max-height: 100px;
-            overflow-y: auto;
-            margin: 2px 0 12px;
+        .typewriter-text .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: #e8867a;
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 0.8s step-end infinite;
         }
-        .log-wrap::-webkit-scrollbar {
-            width: 3px;
-        }
-        .log-wrap::-webkit-scrollbar-thumb {
-            background: rgba(232, 134, 122, 0.15);
-            border-radius: 10px;
-        }
-        .log {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 3px 0;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.15);
-            opacity: 0;
-            transform: translateX(-6px);
-            animation: logIn 0.35s ease forwards;
-        }
-        .log .icon { font-size: 14px; }
-        .log .text { color: rgba(255, 255, 255, 0.4); }
-        .log .hl { color: #e8867a; font-weight: 500; }
-        .log .ok { color: #d4738a; font-weight: 500; }
-        .log .love { color: #e8867a; }
-
-        @keyframes logIn {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         /* ===== BUTTON ===== */
         .btn-wrap {
             margin-top: 12px;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(10px) scale(0.95);
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             pointer-events: none;
         }
         .btn-wrap.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
             pointer-events: auto;
         }
 
         .btn-love {
             position: relative;
-            padding: 12px 30px;
+            padding: 14px 40px;
             border: none;
             border-radius: 50px;
             background: linear-gradient(135deg, #e8867a, #d4738a);
             color: #fff;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 600;
             font-family: 'Segoe UI', 'Poppins', sans-serif;
             cursor: pointer;
@@ -358,8 +238,8 @@
             opacity: 1;
         }
         .btn-love:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 8px 40px rgba(232, 134, 122, 0.4);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 40px rgba(232, 134, 122, 0.5);
         }
         .btn-love:active {
             transform: scale(0.96);
@@ -369,7 +249,7 @@
             z-index: 1;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .btn-love .heart-icon {
             display: inline-block;
@@ -445,45 +325,32 @@
                 overflow-y: auto;
             }
             .container {
-                padding: 20px 16px 18px;
+                padding: 24px 18px 20px;
                 max-height: 100%;
                 background: rgba(0, 0, 0, 0.6);
                 border-radius: 24px;
+                min-height: 300px;
             }
             .right-panel {
                 flex: 1;
                 min-height: 50vh;
                 height: 50vh;
             }
-            .title { font-size: 18px; }
-            .icon-wrap { font-size: 36px; }
-            .spinner { width: 80px; height: 80px; }
-            .spinner svg { width: 80px; height: 80px; }
-            .spinner .pct { font-size: 20px; }
-            .spinner .bg-circle { r: 44; }
-            .spinner .progress-circle { r: 44; stroke-dasharray: 230.265; stroke-dashoffset: 230.265; }
-            .log { font-size: 11px; }
-            .status-text { font-size: 11px; }
-            .btn-love { padding: 10px 22px; font-size: 13px; }
+            .greeting { font-size: 17px; }
+            .typewriter-text { font-size: 15px; }
+            .icon-wrap { font-size: 40px; }
+            .btn-love { padding: 12px 30px; font-size: 15px; }
         }
 
         @media (max-width: 480px) {
             .left-panel { padding: 8px 10px; max-height: 45vh; }
-            .container { padding: 16px 12px 14px; border-radius: 20px; }
-            .title { font-size: 15px; }
-            .icon-wrap { font-size: 30px; }
-            .spinner { width: 65px; height: 65px; }
-            .spinner svg { width: 65px; height: 65px; }
-            .spinner .pct { font-size: 16px; }
-            .spinner .bg-circle { r: 35; }
-            .spinner .progress-circle { r: 35; stroke-dasharray: 183.259; stroke-dashoffset: 183.259; }
-            .status-bar { padding: 6px 12px; min-height: 30px; }
-            .log-wrap { min-height: 40px; max-height: 60px; padding: 6px 10px; }
-            .log { font-size: 10px; }
-            .btn-love { padding: 8px 16px; font-size: 11px; }
-            .btn-love .btn-content { gap: 4px; }
-            .status-text { font-size: 10px; }
-            .sub { font-size: 11px; margin-bottom: 12px; }
+            .container { padding: 18px 14px 16px; border-radius: 20px; min-height: 250px; }
+            .greeting { font-size: 14px; margin-bottom: 10px; }
+            .typewriter-text { font-size: 13px; line-height: 1.6; min-height: 80px; }
+            .typewriter-wrap { min-height: 120px; }
+            .icon-wrap { font-size: 32px; margin-bottom: 6px; }
+            .btn-love { padding: 10px 20px; font-size: 13px; }
+            .btn-love .btn-content { gap: 6px; }
         }
     </style>
 </head>
@@ -499,50 +366,17 @@
         <div class="left-panel">
             <div class="container" id="container">
                 <!-- Icon -->
-                <div class="icon-wrap" id="iconWrap">💫</div>
+                <div class="icon-wrap" id="iconWrap">💌</div>
 
-                <!-- Title -->
-                <div class="title" id="title">
-                    Tìm <span class="hl">em</span> giữa hàng tỉ người...
-                </div>
-                <div class="sub" id="sub">
-                    Biết đâu <span class="hl">em</span> ở đâu đó...
+                <!-- Greeting -->
+                <div class="greeting" id="greeting">
+                    Gửi <span class="hl">em</span> yêu dấu...
                 </div>
 
-                <!-- Spinner -->
-                <div class="spinner-wrap">
-                    <div class="spinner">
-                        <svg viewBox="0 0 100 100">
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#e8867a"/>
-                                    <stop offset="50%" style="stop-color:#e8867a"/>
-                                    <stop offset="100%" style="stop-color:#d4738a"/>
-                                </linearGradient>
-                            </defs>
-                            <circle class="bg-circle" cx="50" cy="50" r="44"/>
-                            <circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="44"/>
-                        </svg>
-                        <div class="center">
-                            <div class="pct" id="pct">0%</div>
-                            <div class="label" id="label">TÌM EM</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Status -->
-                <div class="status-bar">
-                    <span class="status-dot active" id="statusDot"></span>
-                    <span class="status-text" id="statusText">
-                        <span class="hl">●</span> Đang tìm em...
-                    </span>
-                </div>
-
-                <!-- Log -->
-                <div class="log-wrap" id="logWrap">
-                    <div class="log">
-                        <span class="icon">💫</span>
-                        <span class="text">Bắt đầu tìm em...</span>
+                <!-- Typewriter -->
+                <div class="typewriter-wrap">
+                    <div class="typewriter-text" id="typewriterText">
+                        <span class="cursor"></span>
                     </div>
                 </div>
 
@@ -551,7 +385,7 @@
                     <button class="btn-love" id="btnLove">
                         <span class="btn-content">
                             <span class="heart-icon">❤️</span>
-                            Cho anh vào tim em nhé
+                            Đồng ý nhé em
                             <span class="heart-icon">❤️</span>
                         </span>
                     </button>
@@ -598,7 +432,7 @@
 
         // --- Tải mô hình và tạo hệ thống hạt ---
         const loader = new GLTFLoader();
-        const PARTICLE_COUNT = 400000; // Giảm để nhẹ hơn
+        const PARTICLE_COUNT = 400000;
         let particleSystem;
         let detailModel;
 
@@ -755,12 +589,10 @@
 
             particleSystem = new THREE.Points(geometry, material);
             
-            // Scale nhỏ lại
             const scale = 0.7;
             particleSystem.scale.set(scale, scale, scale);
             scene.add(particleSystem);
             
-            // Điều chỉnh camera để fit với scale mới
             const fitDistance = (largestDimension * scale) / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
             camera.position.set(0, 0, fitDistance * 1.3);
             camera.near = Math.max(largestDimension / 100, 0.01);
@@ -799,32 +631,28 @@
         setTimeout(resizeRenderer, 100);
 
         // =============================================================
-        // UI SEQUENCE
+        // TYPEWRITER + UI SEQUENCE
         // =============================================================
-        const CIRCUMFERENCE = 282.743; // 2 * PI * 45 (r=44)
-        const progressCircle = document.getElementById('progressCircle');
-        const pct = document.getElementById('pct');
-        const label = document.getElementById('label');
-        const statusDot = document.getElementById('statusDot');
-        const statusText = document.getElementById('statusText');
-        const logWrap = document.getElementById('logWrap');
+        const typewriterText = document.getElementById('typewriterText');
         const btnWrap = document.getElementById('btnWrap');
         const btnLove = document.getElementById('btnLove');
         const iconWrap = document.getElementById('iconWrap');
-        const title = document.getElementById('title');
-        const sub = document.getElementById('sub');
+
+        // Nội dung sẽ chạy từng chữ
+        const lines = [
+            'Anh có vài điều <span class="highlight">nho nhỏ</span> muốn hỏi em...',
+            'Không phải gì to tát đâu,',
+            'chỉ là mấy câu <span class="highlight-pink">thầm thì</span> thôi mà.',
+            '',
+            'Mà khoan... em có muốn nghe không? 💕'
+        ];
 
         const popupMessages = [
-            { icon: '💫', text: 'Đang tìm em giữa hàng tỉ người...', badge: 'TÌM' },
-            { icon: '🌙', text: 'Phát hiện một ánh sáng đặc biệt!', badge: 'FOUND' },
-            { icon: '☁️', text: 'Em ở đâu nhỉ...?', badge: 'TÌM' },
-            { icon: '🌅', text: 'Đang tiến gần hơn...', badge: 'GẦN' },
-            { icon: '✨', text: 'Kết nối đang được thiết lập...', badge: 'SYNC' },
-            { icon: '🌤', text: 'Hình như là em rồi!', badge: 'GẦN' },
-            { icon: '☀️', text: 'Gặp được em thật tuyệt!', badge: 'YES' },
-            { icon: '⭐', text: 'Em tỏa sáng quá!', badge: 'WOW' },
-            { icon: '🌙', text: 'Cuối cùng cũng tìm thấy...', badge: 'THẤY' },
-            { icon: '💫', text: 'Chính là em!', badge: 'ĐÂY RỒI' }
+            { icon: '💫', text: 'Anh ơi em đây nè...', badge: 'NGHE' },
+            { icon: '🌙', text: 'Em đang lắng nghe nè...', badge: 'CHÚ Ý' },
+            { icon: '✨', text: 'Anh nói đi ạ...', badge: 'SẴN SÀNG' },
+            { icon: '💕', text: 'Em đây, anh nói đi...', badge: 'NGHE' },
+            { icon: '🌹', text: 'Anh đang định hỏi gì thế?', badge: 'TÒ MÒ' },
         ];
 
         function showPopup(msg, delay = 0) {
@@ -842,7 +670,7 @@
             el.style.top = y + 'px';
             document.body.appendChild(el);
 
-            const duration = 1.8 + Math.random() * 2.2;
+            const duration = 2.0 + Math.random() * 2.0;
             setTimeout(() => {
                 el.classList.add('fade');
                 el.style.setProperty('--delay', duration + 's');
@@ -852,108 +680,91 @@
             }, duration * 1000);
         }
 
-        function addLog(icon, text, delay = 0) {
-            return new Promise(resolve => {
+        function typeLine(text, index, callback) {
+            if (index < text.length) {
+                const char = text.charAt(index);
+                if (char === '<') {
+                    // Nếu gặp thẻ HTML, thêm toàn bộ thẻ vào
+                    const closeTagIndex = text.indexOf('>', index);
+                    if (closeTagIndex !== -1) {
+                        const fullTag = text.substring(index, closeTagIndex + 1);
+                        typewriterText.innerHTML = text.substring(0, index) + fullTag + '<span class="cursor"></span>';
+                        setTimeout(() => typeLine(text, closeTagIndex + 1, callback), 15);
+                    } else {
+                        typewriterText.innerHTML = text.substring(0, index + 1) + '<span class="cursor"></span>';
+                        setTimeout(() => typeLine(text, index + 1, callback), 25);
+                    }
+                } else {
+                    typewriterText.innerHTML = text.substring(0, index + 1) + '<span class="cursor"></span>';
+                    const delay = char === ' ' ? 40 : 25;
+                    setTimeout(() => typeLine(text, index + 1, callback), delay);
+                }
+            } else {
+                typewriterText.innerHTML = text + '<span class="cursor"></span>';
+                callback();
+            }
+        }
+
+        function showLine(lineIndex) {
+            if (lineIndex >= lines.length) {
+                // Hoàn thành tất cả dòng, hiển thị nút
+                typewriterText.innerHTML = lines[lines.length - 1] + ' 💖';
                 setTimeout(() => {
-                    const div = document.createElement('div');
-                    div.className = 'log';
-                    div.innerHTML = `<span class="icon">${icon}</span><span class="text">${text}</span>`;
-                    logWrap.appendChild(div);
-                    logWrap.scrollTop = logWrap.scrollHeight;
-                    resolve();
-                }, delay);
+                    btnWrap.classList.add('show');
+                    // Popup kêu gọi ấn nút
+                    setTimeout(() => {
+                        showPopup({ icon: '💕', text: 'Ấn vào đi anh yêu...', badge: 'NHANH' }, 0.5);
+                    }, 500);
+                }, 600);
+                return;
+            }
+
+            const text = lines[lineIndex];
+            if (text === '') {
+                // Dòng trống, chờ rồi qua dòng tiếp
+                setTimeout(() => showLine(lineIndex + 1), 400);
+                return;
+            }
+
+            // Xóa nội dung cũ
+            typewriterText.innerHTML = '';
+            
+            // Thêm dòng mới
+            typeLine(text, 0, () => {
+                // Chờ một chút rồi chuyển dòng tiếp
+                setTimeout(() => {
+                    // Thêm xuống dòng nếu chưa phải dòng cuối
+                    if (lineIndex < lines.length - 1) {
+                        typewriterText.innerHTML += '<br>';
+                    }
+                    showLine(lineIndex + 1);
+                }, 600);
             });
         }
 
-        function setProgress(pctVal, labelText) {
-            const offset = CIRCUMFERENCE - (pctVal / 100) * CIRCUMFERENCE;
-            progressCircle.style.strokeDashoffset = offset;
-            pct.textContent = Math.round(pctVal) + '%';
-            label.textContent = labelText;
-        }
-
-        function setStatus(text, type = 'normal') {
-            if (type === 'done') {
-                statusDot.className = 'status-dot done';
-                statusText.innerHTML = `<span class="done">●</span> <span class="done">${text}</span>`;
-            } else {
-                statusDot.className = 'status-dot active';
-                statusText.innerHTML = `<span class="hl">●</span> ${text}`;
-            }
-        }
-
-        function redirectToSurvey() {
-            window.location.href = 'survey.html?hacked=true&timestamp=' + Date.now();
-        }
-
+        // Bắt sự kiện click nút
         btnLove.addEventListener('click', () => {
-            redirectToSurvey();
+            window.location.href = 'survey.html?hacked=true&timestamp=' + Date.now();
         });
 
-        async function startSequence() {
+        // Bắt đầu chạy typewriter sau 1 giây
+        setTimeout(() => {
+            showLine(0);
+            
+            // Popup ngẫu nhiên trong lúc chờ
             let popupInterval = setInterval(() => {
                 const msg = popupMessages[Math.floor(Math.random() * popupMessages.length)];
                 showPopup(msg);
-            }, 1200);
+            }, 2500);
 
-            setStatus('Đang tìm em...');
-            await addLog('💫', 'Bắt đầu tìm em...', 300);
-            
-            for (let p = 3; p <= 25; p += 2) {
-                setProgress(p, 'TÌM EM');
-                await new Promise(r => setTimeout(r, 100));
-            }
-            await addLog('🌙', 'Biết đâu em ở đâu đó...', 300);
-            await addLog('☁️', 'Đang tìm em giữa hàng tỉ người...', 400);
-
-            setStatus('Phát hiện <span class="hl">ánh sáng</span> đặc biệt...');
-            for (let p = 28; p <= 52; p += 2) {
-                setProgress(p, 'PHÁT HIỆN');
-                await new Promise(r => setTimeout(r, 80));
-            }
-            await addLog('🌅', 'Phát hiện <span class="hl">ánh sáng</span> đặc biệt!', 300);
-            await addLog('✨', 'Kết nối đang <span class="hl">thiết lập</span>...', 400);
-
-            setStatus('Đang tiến gần <span class="hl">em</span> hơn...');
-            for (let p = 55; p <= 80; p += 2) {
-                setProgress(p, 'TIẾN GẦN');
-                await new Promise(r => setTimeout(r, 70));
-            }
-            await addLog('🌤', 'Hình như <span class="love">em</span> ở đây rồi...', 300);
-            await addLog('☀️', 'Đang đến gần <span class="love">em</span>...', 400);
-
-            setStatus('Đang đến gần <span class="hl">em</span>...');
-            for (let p = 83; p <= 100; p += 1.5) {
-                setProgress(p, 'GẦN RỒI');
-                await new Promise(r => setTimeout(r, 60));
-            }
-            await addLog('⭐', '<span class="ok">✓ Tìm thấy em rồi!</span>', 300);
-            await addLog('🌙', 'Chính là <span class="love">em</span>!', 400);
-
-            clearInterval(popupInterval);
-
-            iconWrap.textContent = '☀️';
-            title.innerHTML = 'Tìm thấy <span class="hl">em</span> rồi!';
-            sub.innerHTML = 'Thì ra <span class="hl">em</span> ở đây... 💫';
-            pct.classList.add('done');
-            label.classList.add('done');
-            setStatus('✦ TÌM THẤY EM ✦', 'done');
-
-            setTimeout(() => {
-                for (let i = 0; i < 3; i++) {
-                    setTimeout(() => {
-                        const msg = popupMessages[Math.floor(Math.random() * popupMessages.length)];
-                        showPopup(msg);
-                    }, i * 400);
+            // Dừng popup khi nút hiện
+            const checkBtn = setInterval(() => {
+                if (btnWrap.classList.contains('show')) {
+                    clearInterval(popupInterval);
+                    clearInterval(checkBtn);
                 }
-            }, 300);
-
-            setTimeout(() => {
-                btnWrap.classList.add('show');
-            }, 800);
-        }
-
-        setTimeout(startSequence, 500);
+            }, 500);
+        }, 800);
 
         // =============================================================
         // TẠO NỀN SAO
@@ -976,7 +787,7 @@
             }
         })();
 
-        console.log('💫 Tìm em giữa hàng tỉ người...');
+        console.log('💌 Gửi em yêu dấu...');
     </script>
 </body>
 </html>
