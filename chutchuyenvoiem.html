@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌸 Chút chuyện với cậu</title>
+  <title>Chút chuyện với emm</title>
   <style>
-    /* ===== RESET & NỀN ===== */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
       background: linear-gradient(145deg, #fce4ec 0%, #fbe9e7 40%, #fff8e1 100%);
-      overflow: hidden;
+      overflow-y: auto;
       position: relative;
     }
 
-    /* ===== NỀN ĐỘNG ===== */
     #bg-canvas {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 0;
     }
@@ -33,74 +35,64 @@
       position: fixed;
       border-radius: 50%;
       filter: blur(90px);
-      opacity: 0.25;
+      opacity: 0.3;
       z-index: 0;
       pointer-events: none;
     }
-    .g1 { width: 500px; height: 500px; top: -150px; left: -100px; background: #f8bbd0; }
-    .g2 { width: 500px; height: 500px; bottom: -150px; right: -100px; background: #ffccbc; }
-    .g3 { width: 300px; height: 300px; top: 40%; left: 30%; background: #ffe0b2; opacity: 0.2; }
-
-    /* ===== HACKER BADGE ===== */
-    .hacker-badge {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid #00ff41;
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: #00ff41;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
-      animation: badgePulse 2s ease-in-out infinite;
+    .g1 {
+      width: 500px;
+      height: 500px;
+      top: -150px;
+      left: -100px;
+      background: #f8bbd0;
     }
-    .hacker-badge .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #00ff41;
-      animation: dotPulse 1.5s ease-in-out infinite;
+    .g2 {
+      width: 500px;
+      height: 500px;
+      bottom: -150px;
+      right: -100px;
+      background: #ffccbc;
     }
-    @keyframes badgePulse {
-      0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 65, 0.1); }
-      50% { box-shadow: 0 0 50px rgba(0, 255, 65, 0.2); }
-    }
-    @keyframes dotPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(0.8); }
+    .g3 {
+      width: 300px;
+      height: 300px;
+      top: 40%;
+      left: 30%;
+      background: #ffe0b2;
+      opacity: 0.2;
     }
 
-    /* ===== CONTAINER CHÍNH ===== */
     .container {
       position: relative;
       z-index: 2;
-      max-width: 560px;
+      max-width: 700px;
       width: 100%;
-      background: rgba(255, 250, 245, 0.78);
+      background: rgba(255, 250, 245, 0.75);
       backdrop-filter: blur(14px);
       border-radius: 60px;
       padding: 30px 26px 38px;
       box-shadow: 0 30px 60px -20px rgba(200, 80, 80, 0.2),
                   inset 0 1px 0 rgba(255, 255, 255, 0.7);
       border: 1px solid rgba(255, 200, 190, 0.5);
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      pointer-events: none;
-    }
-    .container.show {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
+      max-height: 95vh;
+      overflow-y: auto;
     }
 
-    /* ===== CÁC PHẦN KHẢO SÁT ===== */
+    .container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .container::-webkit-scrollbar-track {
+      background: rgba(255, 200, 190, 0.1);
+      border-radius: 10px;
+    }
+    .container::-webkit-scrollbar-thumb {
+      background: rgba(232, 90, 122, 0.3);
+      border-radius: 10px;
+    }
+    .container::-webkit-scrollbar-thumb:hover {
+      background: rgba(232, 90, 122, 0.5);
+    }
+
     .dots {
       display: flex;
       justify-content: center;
@@ -114,21 +106,29 @@
       background: #efd0ca;
       transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .dot.active { width: 34px; background: #e85a7a; box-shadow: 0 0 20px rgba(232,90,122,0.4); }
-    .dot.passed { background: #f5a0a0; }
+    .dot.active {
+      width: 34px;
+      background: #e85a7a;
+      box-shadow: 0 0 20px rgba(232, 90, 122, 0.4);
+    }
+    .dot.passed {
+      background: #f5a0a0;
+    }
 
     .step {
       display: none;
-      animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      animation: fadeIn 0.7s cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .step.active { display: block; }
+    .step.active {
+      display: block;
+    }
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(24px) scale(0.96); }
+      0% { opacity: 0; transform: translateY(30px) scale(0.95); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     h1 {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       color: #4a2a2a;
       margin-bottom: 4px;
@@ -145,63 +145,108 @@
       padding-left: 16px;
       border-left: 4px solid #f5b0a0;
       font-weight: 400;
-      line-height: 1.6;
+      line-height: 1.5;
     }
     .note {
       margin: 14px 0 20px;
       padding: 14px 20px;
-      background: rgba(245, 200, 190, 0.12);
+      background: rgba(245, 200, 190, 0.15);
+      backdrop-filter: blur(4px);
       border-radius: 32px;
       font-size: 15px;
       color: #5a3e3e;
       text-align: center;
-      border: 1px solid rgba(235, 180, 170, 0.2);
+      border: 1px solid rgba(235, 180, 170, 0.3);
       line-height: 1.7;
     }
-    .note strong { color: #d45a5a; font-weight: 600; }
+    .note strong {
+      color: #d45a5a;
+      font-weight: 600;
+    }
 
     .options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-bottom: 26px;
+      justify-content: flex-start;
     }
-    @media (max-width: 480px) { .options { grid-template-columns: 1fr; } }
-
     .option {
       background: rgba(255, 248, 245, 0.7);
       backdrop-filter: blur(4px);
-      padding: 14px 16px;
+      padding: 10px 16px;
       border-radius: 24px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
       color: #4a2a2a;
-      border: 1.5px solid rgba(210, 160, 150, 0.25);
+      border: 1.5px solid rgba(210, 160, 150, 0.3);
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-      display: flex;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
       user-select: none;
       position: relative;
+      overflow: hidden;
+      flex: 0 1 auto;
     }
-    .option .emoji { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; }
-    .option .label { flex: 1; }
+    .option::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(232, 90, 122, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .option:hover {
+      transform: translateY(-3px);
+      border-color: #e88a6a;
+      box-shadow: 0 8px 20px -6px rgba(200, 80, 80, 0.15);
+      background: rgba(255, 248, 245, 0.95);
+    }
+    .option:hover::after {
+      opacity: 1;
+    }
+    .option .emoji {
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 26px;
+      text-align: center;
+    }
+    .option .food-img {
+      width: 26px;
+      height: 26px;
+      object-fit: cover;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .option .label {
+      flex: 0 1 auto;
+      white-space: nowrap;
+    }
     .option .check {
       opacity: 0;
       transform: scale(0.5) rotate(-30deg);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      font-size: 18px;
+      font-size: 16px;
       color: #d45a5a;
+      flex-shrink: 0;
+      margin-left: 2px;
     }
     .option.selected {
       border-color: #e85a7a;
-      background: rgba(245, 200, 190, 0.2);
-      box-shadow: 0 8px 24px -6px rgba(232,90,122,0.15),
-                  inset 0 0 0 1px rgba(232,90,122,0.1);
+      background: rgba(245, 200, 190, 0.25);
+      box-shadow: 0 6px 18px -4px rgba(232, 90, 122, 0.18),
+                  inset 0 0 0 1px rgba(232, 90, 122, 0.12);
       transform: translateY(-2px);
     }
-    .option.selected .check { opacity: 1; transform: scale(1) rotate(0deg); }
+    .option.selected .check {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
 
     .btn-group {
       display: flex;
@@ -217,165 +262,184 @@
       font-size: 16px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      letter-spacing: 0.2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: #e85a7a;
       color: #fff;
-      box-shadow: 0 6px 20px -6px rgba(232,90,122,0.4);
-      font-family: inherit;
+      box-shadow: 0 6px 20px -6px rgba(232, 90, 122, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    button .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
     }
     button:hover:not(:disabled) {
       transform: translateY(-3px);
-      box-shadow: 0 12px 28px -8px rgba(232,90,122,0.5);
+      box-shadow: 0 12px 28px -8px rgba(232, 90, 122, 0.5);
       background: #c04a6a;
     }
-    button:active:not(:disabled) { transform: scale(0.94); }
-    button:disabled { opacity: 0.35; pointer-events: none; }
+    button:active:not(:disabled) {
+      transform: scale(0.94);
+    }
+    button:disabled {
+      opacity: 0.35;
+      pointer-events: none;
+      transform: none;
+      box-shadow: none;
+    }
     .btn-secondary {
       background: rgba(190, 150, 140, 0.2);
+      backdrop-filter: blur(4px);
       color: #5a3e3e;
       box-shadow: none;
       border: 1px solid rgba(190, 150, 140, 0.2);
     }
     .btn-secondary:hover:not(:disabled) {
-      background: rgba(190, 150, 140, 0.35);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      background: rgba(190, 150, 140, 0.4);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      transform: translateY(-2px);
     }
 
-    .step-final .big-emoji { font-size: 60px; display: block; text-align: center; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
+    .step-final .big-emoji {
+      font-size: 56px;
+      display: block;
+      text-align: center;
+      margin-bottom: 4px;
+      animation: float 3s ease-in-out infinite;
+    }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-12px); }
     }
-    .step-final .note { background: rgba(245, 200, 190, 0.08); border-color: rgba(235, 180, 170, 0.15); }
+    .step-final .note {
+      background: rgba(245, 200, 190, 0.15);
+      border-color: rgba(235, 180, 170, 0.25);
+    }
 
     @media (max-width: 480px) {
-      .container { padding: 24px 16px 30px; }
-      h1 { font-size: 22px; }
-      .option { padding: 12px 14px; font-size: 14px; }
+      .container { padding: 24px 16px 30px; max-width: 100%; }
+      h1 { font-size: 24px; }
+      .option { padding: 8px 14px; font-size: 13px; }
+      .option .emoji { font-size: 16px; width: 22px; }
+      .option .food-img { width: 22px; height: 22px; }
       button { padding: 12px 20px; font-size: 15px; }
-      .hacker-badge { font-size: 9px; padding: 5px 12px; top: 10px; right: 10px; }
     }
+
+    .step-final .big-image {
+      display: block;
+      text-align: center;
+      margin: 0 auto 10px;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      animation: float 3s ease-in-out infinite;
+      box-shadow: 0 10px 40px rgba(232, 90, 122, 0.2);
+      border: 3px solid rgba(255, 255, 255, 0.6);
   </style>
 </head>
 <body>
 
-  <!-- Background -->
   <div class="glow g1"></div>
   <div class="glow g2"></div>
   <div class="glow g3"></div>
+
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Hacker Badge (hiện nếu đã qua hack) -->
-  <div class="hacker-badge" id="hackerBadge" style="display:none;">
-    <span class="dot"></span>
-    <span>● SYSTEM CONNECTED</span>
-  </div>
-
-  <!-- ===== CONTAINER KHẢO SÁT ===== -->
-  <div class="container" id="mainContainer">
-    <!-- Dấu chấm bước -->
+  <div class="container" id="app">
     <div class="dots" id="dots"></div>
 
-    <!-- STEP 0: Giới thiệu -->
+    <!-- STEP 0 -->
     <div class="step active" data-step="0">
-      <h1 id="typing-title">🌸 Nè, cho tớ hỏi chút</h1>
-      <div class="sub">Chỉ là vài câu để tớ hiểu cậu hơn thôi</div>
+      <h1 id="typing-title">Mỗi câu trả lời của em là một mảnh ghép nhỏ</h1>
+      <div class="sub">Và anh đang cố ghép chúng lại để thấy một bức tranh đẹp về em. Giúp anh nhé!</div>
       <div class="note">
-        💬 <strong>"Hôm nay cậu có điều gì nhẹ nhàng không?"</strong><br />
-        (nếu không có, thì để tớ gửi cậu một chút nắng)
+        <strong>Anh không redflag, anh là cả bảng màu<br />Em chọn màu, anh chọn cách</strong><br /><span style="font-size: 8px;">anh không phải trap boy đou, đừng hiểu lầm</span><br />ý anh là em cứ nói điều em thích, còn anh sẽ tìm cách làm em vui :)))
       </div>
       <div class="btn-group">
         <button onclick="nextStep()" id="startBtn">Bắt đầu ✦</button>
       </div>
     </div>
 
-    <!-- STEP 1: Sở thích -->
+    <!-- STEP 1 - Đồ ăn yêu thích -->
     <div class="step" data-step="1">
-      <h1>🌿 Vài điều nhỏ xinh</h1>
-      <div class="sub">Chọn những gì cậu thấy hợp</div>
+      <h1>🍜 Ăn gì là hợp gu em?</h1>
+      <div class="sub">Chọn nhiều hoặc chọn hết cũng được nhaa</div>
       <div class="options" id="q1"></div>
-      <div class="note">🌱 Tớ muốn biết những điều nhẹ nhàng làm cậu mỉm cười</div>
+      <div class="note" style="font-size:12px; color:#888;">Hơi chung chung xíu ha, trước hết anh khoanh vùng được những gì em thích và những gì em không thích</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Quay</button>
         <button id="next1" disabled onclick="nextStep()">Tiếp →</button>
       </div>
     </div>
 
-    <!-- STEP 2: Đam mê -->
+    <!-- STEP 2 - Đồ uống yêu thích -->
     <div class="step" data-step="2">
-      <h1>🎐 Cậu thích điều gì?</h1>
-      <div class="sub">Những điều đang làm cậu rung động</div>
+      <h1>☕ Uống gì người đẹp?</h1>
+      <div class="sub">Anh có cả ngày để ngồi đây với em, nên em cứ thong thả order</div>
       <div class="options" id="q2"></div>
-      <div class="note">✨ Tớ cũng thích nghe về đam mê của cậu</div>
+      <div class="note" style="font-size:12px; color:#888;">Còn anh order một Ly :))) Ly là được rồi, nước là bonus</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Quay</button>
         <button id="next2" disabled onclick="nextStep()">Tiếp →</button>
       </div>
     </div>
 
-    <!-- STEP 3: Tính cách -->
+    <!-- STEP 3 - Thể loại nhạc -->
     <div class="step" data-step="3">
-      <h1>🌙 Con người cậu</h1>
-      <div class="sub">Điều gì làm nên cậu?</div>
+      <h1>🎵 Tai em đang nghe gì thế?</h1>
+      <div class="sub"></div>
       <div class="options" id="q3"></div>
-      <div class="note">🌻 Tớ thích con người thật của cậu, không cần hoàn hảo</div>
+      <div class="note" style="font-size:12px; color:#888;">Anh thì trừ nhạc đám ma ra cứ thấy hay là nghe :))) (không có chuyện đám ma remix đou nhé)</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Quay</button>
         <button id="next3" disabled onclick="nextStep()">Tiếp →</button>
       </div>
     </div>
 
-    <!-- STEP 4: Kỷ niệm -->
+    <!-- STEP 4 - Thể loại phim -->
     <div class="step" data-step="4">
-      <h1>📖 Chuyện cũ</h1>
-      <div class="sub">Những mảnh ghép đã tạo nên cậu</div>
+      <h1>📺 Phim nào là chân ái của em?</h1>
+      <div class="sub"></div>
       <div class="options" id="q4"></div>
-      <div class="note">🌼 Tớ trân trọng những câu chuyện cậu chọn kể</div>
+      <div class="note" style="font-size:12px; color:#888;">Phần này anh gộp thành thể loại phim và truyện được khum, anh thấy nội dung vẫn thế chỉ khác mỗi 1 là xem 2 là đọc</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Quay</button>
-        <button id="next4" disabled onclick="nextStep()">Tiếp →</button>
+        <button id="next4" disabled onclick="nextStep()">✨ Xem kết quả</button>
       </div>
     </div>
 
-    <!-- STEP 5: Tương lai -->
-    <div class="step" data-step="5">
-      <h1>🌟 Phía trước</h1>
-      <div class="sub">Cậu thấy mình ở đâu trong những ngày sắp tới?</div>
-      <div class="options" id="q5"></div>
-      <div class="note">🌈 Tớ tin cậu sẽ làm những điều đẹp đẽ</div>
-      <div class="btn-group">
-        <button class="btn-secondary" onclick="prevStep()">← Quay</button>
-        <button id="next5" disabled onclick="nextStep()">✨ Xem kết quả</button>
-      </div>
-    </div>
-
-    <!-- STEP 6: Kết thúc -->
-    <div class="step step-final" data-step="6">
-      <span class="big-emoji">💗</span>
-      <h1 style="text-align:center; -webkit-text-fill-color: #4a2a2a; background:none; color:#4a2a2a;">Cảm ơn cậu</h1>
-      <div class="sub" style="text-align:center; border-left: none; padding-left:0;">Tớ đã có thêm một chút hiểu về cậu</div>
-      <div class="note" style="font-size:17px; border:none; background:rgba(245,200,190,0.1);">
-        <span style="display:block; font-size:32px; margin-bottom:4px;">🍰</span>
-        <strong>"Hãy luôn như những điều cậu đã chọn"</strong><br />
-        <span style="font-size:14px; color:#7a5a5a;">— từ một người thầm thương cậu</span>
-      </div>
-      <div class="note" style="background:rgba(245,200,190,0.06);">
-        📬 Tớ đã nhận được câu trả lời của cậu.
-      </div>
-      <div class="btn-group" style="justify-content:center;">
-        <button onclick="resetAll()">🔄 Làm lại</button>
-        <button onclick="goToHack()" style="background:#1a1a2e; box-shadow: 0 6px 20px -6px rgba(0,255,65,0.3);">🔐 Về hack</button>
+    <!-- STEP 5 - Kết quả -->
+    <div class="step step-final" data-step="5">
+      <img src="anhcamon.png" alt="❤️" class="big-image" />
+      <h1 style="text-align:center; -webkit-text-fill-color: #4a2a2a; background: none; color:#4a2a2a;">Cảm ơn em</h1>
+      <div class="sub" style="text-align:center; border-left: none; padding-left:0;">Anh đã có thêm một chút hiểu về em</div>
+      <div class="note" style="font-size:17px; border: none; background: rgba(245,200,190,0.15);">
+        <strong>"Tại ai đó cứ không chịu kể chuyện, chắc do bận hoặc ngại gì đó nên anh mới phải vibe coding thế này"</strong><br /><br />
+        <span style="font-size:14px; color:#7a5a5a;">Em có biết là em rất quá đáng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yêu không?</span>
       </div>
     </div>
   </div>
 
   <script>
     // =============================================================
-    // 1. NỀN ĐỘNG
+    // 1. BACKGROUND CANVAS
     // =============================================================
     (function initBg() {
       const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
       let w, h;
+
       function resize() {
         w = canvas.width = window.innerWidth;
         h = canvas.height = window.innerHeight;
@@ -394,6 +458,7 @@
           color: `hsla(350, 70%, 80%, ${0.1 + Math.random()*0.3})`
         });
       }
+
       const stars = [];
       for (let i = 0; i < 12; i++) {
         stars.push({
@@ -408,6 +473,7 @@
           active: true
         });
       }
+
       const hearts = [];
       function spawnHeart() {
         hearts.push({
@@ -421,6 +487,7 @@
         });
       }
       setInterval(spawnHeart, 4000);
+
       const petals = [];
       function spawnPetal() {
         petals.push({
@@ -435,6 +502,7 @@
         });
       }
       setInterval(spawnPetal, 300);
+
       const sparkles = [];
       function spawnSparkle() {
         sparkles.push({
@@ -449,11 +517,14 @@
       setInterval(spawnSparkle, 200);
 
       let frame = 0;
+
       function draw() {
         frame++;
         ctx.clearRect(0, 0, w, h);
+
         bubbles.forEach(b => {
-          b.x += b.dx; b.y += b.dy;
+          b.x += b.dx;
+          b.y += b.dy;
           if (b.y < -20) { b.y = h + 20; b.x = Math.random() * w; }
           if (b.x < -20 || b.x > w + 20) b.dx *= -1;
           ctx.beginPath();
@@ -464,6 +535,7 @@
           ctx.fill();
           ctx.shadowBlur = 0;
         });
+
         stars.forEach(s => {
           if (!s.active) return;
           s.x += Math.cos(s.angle) * s.speed;
@@ -485,6 +557,7 @@
           ctx.lineWidth = 1.5;
           ctx.stroke();
         });
+
         hearts.forEach((h, idx) => {
           h.y += h.speed;
           h.x += Math.sin(h.phase + frame * h.wobble) * 0.5;
@@ -496,6 +569,7 @@
           ctx.fillText('❤️', h.x, h.y);
           ctx.globalAlpha = 1;
         });
+
         petals.forEach((p, idx) => {
           p.x += p.speedX + Math.sin(p.angle + frame * 0.02) * 0.3;
           p.y += p.speedY;
@@ -508,6 +582,7 @@
           ctx.fillText('🌸', p.x, p.y);
           ctx.globalAlpha = 1;
         });
+
         sparkles.forEach((s, idx) => {
           s.life++;
           if (s.life > s.maxLife) { sparkles.splice(idx, 1); return; }
@@ -520,34 +595,38 @@
           ctx.fill();
           ctx.shadowBlur = 0;
         });
+
         requestAnimationFrame(draw);
       }
+
       draw();
     })();
 
     // =============================================================
-    // 2. KIỂM TRA THAM SỐ URL
+    // 2. LOGIC CÂU HỎI & FORMSPREE
     // =============================================================
-    const urlParams = new URLSearchParams(window.location.search);
-    const hacked = urlParams.get('hacked') === 'true';
 
-    if (hacked) {
-      document.getElementById('hackerBadge').style.display = 'flex';
-    }
-
-    // =============================================================
-    // 3. LOGIC KHẢO SÁT
-    // =============================================================
     const questions = [
-      { id: 'q1', choices: ['📖 Sách', '🎵 Nhạc', '🍽️ Ăn uống', '🌟 Điều nhỏ vui', '🎬 Phim ảnh'] },
-      { id: 'q2', choices: ['🔥 Đam mê', '🗣️ Kể chuyện', '🤯 Sở thích lạ', '🌟 Kỹ năng mới', '😆 Kỷ niệm vui'] },
-      { id: 'q3', choices: ['👀 Ấn tượng', '🏠 Hướng nội/ngoại', '💪 Chính mình', '⚡ Năng lượng', '🤫 Điều tự hào'] },
-      { id: 'q4', choices: ['🎁 Quà', '🌙 Kỷ niệm', '🤐 Bí mật', '😳 Xấu hổ', '👨‍👩‍👧‍👦 Gia đình'] },
-      { id: 'q5', choices: ['💼 Công việc', '🌍 Du lịch', '💍 Hôn nhân', '⭐ Điều ước', '🗓️ Tương lai'] }
+      {
+        id: 'q1',
+        choices: ['🍜 Mì cay', '🍲 Lẩu', '🍡 Nướng', '🫔 Bánh cuốn', '🍤 Bánh rán', '🥗 Bánh tráng', '🥞 Bánh xèo', '🥚 Trứng', '🍗 Gà', '🦆 Vịt', '🥩 Heo', '🥩 Bò', '🦐 Tôm', '🦀 Cua', '🐟 Cá', '🍚 Xôi', '🍚 Cơm', '🍜 Phở', '🍲 Bún', '🍜 Miến', '🍤 Nem', '🦪 Ốc', '🦞 Hải sản', '🍣 Anh', '🍞 Bánh ngọt', '🍦 Kem', '🫘 Chè', '🥨 Phô mai', '🍮 Em ăn gì cũng được', '🥜 Các loại hạt', '🍄 Nấm', '🥬 Rau Củ Quả']
+      },
+      {
+        id: 'q2',
+        choices: ['☕ Bạc sỉu', '☕ Cà phê sữa', '☕ Cold Brew', '☕ Cappuccino', '🍵 Matcha latte', '🍵 Hồng trà', '🍵 Trà thảo mộc', '🍵 Trà ô long', '🧋 Trà sữa', '🍵 Trà đào', '🍵 Trà xanh', '🍋 Trà chanh', '🍊 Trà tắc', '🍵 Trà vải', '🧊 Trà đá', '🥤 Nước ép trái cây', '🥤 Sinh tố', '🥤 Nước có gas', '🍺 Sinh tố lúa mạch', '🥂 Cocktail', '🥂 Martini', '🍷 Ancol etylic', '🍷 Whisky', '🥛 Sữa tươi', '🥛 Sữa chua', '🥛 Sữa hạt']
+      },
+      {
+        id: 'q3',
+        choices: ['🎵 Pop', '🎵 R&B', '🎵 Rap', '🎵 Ballad', '🎵 Indie', '🎵 Nhạc gì cũng nhảy', '🎵 Bolero', '🎵 EDM', '🎵 Lofi', '🎵 Vinahouse', '🎵 Remix/Mashup/Cover', '🎵 Acoustic', '🎵 Trap']
+      },
+      {
+        id: 'q4',
+        choices: ['🎬 Anime', '🎬 Fantasy', '🎬 Harem', '🎬 Boys love', '🎬 Huyền huyễn', '🎬 Xuyên không', '🎬 Marvel/DC', '🎬 Ngôn tình', '🎬 Lãng mạn', '🎬 Gia đình', '🎬 Drama', '🎬 Lịch sử', '🎬 Học đường', '🎬 Hài', '🎬 Kinh dị', '🎬 Hành động', '🎬 Tội phạm', '🎬 Hình sự', '🎬 Gây cấn', '🎬 Khoa học']
+      }
     ];
 
     let currentStep = 0;
-    const totalSteps = 7;
+    const totalSteps = 6;
     const answers = {};
     const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
 
@@ -559,13 +638,27 @@
       container.innerHTML = '';
       const selected = answers[qData.id] || [];
 
+      const imageMap = {
+        'Anh': 'anh.png', 'Em ăn gì cũng được': 'em.png', 'Nhạc gì cũng nhảy': 'emnghe.png', 
+      };
+
       qData.choices.forEach(choice => {
         const div = document.createElement('div');
         div.className = 'option' + (selected.includes(choice) ? ' selected' : '');
         const emoji = choice.match(/^.{1,2}/)?.[0] || '🌸';
         const label = choice.replace(/^.{1,2}\s*/, '');
+        
+        const imageUrl = imageMap[label];
+        
+        let iconHTML = '';
+        if (imageUrl) {
+          iconHTML = `<img src="${imageUrl}" alt="${label}" class="food-img" />`;
+        } else {
+          iconHTML = `<span class="emoji">${emoji}</span>`;
+        }
+        
         div.innerHTML = `
-          <span class="emoji">${emoji}</span>
+          ${iconHTML}
           <span class="label">${label}</span>
           <span class="check">✓</span>
         `;
@@ -585,6 +678,13 @@
           const btn = document.getElementById(`next${stepIndex}`);
           if (btn) btn.disabled = (arr.length === 0);
         });
+        div.addEventListener('mousemove', function(e) {
+          const rect = this.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          this.style.setProperty('--mx', (x + 0.5) * 100 + '%');
+          this.style.setProperty('--my', (y + 0.5) * 100 + '%');
+        });
         container.appendChild(div);
       });
 
@@ -603,13 +703,15 @@
         dot.classList.toggle('active', i === index);
         dot.classList.toggle('passed', i < index);
       });
-      if (index >= 1 && index <= 5) renderOptions(index);
+      if (index >= 1 && index <= 4) renderOptions(index);
       currentStep = index;
+      const container = document.getElementById('app');
+      if (container) container.scrollTop = 0;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function nextStep() {
-      if (currentStep === 5) {
+      if (currentStep === 4) {
         submitAndFinish();
       } else if (currentStep < totalSteps - 1) {
         showStep(currentStep + 1);
@@ -623,38 +725,31 @@
     function submitAndFinish() {
       const btn = document.querySelector('.step.active .btn-group button:last-child');
       if (btn) btn.disabled = true;
-
-      const labels = ['🌿 Phá băng', '🎐 Sở thích', '🌙 Tính cách', '📖 Kỷ niệm', '🌟 Tương lai'];
+      const labels = ['🍜 Đồ ăn', '☕ Đồ uống', '🎵 Nhạc', '📺 Phim'];
       let message = '💌 Câu trả lời từ người ấy:\n\n';
       questions.forEach((q, idx) => {
         const items = answers[q.id] || [];
         message += `${labels[idx]}: ${items.length ? items.join(', ') : 'Không chọn'}\n`;
       });
-      
-      if (hacked) {
-        message += '\n🔐 Truy cập từ: HACKER SYSTEM';
-      }
-
       fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           _subject: '💗 Kết quả khảo sát crush',
           message: message,
-          timestamp: new Date().toLocaleString('vi-VN'),
-          hacked: hacked
+          timestamp: new Date().toLocaleString('vi-VN')
         })
       })
       .then(response => {
         if (response.ok) {
-          showStep(6);
+          showStep(5);
         } else {
           alert('❌ Gửi lỗi, nhưng dữ liệu vẫn lưu tạm.');
           if (btn) btn.disabled = false;
         }
       })
       .catch(() => {
-        alert('⚠️ Mất kết nối, bạn vẫn có thể chụp màn hình gửi tớ nhé!');
+        alert('⚠️ Mất kết nối, em vẫn có thể làm lại nhaa');
         if (btn) btn.disabled = false;
       });
     }
@@ -662,15 +757,11 @@
     function resetAll() {
       for (let key in answers) delete answers[key];
       document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 4; i++) {
         const btn = document.getElementById(`next${i}`);
         if (btn) btn.disabled = true;
       }
       showStep(0);
-    }
-
-    function goToHack() {
-      window.location.href = 'hack.html';
     }
 
     function createDots() {
@@ -683,21 +774,13 @@
       }
     }
 
-    // =============================================================
-    // 4. KHỞI CHẠY
-    // =============================================================
     createDots();
     showStep(0);
 
-    // Hiệu ứng xuất hiện
-    setTimeout(() => {
-      document.getElementById('mainContainer').classList.add('show');
-    }, 300);
-
-    // Hiệu ứng gõ chữ
-    setTimeout(() => {
+    // Gõ chữ
+    (function typeEffect() {
       const el = document.getElementById('typing-title');
-      const text = '🌸 Nè, cho tớ hỏi chút';
+      const text = 'Mỗi câu trả lời của em là một mảnh ghép nhỏ';
       let index = 0;
       el.textContent = '';
       function type() {
@@ -707,10 +790,26 @@
           setTimeout(type, 50 + Math.random() * 30);
         }
       }
-      type();
-    }, 500);
+      setTimeout(type, 400);
+    })();
 
-    // Hỗ trợ bàn phím
+    // Ripple
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.width = '30px';
+        ripple.style.height = '30px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         const btn = document.querySelector('.step.active .btn-group button:not(.btn-secondary)');
