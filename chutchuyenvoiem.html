@@ -65,9 +65,8 @@
     .container {
       position: relative;
       z-index: 2;
-      max-width: 95vw;
-      width: auto;
-      min-width: 320px;
+      max-width: 700px;
+      width: 100%;
       background: rgba(255, 250, 245, 0.75);
       backdrop-filter: blur(14px);
       border-radius: 60px;
@@ -77,7 +76,6 @@
       border: 1px solid rgba(255, 200, 190, 0.5);
       max-height: 95vh;
       overflow-y: auto;
-      transition: all 0.3s ease;
     }
 
     .container::-webkit-scrollbar {
@@ -166,14 +164,38 @@
       font-weight: 600;
     }
 
-    /* ===== OPTIONS - KHÔNG SCROLL, TỰ ĐỘNG MỞ RỘNG ===== */
+    /* ===== KHUNG OPTIONS MỚI ===== */
+    .options-wrapper {
+      max-height: 280px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 6px;
+      margin-bottom: 16px;
+      border-radius: 20px;
+      transition: max-height 0.3s ease;
+    }
+
+    .options-wrapper::-webkit-scrollbar {
+      width: 4px;
+    }
+    .options-wrapper::-webkit-scrollbar-track {
+      background: rgba(255, 200, 190, 0.08);
+      border-radius: 10px;
+    }
+    .options-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(232, 90, 122, 0.25);
+      border-radius: 10px;
+    }
+    .options-wrapper::-webkit-scrollbar-thumb:hover {
+      background: rgba(232, 90, 122, 0.4);
+    }
+
     .options {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: flex-start;
       padding: 4px 2px;
-      width: 100%;
     }
 
     .option {
@@ -195,7 +217,6 @@
       position: relative;
       overflow: hidden;
       flex: 0 1 auto;
-      white-space: nowrap;
     }
     .option::after {
       content: '';
@@ -231,6 +252,7 @@
     }
     .option .label {
       flex: 0 1 auto;
+      white-space: nowrap;
     }
     .option .check {
       opacity: 0;
@@ -332,19 +354,13 @@
     }
 
     @media (max-width: 480px) {
-      .container { padding: 24px 16px 30px; min-width: unset; width: 100%; }
+      .container { padding: 24px 16px 30px; max-width: 100%; }
       h1 { font-size: 24px; }
       .option { padding: 8px 14px; font-size: 13px; }
       .option .emoji { font-size: 16px; width: 22px; }
       .option .food-img { width: 22px; height: 22px; }
       button { padding: 12px 20px; font-size: 15px; }
-    }
-
-    /* Trên màn hình lớn, cho phép container mở rộng tối đa */
-    @media (min-width: 768px) {
-      .container {
-        max-width: 92vw;
-      }
+      .options-wrapper { max-height: 200px; }
     }
 
     .step-final .big-image {
@@ -388,7 +404,9 @@
     <div class="step" data-step="1">
       <h1>🍜 Ăn gì là hợp gu em?</h1>
       <div class="sub">Chọn nhiều hoặc chọn hết cũng được nhaa</div>
-      <div class="options" id="q1"></div>
+      <div class="options-wrapper" id="wrapper-q1">
+        <div class="options" id="q1"></div>
+      </div>
       <div class="note" style="font-size:12px; color:#888;">Hơi chung chung xíu ha, trước hết anh khoanh vùng được những gì em thích và những gì em không thích</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Trước</button>
@@ -400,7 +418,9 @@
     <div class="step" data-step="2">
       <h1>☕ Uống gì người đẹp?</h1>
       <div class="sub">Anh có cả ngày để ngồi đây với em, nên em cứ thong thả order</div>
-      <div class="options" id="q2"></div>
+      <div class="options-wrapper" id="wrapper-q2">
+        <div class="options" id="q2"></div>
+      </div>
       <div class="note" style="font-size:12px; color:#888;">Còn anh order một Ly :))) Ly là được rồi, nước là bonus</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Trước</button>
@@ -412,7 +432,9 @@
     <div class="step" data-step="3">
       <h1>🎵 Tai em đang nghe gì thế?</h1>
       <div class="sub"></div>
-      <div class="options" id="q3"></div>
+      <div class="options-wrapper" id="wrapper-q3">
+        <div class="options" id="q3"></div>
+      </div>
       <div class="note" style="font-size:12px; color:#888;">Anh thì trừ nhạc đám ma ra cứ thấy hay là nghe :))) (không có chuyện đám ma remix đou nhé)</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Trước</button>
@@ -424,7 +446,9 @@
     <div class="step" data-step="4">
       <h1>📺 Phim nào là chân ái của em?</h1>
       <div class="sub"></div>
-      <div class="options" id="q4"></div>
+      <div class="options-wrapper" id="wrapper-q4">
+        <div class="options" id="q4"></div>
+      </div>
       <div class="note" style="font-size:12px; color:#888;">Phần này anh gộp thành thể loại phim và truyện được khum, anh thấy nội dung vẫn thế chỉ khác mỗi 1 là xem 2 là đọc</div>
       <div class="btn-group">
         <button class="btn-secondary" onclick="prevStep()">← Trước</button>
@@ -705,6 +729,30 @@
       if (btn) {
         const arr = answers[qData.id] || [];
         btn.disabled = (arr.length === 0);
+      }
+
+      // Tự động điều chỉnh max-height của wrapper dựa trên số lượng option
+      adjustWrapperHeight(stepIndex);
+    }
+
+    function adjustWrapperHeight(stepIndex) {
+      const wrapper = document.getElementById(`wrapper-q${stepIndex}`);
+      if (!wrapper) return;
+      const options = wrapper.querySelector('.options');
+      if (!options) return;
+      
+      // Reset về auto để đo chiều cao thực
+      wrapper.style.maxHeight = 'none';
+      const naturalHeight = options.scrollHeight;
+      
+      // Nếu chiều cao tự nhiên nhỏ hơn 200px, giữ nguyên (không scroll)
+      // Nếu lớn hơn, giới hạn và cho scroll
+      if (naturalHeight > 220) {
+        wrapper.style.maxHeight = '280px';
+        wrapper.style.overflowY = 'auto';
+      } else {
+        wrapper.style.maxHeight = 'none';
+        wrapper.style.overflowY = 'visible';
       }
     }
 
