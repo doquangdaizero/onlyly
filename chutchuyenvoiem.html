@@ -463,10 +463,10 @@
       <div class="note" style="font-size:12px; color:#888;">Hơi chung chung xíu ha, trước hết anh khoanh vùng được những gì em thích và những gì em không thích</div>
       <div class="btn-group">
         <div class="btn-left">
-          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <span class="scroll-notice" id="scrollNotice1">👇 Cuộn xuống xem hết nè <span class="arrow">↓</span></span>
         </div>
         <div class="btn-right">
+          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <button id="next1" disabled onclick="nextStep()">Tiếp →</button>
         </div>
       </div>
@@ -482,10 +482,10 @@
       <div class="note" style="font-size:12px; color:#888;">Còn anh order một Ly :))) Ly là được rồi, nước là bonus</div>
       <div class="btn-group">
         <div class="btn-left">
-          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <span class="scroll-notice" id="scrollNotice2">👇 Cuộn xuống xem hết nè <span class="arrow">↓</span></span>
         </div>
         <div class="btn-right">
+          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <button id="next2" disabled onclick="nextStep()">Tiếp →</button>
         </div>
       </div>
@@ -501,10 +501,10 @@
       <div class="note" style="font-size:12px; color:#888;">Anh thì trừ nhạc đám ma ra cứ thấy hay là nghe :))) (không có chuyện đám ma remix đou nhé)</div>
       <div class="btn-group">
         <div class="btn-left">
-          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <span class="scroll-notice" id="scrollNotice3">👇 Cuộn xuống xem hết nè <span class="arrow">↓</span></span>
         </div>
         <div class="btn-right">
+          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <button id="next3" disabled onclick="nextStep()">Tiếp →</button>
         </div>
       </div>
@@ -520,10 +520,10 @@
       <div class="note" style="font-size:12px; color:#888;">Phần này anh gộp thành thể loại phim và truyện được khum, anh thấy nội dung vẫn thế chỉ khác mỗi 1 là xem 2 là đọc</div>
       <div class="btn-group">
         <div class="btn-left">
-          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <span class="scroll-notice" id="scrollNotice4">👇 Cuộn xuống xem hết nè <span class="arrow">↓</span></span>
         </div>
         <div class="btn-right">
+          <button class="btn-secondary" onclick="prevStep()">← Trước</button>
           <button id="next4" disabled onclick="nextStep()">✨ Confirm</button>
         </div>
       </div>
@@ -911,7 +911,7 @@
     // =============================================================
 
     function submitAndFinish() {
-      const btn = document.querySelector('.step.active .btn-group button:last-child');
+      const btn = document.querySelector('.step.active .btn-group .btn-right button:last-child');
       if (btn) btn.disabled = true;
       const labels = ['🍜 Đồ ăn', '☕ Đồ uống', '🎵 Nhạc', '📺 Phim'];
       let message = '💌 Câu trả lời từ người ấy:\n\n';
@@ -1007,7 +1007,7 @@
         const btn = document.querySelector('.step.active .btn-group .btn-right button:not(.btn-secondary)');
         if (btn && !btn.disabled) btn.click();
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        const btn = document.querySelector('.step.active .btn-group .btn-left .btn-secondary');
+        const btn = document.querySelector('.step.active .btn-group .btn-right .btn-secondary');
         if (btn) btn.click();
       }
     });
