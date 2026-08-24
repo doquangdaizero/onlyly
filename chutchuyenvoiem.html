@@ -76,6 +76,7 @@
       border: 1px solid rgba(255, 200, 190, 0.5);
       max-height: 95vh;
       overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
     .container::-webkit-scrollbar {
@@ -91,6 +92,57 @@
     }
     .container::-webkit-scrollbar-thumb:hover {
       background: rgba(232, 90, 122, 0.5);
+    }
+
+    /* ===== SCROLL INDICATOR ===== */
+    .scroll-indicator {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      text-align: center;
+      padding: 12px 0 4px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 250, 245, 0.9));
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .scroll-indicator.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .scroll-indicator span {
+      display: inline-block;
+      font-size: 13px;
+      color: #b08070;
+      background: rgba(255, 248, 245, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 8px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(210, 160, 150, 0.2);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      pointer-events: auto;
+      cursor: pointer;
+      animation: pulseIndicator 2s ease-in-out infinite;
+    }
+    .scroll-indicator span:hover {
+      background: rgba(255, 248, 245, 0.95);
+      transform: scale(1.02);
+    }
+    .scroll-indicator .arrow {
+      display: inline-block;
+      margin-left: 6px;
+      animation: bounceArrow 1.5s ease-in-out infinite;
+    }
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    @keyframes pulseIndicator {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
     }
 
     .dots {
@@ -173,6 +225,22 @@
       margin-bottom: 16px;
       border-radius: 20px;
       transition: max-height 0.3s ease;
+      position: relative;
+    }
+
+    /* Gradient fade khi có thể scroll */
+    .options-wrapper.scrollable::after {
+      content: '';
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      display: block;
+      background: linear-gradient(to bottom, transparent, rgba(255, 250, 245, 0.95));
+      pointer-events: none;
+      margin-top: -40px;
+      border-radius: 0 0 20px 20px;
     }
 
     .options-wrapper::-webkit-scrollbar {
@@ -361,6 +429,7 @@
       .option .food-img { width: 22px; height: 22px; }
       button { padding: 12px 20px; font-size: 15px; }
       .options-wrapper { max-height: 200px; }
+      .scroll-indicator span { font-size: 12px; padding: 6px 16px; }
     }
 
     .step-final .big-image {
@@ -374,6 +443,17 @@
       animation: float 3s ease-in-out infinite;
       box-shadow: 0 10px 40px rgba(232, 90, 122, 0.2);
       border: 3px solid rgba(255, 255, 255, 0.6);
+    }
+
+    /* Selected count badge */
+    .selected-count {
+      font-size: 12px;
+      color: #b08070;
+      margin-left: 8px;
+      background: rgba(210, 160, 150, 0.15);
+      padding: 2px 10px;
+      border-radius: 20px;
+      display: inline-block;
     }
   </style>
 </head>
@@ -465,6 +545,13 @@
         <strong>"Tại ai đó cứ không chịu kể chuyện, chắc do bận hoặc ngại gì đó nên anh mới phải vibe coding thế này"</strong><br /><br />
         <span style="font-size:14px; color:#7a5a5a;">Em có biết là em rất quá đáng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yêu không?</span>
       </div>
+    </div>
+
+    <!-- SCROLL INDICATOR -->
+    <div class="scroll-indicator" id="scrollIndicator">
+      <span onclick="scrollToBottom()">
+        👇 Cuộn xuống để xem hết nè <span class="arrow">↓</span>
+      </span>
     </div>
   </div>
 
@@ -667,6 +754,82 @@
     const answers = {};
     const FORMSPREE_URL = 'https://formspree.io/f/mdenjdbq';
 
+    // =============================================================
+    // 3. SCROLL INDICATOR LOGIC
+    // =============================================================
+    const container = document.getElementById('app');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    let indicatorTimeout = null;
+
+    function checkScrollNeeded() {
+      const step = document.querySelector('.step.active');
+      if (!step) return;
+      
+      // Chỉ kiểm tra cho các step có options (step 1-4)
+      const stepNum = parseInt(step.dataset.step);
+      if (stepNum < 1 || stepNum > 4) {
+        scrollIndicator.classList.remove('show');
+        return;
+      }
+
+      // Đợi một chút để DOM render xong
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const wrapper = step.querySelector('.options-wrapper');
+          if (!wrapper) return;
+          
+          // Kiểm tra xem content có bị tràn không
+          const isScrollable = wrapper.scrollHeight > wrapper.clientHeight + 5;
+          
+          // Kiểm tra xem toàn bộ step có cần scroll trong container không
+          const stepHeight = step.scrollHeight;
+          const containerHeight = container.clientHeight;
+          const isStepTooLong = stepHeight > containerHeight - 80; // trừ padding và nút
+
+          // Hiển thị indicator nếu cần scroll
+          if (isScrollable || isStepTooLong) {
+            scrollIndicator.classList.add('show');
+          } else {
+            scrollIndicator.classList.remove('show');
+          }
+        });
+      });
+    }
+
+    function scrollToBottom() {
+      // Cuộn xuống cuối container
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      });
+      
+      // Ẩn indicator sau khi đã cuộn
+      setTimeout(() => {
+        scrollIndicator.classList.remove('show');
+      }, 1000);
+    }
+
+    // Lắng nghe sự kiện scroll để ẩn indicator khi đã cuộn xuống đủ
+    container.addEventListener('scroll', () => {
+      const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 50;
+      if (isAtBottom) {
+        scrollIndicator.classList.remove('show');
+      } else {
+        // Kiểm tra lại nếu cần hiển thị
+        checkScrollNeeded();
+      }
+    });
+
+    // Khi resize, kiểm tra lại
+    window.addEventListener('resize', () => {
+      clearTimeout(indicatorTimeout);
+      indicatorTimeout = setTimeout(checkScrollNeeded, 200);
+    });
+
+    // =============================================================
+    // 4. RENDER OPTIONS
+    // =============================================================
+
     function renderOptions(stepIndex) {
       const qData = questions[stepIndex - 1];
       if (!qData) return;
@@ -714,6 +877,12 @@
           answers[qData.id] = arr;
           const btn = document.getElementById(`next${stepIndex}`);
           if (btn) btn.disabled = (arr.length === 0);
+          
+          // Cập nhật số lượng đã chọn
+          updateSelectedCount(stepIndex);
+          
+          // Kiểm tra lại scroll indicator
+          setTimeout(checkScrollNeeded, 100);
         });
         div.addEventListener('mousemove', function(e) {
           const rect = this.getBoundingClientRect();
@@ -731,8 +900,37 @@
         btn.disabled = (arr.length === 0);
       }
 
-      // Tự động điều chỉnh max-height của wrapper dựa trên số lượng option
+      // Thêm hiển thị số lượng đã chọn
+      updateSelectedCount(stepIndex);
+
+      // Tự động điều chỉnh max-height của wrapper
       adjustWrapperHeight(stepIndex);
+      
+      // Kiểm tra scroll indicator sau khi render
+      setTimeout(checkScrollNeeded, 200);
+    }
+
+    function updateSelectedCount(stepIndex) {
+      const qData = questions[stepIndex - 1];
+      if (!qData) return;
+      const arr = answers[qData.id] || [];
+      const sub = document.querySelector(`.step[data-step="${stepIndex}"] .sub`);
+      if (sub && arr.length > 0) {
+        // Nếu đã có text cũ, thêm badge
+        const baseText = qData.id === 'q1' ? 'Chọn nhiều hoặc chọn hết cũng được nhaa' : '';
+        const existingSpan = sub.querySelector('.selected-count');
+        if (!existingSpan) {
+          const span = document.createElement('span');
+          span.className = 'selected-count';
+          span.textContent = `✨ ${arr.length} lựa chọn`;
+          sub.appendChild(span);
+        } else {
+          existingSpan.textContent = `✨ ${arr.length} lựa chọn`;
+        }
+      } else {
+        const span = sub?.querySelector('.selected-count');
+        if (span) span.remove();
+      }
     }
 
     function adjustWrapperHeight(stepIndex) {
@@ -745,16 +943,22 @@
       wrapper.style.maxHeight = 'none';
       const naturalHeight = options.scrollHeight;
       
-      // Nếu chiều cao tự nhiên nhỏ hơn 200px, giữ nguyên (không scroll)
+      // Nếu chiều cao tự nhiên nhỏ hơn 220px, giữ nguyên (không scroll)
       // Nếu lớn hơn, giới hạn và cho scroll
       if (naturalHeight > 220) {
         wrapper.style.maxHeight = '280px';
         wrapper.style.overflowY = 'auto';
+        wrapper.classList.add('scrollable');
       } else {
         wrapper.style.maxHeight = 'none';
         wrapper.style.overflowY = 'visible';
+        wrapper.classList.remove('scrollable');
       }
     }
+
+    // =============================================================
+    // 5. STEP NAVIGATION
+    // =============================================================
 
     function showStep(index) {
       document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
@@ -764,10 +968,21 @@
         dot.classList.toggle('active', i === index);
         dot.classList.toggle('passed', i < index);
       });
-      if (index >= 1 && index <= 4) renderOptions(index);
+      
+      // Reset scroll về đầu
+      container.scrollTop = 0;
+      
+      if (index >= 1 && index <= 4) {
+        renderOptions(index);
+        // Thêm một chút delay để check scroll indicator sau khi render
+        setTimeout(checkScrollNeeded, 300);
+      } else if (index === 0) {
+        scrollIndicator.classList.remove('show');
+      } else if (index === 5) {
+        scrollIndicator.classList.remove('show');
+      }
+      
       currentStep = index;
-      const container = document.getElementById('app');
-      if (container) container.scrollTop = 0;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -782,6 +997,10 @@
     function prevStep() {
       if (currentStep > 0) showStep(currentStep - 1);
     }
+
+    // =============================================================
+    // 6. SUBMIT
+    // =============================================================
 
     function submitAndFinish() {
       const btn = document.querySelector('.step.active .btn-group button:last-child');
@@ -835,6 +1054,10 @@
       }
     }
 
+    // =============================================================
+    // 7. INIT
+    // =============================================================
+
     createDots();
     showStep(0);
 
@@ -880,6 +1103,21 @@
         if (btn) btn.click();
       }
     });
+
+    // Lắng nghe thay đổi kích thước container
+    const resizeObserver = new ResizeObserver(() => {
+      clearTimeout(indicatorTimeout);
+      indicatorTimeout = setTimeout(checkScrollNeeded, 300);
+    });
+    resizeObserver.observe(container);
+
+    // Expose functions to global scope
+    window.nextStep = nextStep;
+    window.prevStep = prevStep;
+    window.scrollToBottom = scrollToBottom;
+    window.resetAll = resetAll;
+
+    console.log('💖 Em có biết scroll xuống để xem hết không?');
   </script>
 </body>
 </html>
